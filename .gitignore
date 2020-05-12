@@ -1,0 +1,18 @@
+# PHPStorm Projekt-Datein
+.idea/.gitignore
+.idea/gowoergingbladdform.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+
+server/node_modules/
+server/package-lock.json
+/dist/
