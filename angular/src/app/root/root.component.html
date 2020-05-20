@@ -1,0 +1,12 @@
+<div id="messages">
+  <ul>
+    <li *ngFor="let msg of msgArray">
+      {{msg}}
+    </li>
+  </ul>
+</div>
+<input id="input" #msg autocomplete="off"/>
+<button (click)="onSend(msg.value)">Send</button>
+
+<button (click)="loadDB()">Load Chat</button>
+
