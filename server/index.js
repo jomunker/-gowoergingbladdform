@@ -3,6 +3,8 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
+const bodyParser = require('body-parser');
+
 app.use(express.static('../dist/'));
 http.listen(3000, () => {
     console.log('listening on *:3000');
@@ -22,7 +24,11 @@ io.on('connection', (socket) => {
 });
 
 
-//API
+// -- API --
+
+//BodyParser for receiving Data
+app.use(bodyParser.json());
+
 app.post('/api/all', function (req, res) {
     db.find({}).sort({createdAt: 1}).exec((err, data) => {
         if (err) {
@@ -31,4 +37,9 @@ app.post('/api/all', function (req, res) {
         }
         res.json(data);
     });
+})
+
+app.post('/api/delete', function (req, res) {
+    console.log(req.body)
+    res.json({test:456});
 })
