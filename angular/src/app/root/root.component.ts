@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 declare function io(): any;
+import { ModulVerarbeitungService } from '../modul-verarbeitung/modul-verarbeitung.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class RootComponent implements OnInit {
   msgArray = [];
   socket = io();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public modulVA: ModulVerarbeitungService) {}
 
   ngOnInit() {
     //start socket.io

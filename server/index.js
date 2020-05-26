@@ -19,8 +19,14 @@ io.on('connection', (socket) => {
         console.log('chat: ' + msg);
         io.emit('chat message', msg);
     });
-});
 
+    socket.on('new object', (obj) => {
+        db.insert({'module': obj}, (err, newDoc) => {});
+        console.log('new object: ' + obj);
+        io.emit('new object', obj);
+    });
+
+});
 
 //API
 app.post('/api/all', function (req, res) {
