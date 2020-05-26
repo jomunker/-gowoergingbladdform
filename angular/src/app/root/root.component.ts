@@ -16,12 +16,13 @@ export class RootComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    //start socket.io
-    io();
-
-    //wenn eine socket-Nachricht reinkommt..
+    //when a chat message arrive
     this.socket.on('chat message', (msg) => {
       this.msgArrayPush(msg);
+    });
+
+    this.socket.on('delete', (object) => {
+      //find and delete the object of the modules.array
     });
   }
 

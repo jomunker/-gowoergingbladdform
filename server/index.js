@@ -16,16 +16,22 @@ const db = new Database({filename: 'database.db', timestampData: true} );
 db.loadDatabase();
 
 io.on('connection', (socket) => {
+
     socket.on('chat message', (msg) => {
         db.insert({'message': msg}, (err, newDoc) => {});
         console.log('chat: ' + msg);
         io.emit('chat message', msg);
     });
+
+    socket.on('delete', (object) => {
+        db.remove();
+        io.emit('delete', object);
+    });
+
 });
 
 
 // -- API --
-
 //BodyParser for receiving Data
 app.use(bodyParser.json());
 

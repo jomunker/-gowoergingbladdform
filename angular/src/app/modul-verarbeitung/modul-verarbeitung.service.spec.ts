@@ -27,6 +27,8 @@ describe('ModulVerarbeitungService', () => {
       }
       const dummy = {"test": 1234}
 
+      // @ts-ignore
+      spy = spyOn(service, "io");
 
       service.moduleDelete(object).subscribe(response => {
         expect(response).toEqual(dummy);

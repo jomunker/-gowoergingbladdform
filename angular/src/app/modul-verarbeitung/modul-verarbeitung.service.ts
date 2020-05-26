@@ -1,31 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+declare function io(): any;
 
 interface module {
   id: string;
   idHTML: number; //count
   type: string; //category
-  position: object; // {x,y,width,height}
+  position: {
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  };
   content: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class ModulVerarbeitungService {
+export class ModulVerarbeitungService{
 
+  socket = io();
   constructor(private http: HttpClient) {}
 
   moduleDelete(object: module){
-
-    const option = {
-      method : 'POST',
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      }
-    }
-
-    return this.http.post('/delete',module,option);
+    this.socket.emit('delete', (object));
   }
 
 }
