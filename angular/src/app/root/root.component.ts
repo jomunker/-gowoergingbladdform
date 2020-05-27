@@ -16,11 +16,12 @@ export class RootComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    //when a chat message arrive
+    //when any other client pushes a message
     this.socket.on('chat message', (msg) => {
       this.msgArrayPush(msg);
     });
 
+    //when any other client provokes a delete
     this.socket.on('delete', (object) => {
       //find and delete the object of the modules.array
     });
@@ -35,11 +36,19 @@ export class RootComponent implements OnInit {
 
     const input:any = document.getElementById("input")
     input.value = "";
-
   }
 
-  onSend(input: String) {
+
+
+  //when this client pushes a message
+  onSend(input: string) {
     this.socket.emit('chat message', (input));
+  }
+
+  //when this client provokes a delete
+  onDelete(msg: string){
+    const deleteObject = JSON.parse(msg)
+    this.socket.emit('delete', (deleteObject));
   }
 
   loadDB(){
@@ -56,7 +65,7 @@ export class RootComponent implements OnInit {
       let newMSGArray: Array<String> = [];
 
       for(let i = 0; i < data.length ;i++ ){
-        newMSGArray.push(data[i].message);
+        newMSGArray.push(JSON.stringify(data[i]));
       }
       this.setMSGArray(newMSGArray)
     });
