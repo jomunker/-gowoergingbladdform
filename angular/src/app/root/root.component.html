@@ -11,3 +11,7 @@
 <button (click)="loadDB()">Load Chat</button>
 
 <button (click)="modulVA.moduleCreate()">New Module</button>
+
+<ul *ngFor="let cm of modulVA.canvasmodules">
+  <li>{{ cm.id }}</li>
+</ul>

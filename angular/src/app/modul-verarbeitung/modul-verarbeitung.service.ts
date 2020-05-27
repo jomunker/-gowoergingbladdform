@@ -11,6 +11,8 @@ export class ModulVerarbeitungService {
 
   socket = io();
 
+  public canvasmodules: Canvasmodule[] = [];
+
   constructor(private http: HttpClient) { }
 
   moduleCreate(): void{
@@ -21,6 +23,7 @@ export class ModulVerarbeitungService {
     };
 
     this.socket.emit('new object', obj);
+    this.canvasmodules.push(obj);
     
     // console.log(obj);
   }
