@@ -1,5 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ModuleService } from '../services/module.service';
+import { Module } from '../interfaces/module';
+
+
 declare function io(): any;
 
 @Component({
@@ -10,10 +14,20 @@ declare function io(): any;
 
 export class RootComponent implements OnInit {
   title = 'coworkingplatform';
-  msgArray = [];
-  socket = io();
+  objectArray = [];
+  //public objectArray: Module[] = [];
 
-  constructor(private http: HttpClient) {}
+  socket = io();
+  
+   object:Module = {
+    id: "1",
+    idHTML: "0",
+    type: "0",
+    position: {x: 0,y: 0,width: 0,height:0},
+    content: "0",
+  }
+
+  constructor(private http: HttpClient, public moduleService: ModuleService) { }
 
   ngOnInit() {
     //start socket.io
@@ -21,18 +35,30 @@ export class RootComponent implements OnInit {
 
     //wenn eine socket-Nachricht reinkommt..
     this.socket.on('chat message', (msg) => {
-      this.msgArrayPush(msg);
+      this.ArrayPush(msg);
+    });
+
+    // if socket recieves a edited object
+    this.socket.on('module edited', (moduleEdit) => {
+      // search and replace the edited object in the modules array
+      for (let i = 0; i < this.objectArray.length; i++) {
+        const module = this.objectArray[i];
+        console.log(module);
+        if (module.id == moduleEdit.id) {
+          this.objectArray.splice(i, 1, moduleEdit);
+        }
+      }
     });
   }
 
-  setMSGArray(array: Array<any>){
-    this.msgArray = array;
+  setObjectArray(array: Array<any>) {
+    this.objectArray = array;
   }
 
-  msgArrayPush(msg) {
-    this.msgArray.push(msg);
+  ArrayPush(object) {
+    this.objectArray.push(object);
 
-    const input:any = document.getElementById("input")
+    const input: any = document.getElementById("input")
     input.value = "";
 
   }
@@ -41,23 +67,23 @@ export class RootComponent implements OnInit {
     this.socket.emit('chat message', (input));
   }
 
-  loadDB(){
+  loadDB() {
     const option = {
-      method : 'POST',
+      method: 'POST',
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       }
     }
 
-    this.http.post('/api/all',option).subscribe(response => {
-      let data: any= response;
+    this.http.post('/api/all', option).subscribe(response => {
+      let data: any = response;
       console.log(data);
-      let newMSGArray: Array<String> = [];
+      let newObjectArray: Array<String> = [];
 
-      for(let i = 0; i < data.length ;i++ ){
-        newMSGArray.push(data[i].message);
+      for (let i = 0; i < data.length; i++) {
+        newObjectArray.push(data[i]);
       }
-      this.setMSGArray(newMSGArray)
+      this.setObjectArray(newObjectArray)
     });
 
   }
