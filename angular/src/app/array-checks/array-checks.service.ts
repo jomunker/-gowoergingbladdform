@@ -8,7 +8,8 @@ export class ArrayChecksService {
 
   constructor() { }
 
-  static checkIfEntriesExists(array: Array<CanvasModule>, object: object):object{
+  static checkIfEntriesExists(array: Array<any>, object: object):object{
+    //check if the object is part of the array and return the position too.
     let exists:object = {
       "exists": false,
       "position": undefined,
@@ -21,3 +22,4 @@ export class ArrayChecksService {
     return exists;
   }
 }
+
