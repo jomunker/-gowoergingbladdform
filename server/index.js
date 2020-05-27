@@ -18,14 +18,17 @@ db.loadDatabase();
 io.on('connection', (socket) => {
 
     socket.on('chat message', (msg) => {
-        db.insert({'message': msg}, (err, newDoc) => {});
-        console.log('chat: ' + msg);
-        io.emit('chat message', msg);
+        db.insert({'message': msg}, (err, newDoc) => {
+            io.emit('chat message', newDoc);
+        });
+        console.log('add: ' + msg);
+
     });
 
     socket.on('delete', (object) => {
         console.log('delete: ' + JSON.stringify(object))
-        //db.remove();
+        db.remove({ _id: object._id }, {}, function (err, numRemoved) {
+        });
         io.emit('delete', object);
     });
 
@@ -33,7 +36,7 @@ io.on('connection', (socket) => {
 
 
 // -- API --
-//BodyParser for receiving Data
+//bodyParser for receiving data via POST request
 app.use(bodyParser.json());
 
 app.post('/api/all', function (req, res) {
@@ -44,9 +47,4 @@ app.post('/api/all', function (req, res) {
         }
         res.json(data);
     });
-})
-
-app.post('/api/delete', function (req, res) {
-    console.log(req.body)
-    res.json({test:456});
 })

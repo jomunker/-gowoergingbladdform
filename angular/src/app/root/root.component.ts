@@ -1,6 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ArrayChecksService } from '../array-checks/array-checks.service';
 declare function io(): any;
+
+interface EntrieObject {
+  "exists": boolean,
+  "position": number,
+}
 
 @Component({
   selector: 'app-root',
@@ -10,7 +16,8 @@ declare function io(): any;
 
 export class RootComponent implements OnInit {
   title = 'coworkingplatform';
-  msgArray = [];
+  displayedArray = [];
+  objectArray = [];
   socket = io();
 
   constructor(private http: HttpClient) {}
@@ -18,31 +25,37 @@ export class RootComponent implements OnInit {
   ngOnInit() {
     //when any other client pushes a message
     this.socket.on('chat message', (msg) => {
-      this.msgArrayPush(msg);
+      this.arraysPush(msg);
     });
 
     //when any other client provokes a delete
     this.socket.on('delete', (object) => {
-      //find and delete the object of the modules.array
+      //find the object to delete, if its exists delete it from the array
+
+      // @ts-ignore
+      const deleteObject: EntrieObject = ArrayChecksService.checkIfEntriesExists(this.objectArray, object)
+
+      if (deleteObject.exists){
+        this.displayedArray.splice(deleteObject.position, 1)
+        this.objectArray.splice(deleteObject.position, 1)
+      } else {
+        console.log(JSON.stringify(object) + "can not be deleted because it is not in the array")
+      }
     });
   }
 
-  setMSGArray(array: Array<any>){
-    this.msgArray = array;
+  arraysPush(input){
+    this.displayedArray.push(JSON.stringify(input));
+    this.objectArray.push(input);
   }
-
-  msgArrayPush(msg) {
-    this.msgArray.push(msg);
-
-    const input:any = document.getElementById("input")
-    input.value = "";
-  }
-
-
 
   //when this client pushes a message
-  onSend(input: string) {
-    this.socket.emit('chat message', (input));
+  onSend(msg: string) {
+    this.socket.emit('chat message', (msg));
+
+    //clear the input field
+    const input:any = document.getElementById("input")
+    input.value = "";
   }
 
   //when this client provokes a delete
@@ -60,15 +73,19 @@ export class RootComponent implements OnInit {
     }
 
     this.http.post('/api/all',option).subscribe(response => {
-      let data: any= response;
-      console.log(data);
-      let newMSGArray: Array<String> = [];
+      //type change object(which is an array acutally) -> any
+      let data: any = response;
+      let newDisplayedArray: Array<String> = [];
+      let newObjectArray: Array<String> = [];
 
+      //go to the whole array and split each item into these two new Arrays
       for(let i = 0; i < data.length ;i++ ){
-        newMSGArray.push(JSON.stringify(data[i]));
+        newDisplayedArray.push(JSON.stringify(data[i]));
+        newObjectArray.push(data[i]);
       }
-      this.setMSGArray(newMSGArray)
-    });
 
+      this.displayedArray = newDisplayedArray;
+      this.objectArray = newObjectArray;
+    });
   }
 }

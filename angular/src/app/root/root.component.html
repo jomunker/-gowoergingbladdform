@@ -1,6 +1,6 @@
 <div id="messages">
   <ul>
-    <li *ngFor="let msg of msgArray">
+    <li *ngFor="let msg of displayedArray">
       {{msg}}
       <button (click)="onDelete(msg)">X</button>
     </li>
