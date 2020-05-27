@@ -24,7 +24,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('delete', (object) => {
-        db.remove();
+        console.log('delete: ' + JSON.stringify(object))
+        //db.remove();
         io.emit('delete', object);
     });
 
