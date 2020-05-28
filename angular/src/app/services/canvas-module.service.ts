@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {CanvasModule} from "../interfaces/canvas-module";
+import {CanvasModule} from "../interfaces/canvasModule";
 declare function io(): any;
 
 
@@ -8,13 +8,14 @@ declare function io(): any;
 @Injectable({
   providedIn: 'root'
 })
-export class ModulVerarbeitungService{
+export class CanvasModuleService {
 
   socket = io();
   constructor(private http: HttpClient) {}
 
-  moduleDelete(object: CanvasModule){
-    this.socket.emit('delete', (object));
+  //when this client provokes a delete
+  moduleDelete(deleteObject){
+    this.socket.emit('delete', (deleteObject));
   }
 
 }

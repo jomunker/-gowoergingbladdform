@@ -1,17 +1,17 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {ModulVerarbeitungService} from './modul-verarbeitung.service';
+import {CanvasModuleService} from './canvas-module.service';
 
 describe('ModulVerarbeitungService', () => {
-  let service: ModulVerarbeitungService;
+  let service: CanvasModuleService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ModulVerarbeitungService]
+      providers: [CanvasModuleService]
     });
-    service = TestBed.inject(ModulVerarbeitungService);
+    service = TestBed.inject(CanvasModuleService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 

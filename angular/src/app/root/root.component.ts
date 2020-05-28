@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ArrayChecksService } from '../array-checks/array-checks.service';
+import { ArrayChecksService } from '../services/array-checks.service';
+import { CanvasModuleService } from '../services/canvas-module.service';
 declare function io(): any;
 
-interface EntrieObject {
+interface EntryObject {
   "exists": boolean,
   "position": number,
 }
@@ -16,16 +17,16 @@ interface EntrieObject {
 
 export class RootComponent implements OnInit {
   title = 'coworkingplatform';
-  displayedArray = [];
-  objectArray = [];
-  socket = io();
+  moduleArray = [];
+  //TODO: Delete objectArray
+  socket = io()
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public canvasmoduleservice: CanvasModuleService){}
 
   ngOnInit() {
     //when any other client pushes a message
     this.socket.on('chat message', (msg) => {
-      this.arraysPush(msg);
+      this.moduleArray.push(msg);
     });
 
     //when any other client provokes a delete
@@ -33,20 +34,14 @@ export class RootComponent implements OnInit {
       //find the object to delete, if its exists delete it from the array
 
       // @ts-ignore
-      const deleteObject: EntrieObject = ArrayChecksService.checkIfEntriesExists(this.objectArray, object)
+      const deleteObject: EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, object)
 
       if (deleteObject.exists){
-        this.displayedArray.splice(deleteObject.position, 1)
-        this.objectArray.splice(deleteObject.position, 1)
+        this.moduleArray.splice(deleteObject.position, 1)
       } else {
         console.log(JSON.stringify(object) + "can not be deleted because it is not in the array")
       }
     });
-  }
-
-  arraysPush(input){
-    this.displayedArray.push(JSON.stringify(input));
-    this.objectArray.push(input);
   }
 
   //when this client pushes a message
@@ -59,9 +54,8 @@ export class RootComponent implements OnInit {
   }
 
   //when this client provokes a delete
-  onDelete(msg: string){
-    const deleteObject = JSON.parse(msg)
-    this.socket.emit('delete', (deleteObject));
+  onDelete(msg){
+    this.canvasmoduleservice.moduleDelete(msg);
   }
 
   loadDB(){
@@ -76,16 +70,13 @@ export class RootComponent implements OnInit {
       //type change object(which is an array acutally) -> any
       let data: any = response;
       let newDisplayedArray: Array<String> = [];
-      let newObjectArray: Array<String> = [];
 
       //go to the whole array and split each item into these two new Arrays
       for(let i = 0; i < data.length ;i++ ){
-        newDisplayedArray.push(JSON.stringify(data[i]));
-        newObjectArray.push(data[i]);
+        newDisplayedArray.push(data[i]);
       }
 
-      this.displayedArray = newDisplayedArray;
-      this.objectArray = newObjectArray;
+      this.moduleArray = newDisplayedArray;
     });
   }
 }

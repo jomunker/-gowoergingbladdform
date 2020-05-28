@@ -1,7 +1,7 @@
 <div id="messages">
   <ul>
-    <li *ngFor="let msg of displayedArray">
-      {{msg}}
+    <li *ngFor="let msg of moduleArray">
+      {{msg.message}}
       <button (click)="onDelete(msg)">X</button>
     </li>
   </ul>
