@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 declare function io(): any;
-import { ModulVerarbeitungService } from '../modul-verarbeitung/modul-verarbeitung.service';
+import { CanvasModuleService } from '../services/canvasmodules.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ export class RootComponent implements OnInit {
   msgArray = [];
   socket = io();
 
-  constructor(private http: HttpClient, public modulVA: ModulVerarbeitungService) {}
+  constructor(private http: HttpClient, public canvasmoduleservice: CanvasModuleService) {}
 
   ngOnInit() {
     //start socket.io

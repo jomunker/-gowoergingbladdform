@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('new object', (obj) => {
-        db.insert({'module': obj}, (err, newDoc) => {});
+        db.insert({id: obj._id, idHTML: obj.idHTML, type: obj.type, position: obj.position, content: obj.content}, (err, newDoc) => {});
         console.log('new object: ' + obj);
         io.emit('new object', obj);
     });
