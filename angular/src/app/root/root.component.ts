@@ -1,6 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {ArrayChecksService} from '../services/array-checks.service';
+import {CanvasModuleService} from '../services/canvasmodule.service';
+import {CanvasModule} from '../interfaces/canvasmodule';
+
 declare function io(): any;
+
+interface EntryObject {
+  "exists": boolean,
+  "position": number,
+}
 
 @Component({
   selector: 'app-root',
@@ -10,55 +19,93 @@ declare function io(): any;
 
 export class RootComponent implements OnInit {
   title = 'coworkingplatform';
-  msgArray = [];
-  socket = io();
+  moduleArray = [];
+  socket = io()
 
-  constructor(private http: HttpClient) {}
+  object:CanvasModule = {
+    _id: "1",
+    idHTML: 4,
+    type: "4",
+    position: {x: 0,y: 0,width: 0,height:0},
+    content: "4",
+  }
+
+  constructor(private http: HttpClient, public canvasmoduleservice: CanvasModuleService) {
+  }
 
   ngOnInit() {
-    //start socket.io
-    io();
-
     //wenn eine socket-Nachricht reinkommt..
     this.socket.on('chat message', (msg) => {
-      this.msgArrayPush(msg);
+      this.moduleArray.push(msg);
+    });
+
+    // if socket recieves a edited object
+    this.socket.on('module edited', (moduleEdit) => {
+      // search and replace the edited object in the modules array
+
+      // @ts-ignore
+      const replaceObject : EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, moduleEdit)
+
+      if (replaceObject.exists) {
+        this.moduleArray.splice(replaceObject.position, 1, moduleEdit)
+      } else {
+        console.log(JSON.stringify(moduleEdit) + "can not be edited")
+      }
+    });
+
+    //when any other client provokes a delete
+    this.socket.on('delete', (object) => {
+      //find the object to delete, if its exists delete it from the array
+
+      // @ts-ignore
+      const deleteObject: EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, object)
+
+      if (deleteObject.exists){
+        this.moduleArray.splice(deleteObject.position, 1)
+      } else {
+        console.log(JSON.stringify(object) + "can not be deleted")
+      }
     });
   }
 
-  setMSGArray(array: Array<any>){
-    this.msgArray = array;
-  }
 
-  msgArrayPush(msg) {
-    this.msgArray.push(msg);
+  //when this client pushes a message
+  onSend(msg: string) {
+    this.socket.emit('chat message', (msg));
 
-    const input:any = document.getElementById("input")
+    //clear the input field
+    const input: any = document.getElementById("input")
     input.value = "";
-
   }
 
-  onSend(input: String) {
-    this.socket.emit('chat message', (input));
+  //when this client provokes a delete
+  onDelete(msg) {
+    this.canvasmoduleservice.moduleDelete(msg);
   }
 
-  loadDB(){
+  onEdit(msg) {
+    this.canvasmoduleservice.editModule(msg);
+  }
+
+
+  loadDB() {
     const option = {
-      method : 'POST',
+      method: 'POST',
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       }
     }
 
     this.http.post('/api/all',option).subscribe(response => {
-      let data: any= response;
-      console.log(data);
-      let newMSGArray: Array<String> = [];
+      //type change object(which is an array acutally) -> any
+      let data: any = response;
+      let newDisplayedArray: Array<String> = [];
 
+      //go to the whole array and split each item into these two new Arrays
       for(let i = 0; i < data.length ;i++ ){
-        newMSGArray.push(data[i].message);
+        newDisplayedArray.push(data[i]);
       }
-      this.setMSGArray(newMSGArray)
+      this.moduleArray = newDisplayedArray;
     });
-
   }
 }

@@ -1,7 +1,8 @@
 <div id="messages">
   <ul>
-    <li *ngFor="let msg of msgArray">
-      {{msg}}
+    <li *ngFor="let module of moduleArray">
+      {{module.id}}
+      <button (click)="onDelete(msg)">X</button>
     </li>
   </ul>
 </div>
@@ -10,3 +11,6 @@
 
 <button (click)="loadDB()">Load Chat</button>
 
+<button (click)="onEdit(object)">Edit Module</button>
+
+<button (click)="canvasmoduleservice.moduleCreate()">New Module</button>
