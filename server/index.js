@@ -22,14 +22,11 @@ io.on('connection', (socket) => {
             io.emit('chat message', newDoc);
         });
         console.log('add: ' + msg);
-
     });
 
     socket.on('module edited', (object) => {
-
         db.update({ id: object.id }, {id: object.id, idHTML: object.idHTML, type: object.type, position: object.position, content: object.content}, { upsert: true }, function (err, numReplaced) {
         });
-
         console.log(object);
         io.emit('module edited', object);
     });

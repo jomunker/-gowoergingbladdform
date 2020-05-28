@@ -24,20 +24,17 @@ export class CanvasModuleService {
     //   position: { x: null, y: null, height: null, width: null },
     //   content: ''
     // }
-
   }
 
   ngOnInit() {
-    // Start socket.io
-    io();
-
   }
-
 
   editModule(object) {
-
     this.socket.emit('module edited', (object));
-
   }
 
+  //when this client provokes a delete
+  moduleDelete(deleteObject){
+    this.socket.emit('delete', (deleteObject));
+  }
 }

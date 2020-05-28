@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ArrayChecksService } from '../services/array-checks.service';
-import { CanvasModuleService } from '../services/canvas-module.service';
-import { CanvasModule } from '../interfaces/canvasmodule';
+import {ArrayChecksService} from '../services/array-checks.service';
+import {CanvasModuleService} from '../services/canvasmodule.service';
+import {CanvasModule} from '../interfaces/canvasmodule';
 
 declare function io(): any;
 
@@ -30,7 +30,8 @@ export class RootComponent implements OnInit {
     content: "4",
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public canvasmoduleservice: CanvasModuleService) {
+  }
 
   ngOnInit() {
     //wenn eine socket-Nachricht reinkommt..
@@ -41,12 +42,14 @@ export class RootComponent implements OnInit {
     // if socket recieves a edited object
     this.socket.on('module edited', (moduleEdit) => {
       // search and replace the edited object in the modules array
-      for (let i = 0; i < this.moduleArray.length; i++) {
-        const module = this.moduleArray[i];
-        console.log(module);
-        if (module.id == moduleEdit.id) {
-          this.moduleArray.splice(i, 1, moduleEdit);
-        }
+
+      // @ts-ignore
+      const replaceObject : EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, moduleEdit)
+
+      if (replaceObject.exists) {
+        this.moduleArray.splice(replaceObject.position, 1, moduleEdit)
+      } else {
+        console.log(JSON.stringify(moduleEdit) + "can not be edited")
       }
     });
 
@@ -60,7 +63,7 @@ export class RootComponent implements OnInit {
       if (deleteObject.exists){
         this.moduleArray.splice(deleteObject.position, 1)
       } else {
-        console.log(JSON.stringify(object) + "can not be deleted because it is not in the array")
+        console.log(JSON.stringify(object) + "can not be deleted")
       }
     });
   }
@@ -80,9 +83,14 @@ export class RootComponent implements OnInit {
     this.canvasmoduleservice.moduleDelete(msg);
   }
 
-  loadDB(){
+  onEdit(msg) {
+    this.canvasmoduleservice.editModule(msg);
+  }
+
+
+  loadDB() {
     const option = {
-      method : 'POST',
+      method: 'POST',
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       }

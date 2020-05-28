@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {CanvasModuleService} from './canvas-module.service';
+import {CanvasModuleService} from './canvasmodule.service';
 
 describe('ModulVerarbeitungService', () => {
   let service: CanvasModuleService;
