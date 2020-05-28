@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ArrayChecksService } from '../services/array-checks.service';
 import { CanvasModuleService } from '../services/canvas-module.service';
+import { CanvasModule } from '../interfaces/canvasmodule';
+
 declare function io(): any;
 
 interface EntryObject {
@@ -18,15 +20,34 @@ interface EntryObject {
 export class RootComponent implements OnInit {
   title = 'coworkingplatform';
   moduleArray = [];
-  //TODO: Delete objectArray
   socket = io()
 
-  constructor(private http: HttpClient, public canvasmoduleservice: CanvasModuleService){}
+  object:CanvasModule = {
+    id: "1",
+    idHTML: "4",
+    type: "4",
+    position: {x: 0,y: 0,width: 0,height:0},
+    content: "4",
+  }
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    //when any other client pushes a message
+    //wenn eine socket-Nachricht reinkommt..
     this.socket.on('chat message', (msg) => {
       this.moduleArray.push(msg);
+    });
+
+    // if socket recieves a edited object
+    this.socket.on('module edited', (moduleEdit) => {
+      // search and replace the edited object in the modules array
+      for (let i = 0; i < this.moduleArray.length; i++) {
+        const module = this.moduleArray[i];
+        console.log(module);
+        if (module.id == moduleEdit.id) {
+          this.moduleArray.splice(i, 1, moduleEdit);
+        }
+      }
     });
 
     //when any other client provokes a delete
@@ -44,17 +65,18 @@ export class RootComponent implements OnInit {
     });
   }
 
+
   //when this client pushes a message
   onSend(msg: string) {
     this.socket.emit('chat message', (msg));
 
     //clear the input field
-    const input:any = document.getElementById("input")
+    const input: any = document.getElementById("input")
     input.value = "";
   }
 
   //when this client provokes a delete
-  onDelete(msg){
+  onDelete(msg) {
     this.canvasmoduleservice.moduleDelete(msg);
   }
 
@@ -75,7 +97,6 @@ export class RootComponent implements OnInit {
       for(let i = 0; i < data.length ;i++ ){
         newDisplayedArray.push(data[i]);
       }
-
       this.moduleArray = newDisplayedArray;
     });
   }

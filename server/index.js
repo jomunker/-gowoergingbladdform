@@ -25,15 +25,23 @@ io.on('connection', (socket) => {
 
     });
 
+    socket.on('module edited', (object) => {
+
+        db.update({ id: object.id }, {id: object.id, idHTML: object.idHTML, type: object.type, position: object.position, content: object.content}, { upsert: true }, function (err, numReplaced) {
+        });
+
+        console.log(object);
+        io.emit('module edited', object);
+    });
+
+
     socket.on('delete', (object) => {
         console.log('delete: ' + JSON.stringify(object))
         db.remove({ _id: object._id }, {}, function (err, numRemoved) {
         });
         io.emit('delete', object);
     });
-
 });
-
 
 // -- API --
 //bodyParser for receiving data via POST request
