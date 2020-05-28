@@ -1,6 +1,6 @@
 <div id="messages">
   <ul>
-    <li *ngFor="let object of objectArray">
+    <li *ngFor="let module of moduleArray">
       {{object.id}}
     </li>
   </ul>
@@ -10,7 +10,7 @@
 
 <button (click)="loadDB()">Load Data</button>
 
-<button (click)="moduleService.editModule(object)">Edit Module</button>
+<button (click)="canvasmoduleservice.editModule(object)">Edit Module</button>
 <!-- <ul *ngFor="let module of moduleService.modules">
   <li>{{ module.id }}</li>
 </ul>  -->

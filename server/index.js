@@ -26,7 +26,6 @@ io.on('connection', (socket) => {
 
         // db.remove({ id: object.id }, {}, function (err, numRemoved) {
         // });
-
         // db.insert({id: object.id,idHTML: object.idHTML, type: object.type, position: object.position, content: object.content}, function (err, docs) {});
 
         console.log(object);

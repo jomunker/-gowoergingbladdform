@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 declare function io(): any;
 
-import { Module } from '../interfaces/module';
+import { CanvasModule } from '../interfaces/canvasmodule';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ModuleService {
+export class CanvasModuleService {
 
   // public modules: Module[] = [];
   socket = io();

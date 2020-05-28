@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ModuleService } from '../services/module.service';
-import { Module } from '../interfaces/module';
+import { CanvasModuleService } from '../services/canvasmodule.service';
+import { CanvasModule } from '../interfaces/canvasmodule';
 
 
 declare function io(): any;
@@ -14,20 +14,20 @@ declare function io(): any;
 
 export class RootComponent implements OnInit {
   title = 'coworkingplatform';
-  objectArray = [];
-  //public objectArray: Module[] = [];
+  moduleArray = [];
+  //public moduleArray: Module[] = [];
 
   socket = io();
   
-   object:Module = {
+   object:CanvasModule = {
     id: "1",
-    idHTML: "0",
-    type: "0",
+    idHTML: "4",
+    type: "4",
     position: {x: 0,y: 0,width: 0,height:0},
-    content: "0",
+    content: "4",
   }
 
-  constructor(private http: HttpClient, public moduleService: ModuleService) { }
+  constructor(private http: HttpClient, public canvasmoduleservice: CanvasModuleService) { }
 
   ngOnInit() {
     //start socket.io
@@ -41,22 +41,22 @@ export class RootComponent implements OnInit {
     // if socket recieves a edited object
     this.socket.on('module edited', (moduleEdit) => {
       // search and replace the edited object in the modules array
-      for (let i = 0; i < this.objectArray.length; i++) {
-        const module = this.objectArray[i];
+      for (let i = 0; i < this.moduleArray.length; i++) {
+        const module = this.moduleArray[i];
         console.log(module);
         if (module.id == moduleEdit.id) {
-          this.objectArray.splice(i, 1, moduleEdit);
+          this.moduleArray.splice(i, 1, moduleEdit);
         }
       }
     });
   }
 
-  setObjectArray(array: Array<any>) {
-    this.objectArray = array;
+  setmoduleArray(array: Array<any>) {
+    this.moduleArray = array;
   }
 
   ArrayPush(object) {
-    this.objectArray.push(object);
+    this.moduleArray.push(object);
 
     const input: any = document.getElementById("input")
     input.value = "";
@@ -78,12 +78,12 @@ export class RootComponent implements OnInit {
     this.http.post('/api/all', option).subscribe(response => {
       let data: any = response;
       console.log(data);
-      let newObjectArray: Array<String> = [];
+      let newmoduleArray: Array<String> = [];
 
       for (let i = 0; i < data.length; i++) {
-        newObjectArray.push(data[i]);
+        newmoduleArray.push(data[i]);
       }
-      this.setObjectArray(newObjectArray)
+      this.setmoduleArray(newmoduleArray)
     });
 
   }

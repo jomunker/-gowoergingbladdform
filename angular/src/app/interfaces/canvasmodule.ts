@@ -1,4 +1,4 @@
-export interface Module {
+export interface CanvasModule {
     id: string,
     idHTML: string,
     type: string,
