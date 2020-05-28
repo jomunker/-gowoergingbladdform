@@ -37,4 +37,22 @@ export class CanvasModuleService {
   moduleDelete(deleteObject){
     this.socket.emit('delete', (deleteObject));
   }
+
+  moduleCreate(): void{
+    let id = Date.now().toString();
+    let obj: CanvasModule = {
+      _id: id,
+      idHTML: 1,
+      type: 'type',
+      position: {
+        x: 1,
+        y: 1,
+        width: 1,
+        height: 1
+      },
+      content: 'content'
+    };
+
+    this.socket.emit('new object', obj);
+  }
 }

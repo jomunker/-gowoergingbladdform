@@ -23,8 +23,8 @@ export class RootComponent implements OnInit {
   socket = io()
 
   object:CanvasModule = {
-    id: "1",
-    idHTML: "4",
+    _id: "1",
+    idHTML: 4,
     type: "4",
     position: {x: 0,y: 0,width: 0,height:0},
     content: "4",

@@ -1,7 +1,7 @@
 export interface CanvasModule {
   _id: string,
-  idHTML: number, //count
-  type: string, //category
+  idHTML: number,
+  type: string,
   position: {
     x: number,
     y: number,

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CanvasModuleService } from './canvasmodules.service';
+import { CanvasModuleService } from './canvasmodule.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 declare function io(): any;
