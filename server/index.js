@@ -38,12 +38,19 @@ io.on('connection', (socket) => {
         });
         io.emit('delete', object);
     });
-});
 
+    socket.on('new object', (obj) => {
+        db.insert({id: obj._id, idHTML: obj.idHTML, type: obj.type, position: obj.position, content: obj.content}, (err, newDoc) => {});
+        console.log('new object: ' + obj);
+        io.emit('new object', obj);
+    });
+});
 // -- API --
 //bodyParser for receiving data via POST request
 app.use(bodyParser.json());
 
+
+//API
 app.post('/api/all', function (req, res) {
     db.find({}).sort({createdAt: 1}).exec((err, data) => {
         if (err) {
