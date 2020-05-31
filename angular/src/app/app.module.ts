@@ -7,6 +7,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { RootComponent } from './root/root.component';
 import { CanvasComponent } from './canvas/canvas.component';
 
+import { MaterialModule } from './material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { CanvasComponent } from './canvas/canvas.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MaterialModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [RootComponent]

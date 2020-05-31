@@ -1,16 +1,31 @@
-<div id="messages">
-  <ul>
-    <li *ngFor="let module of moduleArray">
-      {{module.id}}
-      <button (click)="onDelete(msg)">X</button>
-    </li>
-  </ul>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" position="end" [opened]="opened" role="region">
+    <mat-toolbar>
+      <h2>Chat</h2>
+      <span class="placeholder"></span>
+      <button mat-icon-button (click)="sidenav.close()"><mat-icon>close</mat-icon></button>
+    </mat-toolbar>
+    <mat-list id="messages">
+      <mat-list-item *ngFor="let module of moduleArray">
+        <span>{{module.id}}</span>
+        <span class="placeholder"></span>
+        <button mat-icon-button (click)="onDelete(module)"><mat-icon>delete</mat-icon></button>
+        <mat-divider [inset]="true"></mat-divider>
+      </mat-list-item>
+    </mat-list>
+<div class="stick-to-bottom">
+<input matInput id="input" #msg autocomplete="off"/>
+<button mat-stroked-button (click)="onSend(msg.value)">Send</button>
+<button mat-stroked-button (click)="loadDB()">Load Chat</button>
+<button mat-stroked-button (click)="onEdit(object)">Edit Module</button>
+<button mat-stroked-button (click)="canvasmoduleservice.moduleCreate()">New Module</button>
 </div>
-<input id="input" #msg autocomplete="off"/>
-<button (click)="onSend(msg.value)">Send</button>
-
-<button (click)="loadDB()">Load Chat</button>
-
-<button (click)="onEdit(object)">Edit Module</button>
-
-<button (click)="canvasmoduleservice.moduleCreate()">New Module</button>
+  </mat-sidenav>
+  <mat-sidenav-content role="main">
+    <mat-toolbar color="primary">
+      <span>Gowörgingbladdform</span>
+      <span class="placeholder"></span>
+      <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>chat</mat-icon></button>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
