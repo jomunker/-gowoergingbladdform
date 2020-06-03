@@ -22,24 +22,15 @@ export class RootComponent implements OnInit {
   moduleArray = [];
   socket = io()
 
-  object:CanvasModule = {
-    _id: "1",
-    idHTML: 4,
-    type: "4",
-    position: {x: 0,y: 0,width: 0,height:0},
-    content: "4",
-  }
-
   constructor(private http: HttpClient, public canvasmoduleservice: CanvasModuleService) {
   }
 
   ngOnInit() {
-    //wenn eine socket-Nachricht reinkommt..
+
     this.socket.on('chat message', (msg) => {
       this.moduleArray.push(msg);
     });
 
-    // if socket recieves a edited object
     this.socket.on('module edited', (moduleEdit) => {
       // search and replace the edited object in the modules array
 
@@ -53,7 +44,6 @@ export class RootComponent implements OnInit {
       }
     });
 
-    //when any other client provokes a delete
     this.socket.on('delete', (object) => {
       //find the object to delete, if its exists delete it from the array
 
@@ -71,22 +61,12 @@ export class RootComponent implements OnInit {
 
   //when this client pushes a message
   onSend(msg: string) {
-    this.socket.emit('chat message', (msg));
+    this.canvasmoduleservice.moduleCreate(msg);
 
     //clear the input field
     const input: any = document.getElementById("input")
     input.value = "";
   }
-
-  //when this client provokes a delete
-  onDelete(msg) {
-    this.canvasmoduleservice.moduleDelete(msg);
-  }
-
-  onEdit(msg) {
-    this.canvasmoduleservice.editModule(msg);
-  }
-
 
   loadDB() {
     const option = {
@@ -97,7 +77,7 @@ export class RootComponent implements OnInit {
     }
 
     this.http.post('/api/all',option).subscribe(response => {
-      //type change object(which is an array acutally) -> any
+      //type change object(which is an array actually) -> any
       let data: any = response;
       let newDisplayedArray: Array<String> = [];
 

@@ -17,15 +17,14 @@ db.loadDatabase();
 
 io.on('connection', (socket) => {
 
-    socket.on('chat message', (msg) => {
-        db.insert({'message': msg}, (err, newDoc) => {
-            io.emit('chat message', newDoc);
-        });
-        console.log('add: ' + msg);
-    });
-
     socket.on('module edited', (object) => {
-        db.update({ id: object.id }, {id: object.id, idHTML: object.idHTML, type: object.type, position: object.position, content: object.content}, { upsert: true }, function (err, numReplaced) {
+        db.update({id: object.id}, {
+            _id: object._id,
+            idHTML: object.idHTML,
+            type: object.type,
+            position: object.position,
+            content: object.content
+        }, {upsert: true}, function (err, numReplaced) {
         });
         console.log(object);
         io.emit('module edited', object);
@@ -34,15 +33,22 @@ io.on('connection', (socket) => {
 
     socket.on('delete', (object) => {
         console.log('delete: ' + JSON.stringify(object))
-        db.remove({ _id: object._id }, {}, function (err, numRemoved) {
-        });
+        db.remove({ _id: object._id }, {}, (err, numRemoved) => {});
         io.emit('delete', object);
     });
 
     socket.on('new object', (obj) => {
-        db.insert({id: obj._id, idHTML: obj.idHTML, type: obj.type, position: obj.position, content: obj.content}, (err, newDoc) => {});
-        console.log('new object: ' + obj);
-        io.emit('new object', obj);
+        db.insert({
+            _id: obj._id,
+            idHTML: obj.idHTML,
+            type: obj.type,
+            position: obj.position,
+            content: obj.content
+        }, (err, newDoc) => {
+            console.log('new object: ' + JSON.stringify(newDoc));
+            //display it in the chat
+            io.emit('chat message', newDoc);
+        });
     });
 });
 // -- API --
