@@ -1,1 +1,20 @@
-<p>chat works!</p>
+<mat-toolbar>
+    <h2>Chat</h2>
+    <span class="placeholder"></span>
+    <button mat-icon-button (click)="rootComponent.opened=!rootComponent.opened"><mat-icon>close</mat-icon></button>
+  </mat-toolbar>
+  <mat-list id="messages">
+    <mat-list-item *ngFor="let module of moduleArray">
+      <span>{{module.content}}</span>
+      <span class="placeholder"></span>
+      <button mat-icon-button (click)="canvasmoduleservice.moduleDelete(module)"><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button (click)="canvasmoduleservice.moduleEdit(module)"><mat-icon>edit</mat-icon></button>
+      <mat-divider [inset]="true"></mat-divider>
+    </mat-list-item>
+  </mat-list>
+
+<div class="stick-to-bottom">
+    <input matInput id="input" #msg autocomplete="off"/>
+    <button mat-stroked-button (click)="onSend(msg.value)">Send</button>
+    <button mat-stroked-button (click)="loadDB()">Load Chat</button>
+</div>
