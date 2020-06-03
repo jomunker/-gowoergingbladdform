@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 declare function io(): any;
 
-import { CanvasModule } from '../interfaces/canvasModule';
+import { CanvasModule } from '../../interfaces/canvasModule';
 
 
 @Injectable({

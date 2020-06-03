@@ -7,6 +7,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatInputModule} from '@angular/material/input';
 
+
+import {DragDropModule} from '@angular/cdk/drag-drop';
 //Centralizing all imports from Angular Material
 
 @NgModule({
@@ -17,7 +19,8 @@ import {MatInputModule} from '@angular/material/input';
     MatListModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatInputModule
+    MatInputModule,
+    DragDropModule
   ],
   exports: [
     MatSidenavModule,
@@ -26,7 +29,8 @@ import {MatInputModule} from '@angular/material/input';
     MatListModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatInputModule
+    MatInputModule,
+    DragDropModule
   ]
 })
 
