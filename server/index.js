@@ -18,7 +18,7 @@ db.loadDatabase();
 io.on('connection', (socket) => {
 
     socket.on('module edited', (object) => {
-        db.update({id: object.id}, {
+        db.update({_id: object._id}, {
             _id: object._id,
             idHTML: object.idHTML,
             type: object.type,

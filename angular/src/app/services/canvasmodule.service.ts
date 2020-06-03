@@ -30,7 +30,9 @@ export class CanvasModuleService {
     this.socket.emit('new object', obj);
   }
 
-  moduleEdit(object) {
+  moduleEdit(object: CanvasModule) {
+    object.content = object.content + " - edited"
+    console.log(object)
     this.socket.emit('module edited', (object));
   }
 
