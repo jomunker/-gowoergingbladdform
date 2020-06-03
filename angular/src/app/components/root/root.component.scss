@@ -1,36 +1,70 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.placeholder {
+  flex: 1 1 auto;
+}
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  height: 100vh;
+
+}
+mat-sidenav{
+  width: 400px;
+  border-right: 4px solid #757575;
 }
 
-body {
-  font: 13px Helvetica, Arial;
+.stick-to-bottom{
+  position: fixed;
+  bottom: 0;
+  padding: 10px; 
 }
 
 input {
-  border: 1px solid black;
-  padding: 10px;
-  margin-right: 0.5%;
+  padding: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #b5b5b5;
+  border-radius: 5px;
 }
 
-button {
-  width: 9%;
-  background: rgb(130, 224, 255);
-  border: none;
-  padding: 10px;
+#messages{
+  padding: 15px;
 }
 
-#messages {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+#tools-container{
+  z-index: 99;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  align-content: space-around;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 5px;
+  position: absolute;
+  top: 100px; 
+  left: 20px;
 }
 
-#messages li {
-  padding: 5px 10px;
+
+.example-box {
+  width: 200px;
+  height: 200px;
+  border: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  cursor: move;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #fff;
+  border-radius: 4px;
+  position: relative;
+  z-index: 0;
+  transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+              0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
-#messages li:nth-child(odd) {
-  background: #eee;
+.example-box:active {
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }

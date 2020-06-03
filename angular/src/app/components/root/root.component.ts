@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {ArrayChecksService} from '../../services/array-checks.service';
-import {CanvasModuleService} from '../../services/canvasmodule.service';
+import {ArrayChecksService} from '../../services/array-checks/array-checks.service';
+import {CanvasModuleService} from '../../services/canvasmodule/canvasmodule.service';
 import {CanvasModule} from '../../interfaces/canvasModule';
 
 declare function io(): any;
@@ -18,6 +18,8 @@ interface EntryObject {
 })
 
 export class RootComponent implements OnInit {
+  opened = false;
+  
   title = 'coworkingplatform';
   moduleArray = [];
   socket = io()

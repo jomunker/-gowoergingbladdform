@@ -1,3 +1,49 @@
+<!-- <mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" position="end" [opened]="opened" role="region">
+    <mat-toolbar>
+      <h2>Chat</h2>
+      <span class="placeholder"></span>
+      <button mat-icon-button (click)="sidenav.close()"><mat-icon>close</mat-icon></button>
+    </mat-toolbar>
+    <mat-list id="messages">
+      <mat-list-item *ngFor="let module of moduleArray">
+        <span>{{module.id}}</span>
+        <span class="placeholder"></span>
+        <button mat-icon-button (click)="onDelete(module)"><mat-icon>delete</mat-icon></button>
+        <mat-divider [inset]="true"></mat-divider>
+      </mat-list-item>
+    </mat-list>
+<div class="stick-to-bottom">
+<input matInput id="input" #msg autocomplete="off"/>
+<button mat-stroked-button (click)="onSend(msg.value)">Send</button>
+<button mat-stroked-button (click)="loadDB()">Load Chat</button>
+<button mat-stroked-button (click)="onEdit(object)">Edit Module</button>
+<button mat-stroked-button (click)="canvasmoduleservice.moduleCreate()">New Module</button>
+</div>
+  </mat-sidenav>
+
+  <mat-sidenav-content role="main">
+    <mat-toolbar color="primary">
+      <span>Gowörgingbladdform</span>
+      <span class="placeholder"></span>
+      <button mat-icon-button aria-label="Show Chat" (click)="sidenav.toggle()"><mat-icon>chat</mat-icon></button>
+    </mat-toolbar>
+
+    <div class="example-box" cdkDrag>
+      Drag me around
+    </div>
+
+    <div id="tools-container" class="mat-elevation-z2">
+      <button mat-icon-button aria-label="Move"><mat-icon>open_with_icon</mat-icon></button>
+      <button mat-icon-button aria-label="Add Text"><mat-icon>title</mat-icon></button>
+      <button mat-icon-button aria-label="Add List"><mat-icon>format_list_bulleted</mat-icon></button>
+      <button mat-icon-button aria-label="Add Sticky"><mat-icon>crop_square</mat-icon></button>
+
+    </div>  
+  </mat-sidenav-content>
+</mat-sidenav-container> -->
+
+
 <div id="messages">
   <ul>
     <li *ngFor="let module of moduleArray">
