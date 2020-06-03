@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {ArrayChecksService} from '../services/array-checks.service';
-import {CanvasModuleService} from '../services/canvasmodule.service';
-import {CanvasModule} from '../interfaces/canvasmodule';
+import {ArrayChecksService} from '../../services/array-checks.service';
+import {CanvasModuleService} from '../../services/canvasmodule.service';
+import {CanvasModule} from '../../interfaces/canvasModule';
 
 declare function io(): any;
 
