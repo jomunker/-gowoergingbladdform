@@ -6,12 +6,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HttpClientModule} from "@angular/common/http";
 import { RootComponent } from './components/root/root.component';
 import { CanvasComponent } from './components/canvas/canvas.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 
 @NgModule({
   declarations: [
     RootComponent,
-    CanvasComponent
+    CanvasComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
