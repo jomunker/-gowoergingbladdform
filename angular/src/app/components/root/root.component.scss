@@ -1,36 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+  height: 100vh;
 }
-
-body {
-  font: 13px Helvetica, Arial;
-}
-
-input {
-  border: 1px solid black;
-  padding: 10px;
-  margin-right: 0.5%;
-}
-
-button {
-  width: 9%;
-  background: rgb(130, 224, 255);
-  border: none;
-  padding: 10px;
-}
-
-#messages {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-#messages li {
-  padding: 5px 10px;
-}
-
-#messages li:nth-child(odd) {
-  background: #eee;
+mat-sidenav{
+  width: 400px;
+  border-right: 4px solid #757575;
 }

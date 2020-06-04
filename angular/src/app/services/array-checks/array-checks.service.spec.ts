@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ArrayChecksService } from './array-checks.service';
-import {CanvasModule} from "../interfaces/canvasModule";
+import {CanvasModule} from "../../interfaces/canvasModule";
 
 describe('ArrayChecksService', () => {
   let service: ArrayChecksService;

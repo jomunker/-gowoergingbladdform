@@ -1,14 +1,12 @@
-<div id="messages">
-  <ul>
-    <li *ngFor="let module of moduleArray">
-      {{module.content}}
-      <button (click)="canvasmoduleservice.moduleDelete(module)">X</button>
-      <button (click)="canvasmoduleservice.moduleEdit(module)">Edit Module</button>
-    </li>
-  </ul>
-</div>
-<input id="input" #msg autocomplete="off"/>
-<button (click)="onSend(msg.value)">Send</button>
-
-<button (click)="loadDB()">Load Chat</button>
-
+<mat-sidenav-container>
+  <!-- Chat -->
+  <mat-sidenav #sidenav mode="side" position="end" [opened]="opened" role="region">
+    <app-chat></app-chat>
+  </mat-sidenav>
+  <!-- Main Content -->
+  <mat-sidenav-content role="main">
+    <app-header></app-header>
+    <app-canvas></app-canvas>
+    <app-toolbar></app-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>

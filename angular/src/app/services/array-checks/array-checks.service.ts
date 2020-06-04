@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {CanvasModule} from "../interfaces/canvasModule";
+import {CanvasModule} from "../../interfaces/canvasModule";
 
 @Injectable({
   providedIn: 'root'
