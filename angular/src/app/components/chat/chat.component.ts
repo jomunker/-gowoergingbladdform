@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import { RootComponent } from '../root/root.component';
+import {RootComponent} from '../root/root.component';
 import {ChatService} from "../../services/chat/chat.service";
+import {ChatMsg} from "../../interfaces/chat-message";
 
 declare function io(): any;
 
@@ -12,46 +13,39 @@ declare function io(): any;
 })
 export class ChatComponent implements OnInit {
   opened = false;
-
-  title = 'coworkingplatform';
   socket = io()
 
-  constructor( public chatService: ChatService, public rootComponent: RootComponent) {
+  constructor(public chatService: ChatService, public rootComponent: RootComponent) {
   }
 
-    ngOnInit() {
+  ngOnInit() {
 
-      this.socket.on('new chat message', (msg) => {
-        this.chatService.recordPush(msg)
-      });
-
-
-      /*this.socket.on('delete', (object) => {
-        //find the object to delete, if its exists delete it from the array
-
-        // @ts-ignore
-        const deleteObject: EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, object)
-
-        if (deleteObject.exists){
-          this.moduleArray.splice(deleteObject.position, 1)
-        } else {
-          console.log(JSON.stringify(object) + "can not be deleted")
-        }
-      });*/
-    }
+    this.socket.on('new chat message', (msg) => {
+      this.chatService.chatRecordPush(msg)
+    });
 
 
-    //when this client pushes a message
-    onSend(msg: string) {
-      this.chatService.msgCreate(msg);
+    this.socket.on('delete chat message', (object) => {
+      //find the object to delete, if its exists delete it from the array
+      this.chatService.chatRecordSplice(object)
+    });
+  }
 
-      //clear the input field
-      const input: any = document.getElementById("input")
-      input.value = "";
-    }
 
-    loadDB() {
-      this.chatService.getChat();
-    }
+  onSend(msg: string) {
+    this.chatService.msgCreate(msg);
+
+    //clear the input field
+    const input: any = document.getElementById("input")
+    input.value = "";
+  }
+
+  onDelete(msg: ChatMsg) {
+    this.chatService.msgDelete(msg);
+  }
+
+  loadDB() {
+    this.chatService.getChat();
+  }
 
 }

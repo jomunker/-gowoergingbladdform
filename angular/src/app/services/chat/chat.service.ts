@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import {CanvasModule} from "../../interfaces/canvasModule";
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {ChatMsg} from "../../interfaces/chat-message"
+
 declare function io(): any;
 
 @Injectable({
@@ -8,31 +9,37 @@ declare function io(): any;
 })
 export class ChatService {
   socket = io();
-  chatRecord:Array<any> = [];
-  constructor(private http: HttpClient,) { }
+  chatRecord: Array<ChatMsg> = [];
+
+  constructor(private http: HttpClient,) {
+  }
 
   msgCreate(content: string): void {
-    const obj: CanvasModule = {
+    const obj: ChatMsg = {
       _id: undefined, //defined from database
-      idHTML: 1,
-      type: 'type',
-      position: {
-        x: 1,
-        y: 1,
-        width: 1,
-        height: 1
-      },
-      content: content,
+      message: content,
     };
 
     this.socket.emit('new chat message', obj);
   }
 
-  recordPush(msg){
+  msgDelete(msg: ChatMsg) {
+    this.socket.emit('delete chat message', msg);
+  }
+
+  chatRecordPush(msg) {
     this.chatRecord.push(msg);
   }
 
-  getChat(){
+  chatRecordSplice(msg) {
+    for (let i = 0; i < this.chatRecord.length; i++) {
+      if (this.chatRecord[i]._id == msg._id) {
+        this.chatRecord.splice(i, 1);
+      }
+    }
+  }
+
+  getChat() {
     const option = {
       method: 'POST',
       headers: {
@@ -40,13 +47,13 @@ export class ChatService {
       }
     }
 
-    this.http.post('/api/chat',option).subscribe(response => {
+    this.http.post('/api/chat', option).subscribe(response => {
       //type change object(which is an array actually) -> any
       let data: any = response;
-      let newDisplayedArray: Array<String> = [];
+      let newDisplayedArray: Array<ChatMsg> = [];
 
       //go to the whole array and split each item into these two new Arrays
-      for(let i = 0; i < data.length ;i++ ){
+      for (let i = 0; i < data.length; i++) {
         newDisplayedArray.push(data[i]);
       }
       this.chatRecord = newDisplayedArray;

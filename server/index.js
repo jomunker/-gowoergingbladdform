@@ -56,15 +56,17 @@ io.on('connection', (socket) => {
     socket.on('new chat message', (obj) => {
         chatdb.insert({
             _id: obj._id,
-            idHTML: obj.idHTML,
-            type: obj.type,
-            position: obj.position,
-            content: obj.content
+            message: obj.message
         }, (err, newDoc) => {
             console.log('new object: ' + JSON.stringify(newDoc));
             //display it in the chat
             io.emit('new chat message', newDoc);
         });
+    });
+
+    socket.on('delete chat message', (obj) => {
+        chatdb.remove({ _id: obj._id }, {}, (err, numRemoved) => {});
+        io.emit('delete chat message', obj);
     });
 });
 // -- API --

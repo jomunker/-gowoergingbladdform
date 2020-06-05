@@ -12,6 +12,6 @@
 .history/
 
 server/node_modules/
-server/database.db
+server/*.db
 server/package-lock.json
 /dist/

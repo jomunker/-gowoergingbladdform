@@ -5,10 +5,9 @@
   </mat-toolbar>
   <mat-list id="messages">
     <mat-list-item *ngFor="let module of chatService.chatRecord">
-      <span>{{module.content}}</span>
+      <span>{{module.message}}</span>
       <span class="placeholder"></span>
-      <button mat-icon-button ><mat-icon>delete</mat-icon></button>
-      <button mat-icon-button ><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button (click)="onDelete(module)"><mat-icon>delete</mat-icon></button>
       <mat-divider [inset]="true"></mat-divider>
     </mat-list-item>
   </mat-list>
