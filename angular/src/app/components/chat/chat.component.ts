@@ -29,11 +29,14 @@ export class ChatComponent implements OnInit {
   }
 
   onSend(msg: string) {
-    this.chatService.msgCreate(msg);
+    if (msg != ""){
+      this.chatService.msgCreate(msg);
 
-    //clear the input field
-    const input: any = document.getElementById("input")
-    input.value = "";
+      //clear the input field
+      const input: any = document.getElementById("input")
+      input.value = "";
+    }
+
   }
 
   onDelete(msg: ChatMsg) {

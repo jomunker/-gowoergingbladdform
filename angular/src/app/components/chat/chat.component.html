@@ -3,6 +3,8 @@
     <span class="placeholder"></span>
     <button mat-icon-button (click)="rootComponent.opened=!rootComponent.opened"><mat-icon>close</mat-icon></button>
   </mat-toolbar>
+
+<div class="scroll">
   <mat-list id="messages">
     <mat-list-item *ngFor="let module of chatService.chatRecord">
       <span>{{module.message}}</span>
@@ -10,9 +12,13 @@
       <button mat-icon-button (click)="onDelete(module)"><mat-icon>delete</mat-icon></button>
       <mat-divider [inset]="true"></mat-divider>
     </mat-list-item>
-  </mat-list>
 
-<div class="stick-to-bottom">
+  </mat-list>
+</div>
+
+<mat-toolbar>
+  <div class="">
     <input matInput id="input" #msg autocomplete="off"/>
     <button mat-stroked-button (click)="onSend(msg.value)">Send</button>
-</div>
+  </div>
+</mat-toolbar>
