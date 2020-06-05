@@ -15,22 +15,18 @@ export class ChatComponent implements OnInit {
   opened = false;
   socket = io()
 
-  constructor(public chatService: ChatService, public rootComponent: RootComponent) {
-  }
+  constructor(public chatService: ChatService, public rootComponent: RootComponent) {}
 
   ngOnInit() {
-
     this.socket.on('new chat message', (msg) => {
       this.chatService.chatRecordPush(msg)
     });
-
 
     this.socket.on('delete chat message', (object) => {
       //find the object to delete, if its exists delete it from the array
       this.chatService.chatRecordSplice(object)
     });
   }
-
 
   onSend(msg: string) {
     this.chatService.msgCreate(msg);

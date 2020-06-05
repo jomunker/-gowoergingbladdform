@@ -11,10 +11,10 @@ export class ChatService {
   socket = io();
   chatRecord: Array<ChatMsg> = [];
 
-  constructor(private http: HttpClient,) {
-  }
+  constructor(private http: HttpClient) {}
 
   msgCreate(content: string): void {
+    //creates and spreads the new chat message
     const obj: ChatMsg = {
       _id: undefined, //defined from database
       message: content,
@@ -24,14 +24,17 @@ export class ChatService {
   }
 
   msgDelete(msg: ChatMsg) {
+    // spreads to dele message
     this.socket.emit('delete chat message', msg);
   }
 
   chatRecordPush(msg) {
+    //adds another message to the chatRecord
     this.chatRecord.push(msg);
   }
 
   chatRecordSplice(msg) {
+    //finds and deletes the chat message of the chatRecord
     for (let i = 0; i < this.chatRecord.length; i++) {
       if (this.chatRecord[i]._id == msg._id) {
         this.chatRecord.splice(i, 1);
@@ -40,6 +43,7 @@ export class ChatService {
   }
 
   getChat() {
+    //loads the chatRecord via API-Call of the database
     const option = {
       method: 'POST',
       headers: {
