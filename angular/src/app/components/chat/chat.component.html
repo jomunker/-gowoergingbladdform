@@ -4,11 +4,11 @@
     <button mat-icon-button (click)="rootComponent.opened=!rootComponent.opened"><mat-icon>close</mat-icon></button>
   </mat-toolbar>
   <mat-list id="messages">
-    <mat-list-item *ngFor="let module of moduleArray">
+    <mat-list-item *ngFor="let module of chatService.chatRecord">
       <span>{{module.content}}</span>
       <span class="placeholder"></span>
-      <button mat-icon-button (click)="canvasmoduleservice.moduleDelete(module)"><mat-icon>delete</mat-icon></button>
-      <button mat-icon-button (click)="canvasmoduleservice.moduleEdit(module)"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button ><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button ><mat-icon>edit</mat-icon></button>
       <mat-divider [inset]="true"></mat-divider>
     </mat-list-item>
   </mat-list>

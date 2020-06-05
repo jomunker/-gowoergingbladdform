@@ -13,7 +13,9 @@ http.listen(3000, () => {
 //NeDB
 const Database = require('nedb');
 const db = new Database({filename: 'database.db', timestampData: true} );
+const chatdb = new Database({filename: 'chat.db', timestampData: true} );
 db.loadDatabase();
+chatdb.loadDatabase();
 
 io.on('connection', (socket) => {
 
@@ -50,6 +52,20 @@ io.on('connection', (socket) => {
             io.emit('chat message', newDoc);
         });
     });
+
+    socket.on('new chat message', (obj) => {
+        chatdb.insert({
+            _id: obj._id,
+            idHTML: obj.idHTML,
+            type: obj.type,
+            position: obj.position,
+            content: obj.content
+        }, (err, newDoc) => {
+            console.log('new object: ' + JSON.stringify(newDoc));
+            //display it in the chat
+            io.emit('new chat message', newDoc);
+        });
+    });
 });
 // -- API --
 //bodyParser for receiving data via POST request
@@ -57,8 +73,8 @@ app.use(bodyParser.json());
 
 
 //API
-app.post('/api/all', function (req, res) {
-    db.find({}).sort({createdAt: 1}).exec((err, data) => {
+app.post('/api/chat', function (req, res) {
+    chatdb.find({}).sort({createdAt: 1}).exec((err, data) => {
         if (err) {
             res.end();
             return;
@@ -66,3 +82,4 @@ app.post('/api/all', function (req, res) {
         res.json(data);
     });
 })
+
