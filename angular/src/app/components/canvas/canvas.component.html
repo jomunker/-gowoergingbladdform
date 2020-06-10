@@ -1,14 +1,20 @@
 <div onload="canvasmoduleservice.loadDB()">
-  <ng-container *ngFor="let module of canvasmoduleservice.moduleArray">
+  <div >
+    <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
 
-    <div cdkDrag *ngIf="module.type == 'doc'" [class]="module.type">
-      <textarea [(ngModel)]='module.content' (keyup)="canvasmoduleservice.moduleEdit(module)"
-        placeholder='Write something...'></textarea>
-      <!-- <button (click)="canvasmoduleservice.moduleDelete(canvasmoduleservice.msg)">X</button> -->
-      <button mat-icon-button (click)="canvasmoduleservice.moduleDelete(module)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
+      <div cdkDrag [cdkDragFreeDragPosition]="module.position" (cdkDragEnded)="dragEnd($event, module)"
+        *ngIf="module.type == 'doc'" [class]="module.type">
+        <textarea [(ngModel)]='module.content' (keyup)="canvasmoduleservice.moduleEdit(module)"
+          placeholder='Write something...'></textarea>
+        <!-- <button (click)="canvasmoduleservice.moduleDelete(canvasmoduleservice.msg)">X</button> -->
+        <button mat-icon-button (click)="canvasmoduleservice.moduleDelete(module)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
 
-  </ng-container>
+    </ng-container>
+  </div>
+  <!-- <div *ngFor="let module of canvasmoduleservice.moduleArray">
+    <h2> {{ module.content }}</h2>
+  </div> -->
 </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CanvasModule } from 'src/app/interfaces/canvasModule';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
 import { ArrayChecksService } from '../../services/array-checks/array-checks.service';
+import { CdkDragDrop, CdkDragEnd } from '@angular/cdk/drag-drop';
 
 declare function io(): any;
 
@@ -14,6 +15,8 @@ declare function io(): any;
 export class CanvasComponent implements OnInit {
 
   socket = io();
+
+  public string: String[] = [];
 
   // canvasmodule: CanvasModule = {
   //   _id: "1",
@@ -28,6 +31,7 @@ export class CanvasComponent implements OnInit {
 
   constructor(public canvasmoduleservice: CanvasModuleService) { }
 
+
   ngOnInit() {
 
     this.socket.on('edited', (moduleEdit) => {
@@ -41,11 +45,15 @@ export class CanvasComponent implements OnInit {
     });
   }
 
-  editDoc(object) {
-    
-    this.canvasmoduleservice.moduleEdit(object);
+  // catches drag-event and updates the modules' position on the canvas
+  dragEnd(event: CdkDragEnd, module) {
+    console.log(event);
+
+    module.position.x += event.distance.x;
+    module.position.y += event.distance.y;
+    this.canvasmoduleservice.moduleEdit(module);
   }
 
-  
+
 
 }
