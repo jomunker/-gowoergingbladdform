@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CanvasModule } from 'src/app/interfaces/canvasModule';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
+import { ArrayChecksService } from '../../services/array-checks/array-checks.service';
 
 declare function io(): any;
+
 
 @Component({
   selector: 'app-canvas',
@@ -28,24 +30,20 @@ export class CanvasComponent implements OnInit {
 
   ngOnInit() {
 
-    this.socket.on('module edited', (moduleEdit) => {
-      // search and replace the edited object in the modules array
+    this.socket.on('edited', (moduleEdit) => {
+      this.canvasmoduleservice.moduleArrayEdit(moduleEdit);
+      console.log("Module edited.");
+    });
 
-      // @ts-ignore
-      const replaceObject : EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, moduleEdit)
-
-      if (replaceObject.exists) {
-        this.canvasmoduleservice.moduleArray.splice(replaceObject.position, 1, moduleEdit)
-      } else {
-        console.log(JSON.stringify(moduleEdit) + "can not be edited")
-      }
-      
-
+    this.socket.on('deleteModule', (object) => {
+      this.canvasmoduleservice.moduleArrayDelete(object);
+      console.log("Module deleted.");
     });
   }
 
-  editDoc(module) {
-    this.canvasmoduleservice.moduleEdit(module);
+  editDoc(object) {
+    
+    this.canvasmoduleservice.moduleEdit(object);
   }
 
   

@@ -29,35 +29,35 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
 
-    this.socket.on('chat message', (msg) => {
-      this.moduleArray.push(msg);
-    });
+    // this.socket.on('chat message', (msg) => {
+    //   this.moduleArray.push(msg);
+    // });
 
-    this.socket.on('module edited', (moduleEdit) => {
-      // search and replace the edited object in the modules array
+    // this.socket.on('module edited', (moduleEdit) => {
+    //   // search and replace the edited object in the modules array
 
-      // @ts-ignore
-      const replaceObject: EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, moduleEdit)
+    //   // @ts-ignore
+    //   const replaceObject: EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, moduleEdit)
 
-      if (replaceObject.exists) {
-        this.moduleArray.splice(replaceObject.position, 1, moduleEdit)
-      } else {
-        console.log(JSON.stringify(moduleEdit) + "can not be edited")
-      }
-    });
+    //   if (replaceObject.exists) {
+    //     this.moduleArray.splice(replaceObject.position, 1, moduleEdit)
+    //   } else {
+    //     console.log(JSON.stringify(moduleEdit) + "can not be edited")
+    //   }
+    // });
 
-    this.socket.on('delete', (object) => {
-      //find the object to delete, if its exists delete it from the array
+    // this.socket.on('delete', (object) => {
+    //   //find the object to delete, if its exists delete it from the array
 
-      // @ts-ignore
-      const deleteObject: EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, object)
+    //   // @ts-ignore
+    //   const deleteObject: EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, object)
 
-      if (deleteObject.exists) {
-        this.moduleArray.splice(deleteObject.position, 1)
-      } else {
-        console.log(JSON.stringify(object) + "can not be deleted")
-      }
-    });
+    //   if (deleteObject.exists) {
+    //     this.moduleArray.splice(deleteObject.position, 1)
+    //   } else {
+    //     console.log(JSON.stringify(object) + "can not be deleted")
+    //   }
+    // });
   }
 
 

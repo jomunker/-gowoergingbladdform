@@ -17,24 +17,26 @@ db.loadDatabase();
 
 io.on('connection', (socket) => {
 
-    socket.on('module edited', (object) => {
-        db.update({_id: object._id}, {
-            _id: object._id,
-            idHTML: object.idHTML,
-            type: object.type,
-            position: object.position,
-            content: object.content
+    socket.on('module edited', (edit) => {
+
+        db.update({_id: edit._id}, {
+            _id: edit._id,
+            idHTML: edit.idHTML,
+            type: edit.type,
+            position: edit.position,
+            content: edit.content
         }, {upsert: true}, function (err, numReplaced) {
         });
-        console.log(object);
-        io.emit('module edited', object);
+
+        console.log(edit);
+        io.emit('edited', edit);
     });
 
 
     socket.on('delete', (object) => {
         console.log('delete: ' + JSON.stringify(object))
         db.remove({ _id: object._id }, {}, (err, numRemoved) => {});
-        io.emit('delete', object);
+        io.emit('deleteModule', object);
     });
 
     socket.on('new object', (obj) => {
@@ -47,7 +49,7 @@ io.on('connection', (socket) => {
         }, (err, newDoc) => {
             console.log('new object: ' + JSON.stringify(newDoc));
             //display it in the chat
-            io.emit('chat message', newDoc);
+            io.emit('new doc', newDoc);
         });
     });
 });
@@ -57,7 +59,7 @@ app.use(bodyParser.json());
 
 
 //API
-app.post('/api/all', function (req, res) {
+app.post('/api/modules', function (req, res) {
     db.find({}).sort({createdAt: 1}).exec((err, data) => {
         if (err) {
             res.end();

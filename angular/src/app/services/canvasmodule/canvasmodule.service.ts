@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class CanvasModuleService {
   socket = io();
 
-  public moduleArray = [];
+  moduleArray: Array<CanvasModule> = [];
 
   constructor(private http: HttpClient) {
     this.loadDB();
@@ -23,38 +23,41 @@ export class CanvasModuleService {
       this.moduleArray.push(module);
     });
 
-    // this.socket.on('module edited', (moduleEdit) => {
-    //   // search and replace the edited object in the modules array
+    // this.socket.on('edited', (edit) => {
+    //   console.log("Module edited");
 
-    //   // @ts-ignore
-    //   const replaceObject : EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, moduleEdit)
-
-    //   if (replaceObject.exists) {
-    //     this.moduleArray.splice(replaceObject.position, 1, moduleEdit)
-    //   } else {
-    //     console.log(JSON.stringify(moduleEdit) + "can not be edited")
-    //   }
+    //   // for (let i = 0; i < this.moduleArray.length; i++) {
+    //   //   const module = this.moduleArray[i];
+    //   //   console.log(module);
+    //   //   if (module.id == edit.id) {
+    //   //     console.log(module.id)
+    //   //     this.moduleArray.splice(i, 1, edit);
+    //   //   }
+    //   // }
     // });
 
-    this.socket.on('delete', (moduleDelete) => {
-      //find the object to delete, if its exists delete it from the array
+    // this.socket.on('deleteModule', (moduleDelete) => {
 
-      // @ts-ignore
-      const deleteObject: EntryObject = ArrayChecksService.checkIfEntriesExists(this.moduleArray, object)
+    //   console.log("Deleted");
 
-      if (deleteObject.exists){
-        this.moduleArray.splice(deleteObject.position, 1)
-      } else {
-        console.log(JSON.stringify(moduleDelete) + "can not be deleted")
-      }
-    });
+    //   for (let i = 0; i < this.moduleArray.length; i++) {
+    //     const module = this.moduleArray[i];
+    //     console.log(module);
+    //     if (module.id == moduleDelete.id) {
+    //       console.log(module.id)
+    //       this.moduleArray.splice(i, 1);
+    //     } else {
+    //       console.log("can't be deleted");
+    //     }
+    //   }
+    // });
   }
 
   moduleCreate(content: string): void {
     const obj: CanvasModule = {
       _id: undefined, //defined from database
       idHTML: 1,
-      type: 'type',
+      type: 'doc',
       position: {
         x: 1,
         y: 1,
@@ -67,10 +70,22 @@ export class CanvasModuleService {
     this.socket.emit('new object', obj);
   }
 
-  moduleEdit(object: CanvasModule) {
+  moduleEdit(object) {
     // object.content = object.content + " - edited"
-    console.log(object)
+
+    console.log(this.moduleArray);
     this.socket.emit('module edited', (object));
+  }
+
+  moduleArrayEdit(object) {
+    for (let i = 0; i < this.moduleArray.length; i++) {
+      const module = this.moduleArray[i];
+      if (module._id == object._id) {
+        console.log(object._id)
+        this.moduleArray.splice(i, 1, object);
+        console.log(this.moduleArray[i])
+      }
+    }
   }
 
   //when this client provokes a delete
@@ -78,8 +93,19 @@ export class CanvasModuleService {
     this.socket.emit('delete', (deleteObject));
   }
 
+  moduleArrayDelete(object) {
+    for (let i = 0; i < this.moduleArray.length; i++) {
+      const module = this.moduleArray[i];
+      console.log(module);
+      if (module._id == object._id) {
+        console.log(this.moduleArray[i]);
+        this.moduleArray.splice(i, 1);
+      }
+    }
+  }
+
   loadDB() {
-    console.log("DB loaded");
+
     const option = {
       method: 'POST',
       headers: {
@@ -87,17 +113,18 @@ export class CanvasModuleService {
       }
     }
 
-    this.http.post('/api/all',option).subscribe(response => {
+    this.http.post('/api/modules', option).subscribe(response => {
       //type change object(which is an array actually) -> any
       let data: any = response;
-      let newDisplayedArray: Array<String> = [];
+      let newDisplayedArray: Array<CanvasModule> = [];
 
       //go to the whole array and split each item into these two new Arrays
-      for(let i = 0; i < data.length ;i++ ){
+      for (let i = 0; i < data.length; i++) {
         newDisplayedArray.push(data[i]);
       }
       this.moduleArray = newDisplayedArray;
       console.log(this.moduleArray);
     });
+    console.log("DB loaded");
   }
 }
