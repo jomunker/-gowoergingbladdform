@@ -27,7 +27,7 @@ export class CanvasModuleService {
 
   // creates new module with type 'doc'
   moduleCreate(content: string): void {
-    const obj: CanvasModule = {
+    const module: CanvasModule = {
       _id: undefined, //defined from database
       idHTML: 1,
       type: 'doc',
@@ -39,8 +39,12 @@ export class CanvasModuleService {
       },
       content: content,
     };
-    console.log(obj);
-    this.socket.emit('new object', obj);
+    console.log(module);
+    this.socket.emit('new module', (module));
+  }
+
+  moduleArrayPush(module) {
+    this.moduleArray.push(module);
   }
 
   // emits 'module edited' to initiate the edit of a module

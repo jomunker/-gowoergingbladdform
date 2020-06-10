@@ -20,7 +20,12 @@ export class CanvasComponent implements OnInit {
 
 
   ngOnInit() {
-
+    // listens to socket event 'editModule' and replaces module from moduleArray
+    this.socket.on('new module', (newModule) => {
+      this.canvasmoduleservice.moduleArrayPush(newModule);
+      console.log("Module created.");
+    });
+    
     // listens to socket event 'editModule' and replaces module from moduleArray
     this.socket.on('editModule', (moduleEdit) => {
       this.canvasmoduleservice.moduleArrayEdit(moduleEdit);
