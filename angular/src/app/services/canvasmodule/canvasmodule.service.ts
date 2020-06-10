@@ -23,36 +23,9 @@ export class CanvasModuleService {
       this.moduleArray.push(module);
     });
 
-    // this.socket.on('edited', (edit) => {
-    //   console.log("Module edited");
-
-    //   // for (let i = 0; i < this.moduleArray.length; i++) {
-    //   //   const module = this.moduleArray[i];
-    //   //   console.log(module);
-    //   //   if (module.id == edit.id) {
-    //   //     console.log(module.id)
-    //   //     this.moduleArray.splice(i, 1, edit);
-    //   //   }
-    //   // }
-    // });
-
-    // this.socket.on('deleteModule', (moduleDelete) => {
-
-    //   console.log("Deleted");
-
-    //   for (let i = 0; i < this.moduleArray.length; i++) {
-    //     const module = this.moduleArray[i];
-    //     console.log(module);
-    //     if (module.id == moduleDelete.id) {
-    //       console.log(module.id)
-    //       this.moduleArray.splice(i, 1);
-    //     } else {
-    //       console.log("can't be deleted");
-    //     }
-    //   }
-    // });
   }
 
+  // creates new module with type 'doc'
   moduleCreate(content: string): void {
     const obj: CanvasModule = {
       _id: undefined, //defined from database
@@ -70,13 +43,13 @@ export class CanvasModuleService {
     this.socket.emit('new object', obj);
   }
 
+  // emits 'module edited' to initiate the edit of a module
   moduleEdit(object) {
-    // object.content = object.content + " - edited"
-
     console.log(this.moduleArray);
     this.socket.emit('module edited', (object));
   }
 
+  // replaces the module in moduleArray if module is edited
   moduleArrayEdit(object) {
     for (let i = 0; i < this.moduleArray.length; i++) {
       const module = this.moduleArray[i];
@@ -88,11 +61,12 @@ export class CanvasModuleService {
     }
   }
 
-  //when this client provokes a delete
+  // emits 'module deleted' to initiate the delete of a module
   moduleDelete(deleteObject) {
-    this.socket.emit('delete', (deleteObject));
+    this.socket.emit('module deleted', (deleteObject));
   }
 
+  // splices module in moduleArray if module is deleted
   moduleArrayDelete(object) {
     for (let i = 0; i < this.moduleArray.length; i++) {
       const module = this.moduleArray[i];
@@ -104,6 +78,7 @@ export class CanvasModuleService {
     }
   }
 
+  //loads module DB
   loadDB() {
 
     const option = {
@@ -114,11 +89,11 @@ export class CanvasModuleService {
     }
 
     this.http.post('/api/modules', option).subscribe(response => {
-      //type change object(which is an array actually) -> any
+      // type change object(which is an array actually) -> any
       let data: any = response;
       let newDisplayedArray: Array<CanvasModule> = [];
 
-      //go to the whole array and split each item into these two new Arrays
+      // go to the whole array and split each item into these two new Arrays
       for (let i = 0; i < data.length; i++) {
         newDisplayedArray.push(data[i]);
       }

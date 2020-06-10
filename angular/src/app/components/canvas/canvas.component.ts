@@ -16,29 +16,18 @@ export class CanvasComponent implements OnInit {
 
   socket = io();
 
-  public string: String[] = [];
-
-  // canvasmodule: CanvasModule = {
-  //   _id: "1",
-  //   idHTML: 4,
-  //   type: "doc",
-  //   position: { x: 0, y: 0, width: 0, height: 0 },
-  //   content: "4",
-  // }
-
-  // moduleArray = [this.canvasmodule];
-
-
   constructor(public canvasmoduleservice: CanvasModuleService) { }
 
 
   ngOnInit() {
 
-    this.socket.on('edited', (moduleEdit) => {
+    // listens to socket event 'editModule' and replaces module from moduleArray
+    this.socket.on('editModule', (moduleEdit) => {
       this.canvasmoduleservice.moduleArrayEdit(moduleEdit);
       console.log("Module edited.");
     });
 
+    // listens to socket event 'editModule' and splices module from modulesArray
     this.socket.on('deleteModule', (object) => {
       this.canvasmoduleservice.moduleArrayDelete(object);
       console.log("Module deleted.");
@@ -47,13 +36,10 @@ export class CanvasComponent implements OnInit {
 
   // catches drag-event and updates the modules' position on the canvas
   dragEnd(event: CdkDragEnd, module) {
-    console.log(event);
-
+    // console.log(event);
     module.position.x += event.distance.x;
     module.position.y += event.distance.y;
     this.canvasmoduleservice.moduleEdit(module);
   }
-
-
 
 }

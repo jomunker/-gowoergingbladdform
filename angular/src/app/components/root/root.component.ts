@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +9,7 @@ import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.
 export class RootComponent implements OnInit {
   opened = false;
 
-  constructor(public canvasmoduleservice: CanvasModuleService) {
+  constructor() {
   }
 
   ngOnInit(){

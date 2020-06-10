@@ -29,11 +29,11 @@ io.on('connection', (socket) => {
         });
 
         console.log(edit);
-        io.emit('edited', edit);
+        io.emit('editModule', edit);
     });
 
 
-    socket.on('delete', (object) => {
+    socket.on('module deleted', (object) => {
         console.log('delete: ' + JSON.stringify(object))
         db.remove({ _id: object._id }, {}, (err, numRemoved) => {});
         io.emit('deleteModule', object);
