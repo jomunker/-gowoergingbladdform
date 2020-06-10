@@ -63,7 +63,7 @@ export class ChatComponent implements OnInit {
 
   //when this client pushes a message
   onSend(msg: string) {
-    this.canvasmoduleservice.moduleCreate(msg);
+    //this.canvasmoduleservice.moduleCreate(msg);
 
     //clear the input field
     const input: any = document.getElementById("input")

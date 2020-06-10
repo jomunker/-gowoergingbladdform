@@ -26,11 +26,11 @@ export class CanvasModuleService {
   }
 
   // creates new module with type 'doc'
-  moduleCreate(content: string): void {
+  moduleCreate(content: string, type: string): void {
     const module: CanvasModule = {
-      _id: undefined, //defined from database
+      _id: undefined, // defined from database
       idHTML: 1,
-      type: 'doc',
+      type: type,
       position: {
         x: 1,
         y: 1,
