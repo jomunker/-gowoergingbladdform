@@ -49,6 +49,7 @@ export class CanvasModuleService {
 
   // emits 'module edited' to initiate the edit of a module
   moduleEdit(object) {
+    this.moduleArrayEdit(object);
     console.log(this.moduleArray);
     this.socket.emit('module edited', (object));
   }
@@ -58,9 +59,19 @@ export class CanvasModuleService {
     for (let i = 0; i < this.moduleArray.length; i++) {
       const module = this.moduleArray[i];
       if (module._id == object._id) {
-        console.log(object._id)
-        this.moduleArray.splice(i, 1, object);
-        console.log(this.moduleArray[i])
+        // checks if the content has changed
+        if (module.content != object.content) {
+          // console.log(module.content);
+          // console.log(object.content);
+          this.moduleArray.splice(i, 1, object);
+        }
+        // checks if the x or y position has changed
+        if (module.position.x != object.position.x || module.position.y != object.position.y) {
+          // console.log(module.position);
+          // console.log(object.position);
+          this.moduleArray.splice(i, 1, object);
+
+        } 
       }
     }
   }
