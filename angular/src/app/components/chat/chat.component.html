@@ -19,6 +19,6 @@
 <mat-toolbar>
   <div class="">
     <input matInput id="input" #msg autocomplete="off"/>
-    <button mat-stroked-button (click)="onSend(msg.value)">Send</button>
+    <button mat-flat-button class="send-button" (click)="onSend(msg.value)" color="primary">Send</button>
   </div>
 </mat-toolbar>
