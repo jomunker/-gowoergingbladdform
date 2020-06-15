@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public canvasmoduleservice: CanvasModuleService) { }
 
   ngOnInit(): void {
   }

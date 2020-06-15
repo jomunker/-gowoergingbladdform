@@ -9,6 +9,7 @@ import {MatInputModule} from '@angular/material/input';
 
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 //Centralizing all imports from Angular Material
 
 @NgModule({
@@ -30,7 +31,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatButtonModule,
     MatButtonToggleModule,
     MatInputModule,
-    DragDropModule
+    DragDropModule,
+    CdkTextareaAutosize
   ]
 })
 
