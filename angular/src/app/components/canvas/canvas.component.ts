@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CanvasModule } from 'src/app/interfaces/canvasModule';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
 import { ArrayChecksService } from '../../services/array-checks/array-checks.service';
 import { CdkDragDrop, CdkDragEnd } from '@angular/cdk/drag-drop';
-
+import { MatMenuTrigger } from '@angular/material/menu';
 declare function io(): any;
-
 
 @Component({
   selector: 'app-canvas',
@@ -46,5 +45,4 @@ export class CanvasComponent implements OnInit {
     module.position.y += event.distance.y;
     this.canvasmoduleservice.moduleEdit(module);
   }
-
 }

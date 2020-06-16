@@ -6,8 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatInputModule} from '@angular/material/input';
-
-
+import {MatMenuModule} from '@angular/material/menu';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 //Centralizing all imports from Angular Material
@@ -21,7 +20,8 @@ import {CdkTextareaAutosize} from '@angular/cdk/text-field';
     MatButtonModule,
     MatButtonToggleModule,
     MatInputModule,
-    DragDropModule
+    DragDropModule,
+    MatMenuModule
   ],
   exports: [
     MatSidenavModule,
@@ -32,7 +32,8 @@ import {CdkTextareaAutosize} from '@angular/cdk/text-field';
     MatButtonToggleModule,
     MatInputModule,
     DragDropModule,
-    CdkTextareaAutosize
+    CdkTextareaAutosize,
+    MatMenuModule
   ]
 })
 
