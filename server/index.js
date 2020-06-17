@@ -2,8 +2,12 @@ const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-
 const bodyParser = require('body-parser');
+
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const morgan = require('morgan');
+const _ = require('lodash');
 
 app.use(express.static('../dist/'));
 http.listen(3000, () => {
@@ -95,3 +99,87 @@ app.post('/api/modules', function (req, res) {
         res.json(data);
     });
 })
+
+
+//File Upload
+app.use(fileUpload({
+    createParentPath: true
+}));
+
+//middleware
+app.use(cors());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(morgan('dev'));
+
+// make directory accessible
+app.use(express.static('uploads'));
+
+//Upload single image
+app.post('/upload-image', async (req, res) => {
+    try {
+        if(!req.files) {
+            res.send({
+                status: false,
+                message: 'No file uploaded'
+            });
+        } else {
+            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+            let image = req.files.image;
+            
+            //Use the mv() method to place the file in upload directory (i.e. "uploads")
+            image.mv('./uploads/' + image.name);
+
+            //send response
+            res.send({
+                status: true,
+                message: 'File is uploaded',
+                data: {
+                    name: image.name,
+                    mimetype: image.mimetype,
+                    size: image.size
+                }
+            });
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+
+// Upload multiple images
+// app.post('/upload-images', async (req, res) => {
+//     try {
+//         if(!req.files) {
+//             res.send({
+//                 status: false,
+//                 message: 'No file uploaded'
+//             });
+//         } else {
+//             let data = []; 
+    
+//             //loop all files
+//             _.forEach(_.keysIn(req.files.photos), (key) => {
+//                 let photo = req.files.photos[key];
+                
+//                 //move photo to uploads directory
+//                 photo.mv('./uploads/' + photo.name);
+
+//                 //push file details
+//                 data.push({
+//                     name: photo.name,
+//                     mimetype: photo.mimetype,
+//                     size: photo.size
+//                 });
+//             });
+    
+//             //return response
+//             res.send({
+//                 status: true,
+//                 message: 'Files are uploaded',
+//                 data: data
+//             });
+//         }
+//     } catch (err) {
+//         res.status(500).send(err);
+//     }
+// });
