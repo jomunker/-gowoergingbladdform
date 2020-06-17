@@ -147,6 +147,8 @@ app.post('/upload-image', async (req, res) => {
 
 
 // Upload multiple images
+// Problem: does not support single file upload
+
 // app.post('/upload-images', async (req, res) => {
 //     try {
 //         if(!req.files) {
