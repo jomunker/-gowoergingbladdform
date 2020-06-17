@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
 
 import { HttpClient } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-toolbar',
@@ -11,8 +13,9 @@ import { HttpClient } from '@angular/common/http';
 export class ToolbarComponent implements OnInit {
 
   selectedFile: File = null;
+  snackBarAction: string = "Nice!";
 
-  constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient) { }
+  constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -27,7 +30,15 @@ export class ToolbarComponent implements OnInit {
     this.http.post('/upload-image', formData)
         .subscribe((response) => {
             console.log('response received is ', response);
+            let responseMsg = response['message'];
+            this.openSnackBar(responseMsg, this.snackBarAction);
         })
+  }
+
+  async openSnackBar(message, action) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
   // File will be uploaded after user clicks on button
