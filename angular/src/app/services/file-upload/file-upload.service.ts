@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
+import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
 
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,15 +8,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
-export class FileUploadService implements OnInit {
+export class FileUploadService {
 
   selectedFile: File = null;
   snackBarAction: string = "Nice!";
 
-  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
-
-  ngOnInit(): void {
-  }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar, public canvasmoduleservice: CanvasModuleService) { }
 
   // File will be uploaded as selectio is done
   onfileChange(element) {
@@ -30,6 +28,11 @@ export class FileUploadService implements OnInit {
             console.log('response received is ', response);
             let responseMsg = response['message'];
             this.openSnackBar(responseMsg, this.snackBarAction);
+            //Create new module with file information
+            let responseData = response['data'];
+            let img = 'uploads/'+responseData.name;
+            console.log('File name' + img);
+            this.canvasmoduleservice.moduleCreate(img, 'doc');
           },
           err => console.log(err)
         )
@@ -37,7 +40,7 @@ export class FileUploadService implements OnInit {
 
   async openSnackBar(message, action) {
     this._snackBar.open(message, action, {
-      duration: 2000,
+      duration: 3000,
     });
   }
 
