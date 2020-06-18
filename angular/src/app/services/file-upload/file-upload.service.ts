@@ -30,9 +30,9 @@ export class FileUploadService {
             this.openSnackBar(responseMsg, this.snackBarAction);
             //Create new module with file information
             let responseData = response['data'];
-            let img = 'uploads/'+responseData.name;
-            console.log('File name' + img);
-            this.canvasmoduleservice.moduleCreate(img, 'doc');
+            let imgPath = responseData.name;
+            console.log('File name' + imgPath);
+            this.canvasmoduleservice.moduleCreate(imgPath, 'img');
           },
           err => console.log(err)
         )
