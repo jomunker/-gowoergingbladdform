@@ -12,10 +12,27 @@ http.listen(3000, () => {
 
 //NeDB
 const Database = require('nedb');
-const db = new Database({filename: 'database.db', timestampData: true} );
-const chatdb = new Database({filename: 'chat.db', timestampData: true} );
+const db = new Database({filename: 'database.db', timestampData: true});
+const chatdb = new Database({filename: 'chat.db', timestampData: true});
+const preferencesdb = new Database({filename: 'preferencesdb.db', timestampData: true});
 db.loadDatabase();
 chatdb.loadDatabase();
+preferencesdb.loadDatabase();
+
+const startPreferences = {
+    canvasWidth : 1920,
+    canvasHeight : 1016, //1080px - headerbar (64px)
+}
+
+function setPreferences() {
+    preferencesdb.find(startPreferences, (err, docs) => {
+        if (docs === []){
+            preferencesdb.insert(startPreferences, (err, newDocs) => {
+            })
+        }
+    })
+}
+setPreferences();
 
 io.on('connection', (socket) => {
 
@@ -70,6 +87,7 @@ io.on('connection', (socket) => {
         io.emit('delete chat message', obj);
     });
 });
+
 // -- API --
 //bodyParser for receiving data via POST request
 app.use(bodyParser.json());
@@ -88,6 +106,16 @@ app.post('/api/chat', function (req, res) {
 
 app.post('/api/modules', function (req, res) {
     db.find({}).sort({ createdAt: 1 }).exec((err, data) => {
+        if (err) {
+            res.end();
+            return;
+        }
+        res.json(data);
+    });
+})
+
+app.post('/api/preferences', function (req, res) {
+    preferencesdb.find({}).exec((err, data) => {
         if (err) {
             res.end();
             return;

@@ -14,7 +14,7 @@ export class CanvasModuleService {
   moduleArray: Array<CanvasModule> = [];
 
   constructor(private http: HttpClient) {
-    this.loadDB();
+    this.loadModules();
   }
 
   ngOnInit() {
@@ -71,7 +71,7 @@ export class CanvasModuleService {
           // console.log(object.position);
           this.moduleArray.splice(i, 1, object);
 
-        } 
+        }
       }
     }
   }
@@ -94,7 +94,7 @@ export class CanvasModuleService {
   }
 
   //loads module DB
-  loadDB() {
+  loadModules() {
 
     const option = {
       method: 'POST',

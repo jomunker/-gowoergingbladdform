@@ -1,7 +1,7 @@
-<div class="boundary" onload="canvasmoduleservice.loadDB()">
+<div class="boundary" style="width: {{settings.canvasWidth}}px; height: {{settings.canvasHeight}}px;">
   <!-- <div>
       <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
-  
+
         <div cdkDrag [cdkDragFreeDragPosition]="module.position" (cdkDragEnded)="dragEnd($event, module)"
           *ngIf="module.type == 'doc'" [class]="module.type">
           <textarea [(ngModel)]='module.content' (keyup)="canvasmoduleservice.moduleEdit(module)"
@@ -16,7 +16,7 @@
   <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
 
     <div class="box" cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
-      (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'doc'" [class]="module.type">
+      (cdkDragEnded)="dragEnd($event, module)"  *ngIf="module.type == 'doc'" [class]="module.type">
       <div class="handle" cdkDragHandle>
         <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
           <path
