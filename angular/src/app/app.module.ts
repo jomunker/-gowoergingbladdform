@@ -10,19 +10,23 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChatComponent } from './components/chat/chat.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import {DialogOverviewExampleDialog, ToolbarComponent} from './components/toolbar/toolbar.component';
 import { FormsModule } from '@angular/forms';
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {Overlay} from "@angular/cdk/overlay";
 
 // import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
+// @ts-ignore
 @NgModule({
   declarations: [
     RootComponent,
     CanvasComponent,
     ChatComponent,
     HeaderComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    DialogOverviewExampleDialog
   ],
   imports: [
     BrowserModule,
@@ -31,10 +35,12 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     MaterialModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule,
     // DragDropModule
   ],
-  providers: [],
+  entryComponents: [DialogOverviewExampleDialog],
+  providers: [MatDialog, Overlay],
   bootstrap: [RootComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
 
 @Component({
@@ -8,9 +9,39 @@ import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(public canvasmoduleservice: CanvasModuleService) { }
+  animal: string;
+  name: string;
 
-  ngOnInit(): void {
+  constructor(public canvasmoduleservice: CanvasModuleService, public dialog: MatDialog) { }
+
+  ngOnInit(): void {}
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '250px',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'settings-dialog.html',
+})
+export class DialogOverviewExampleDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }
