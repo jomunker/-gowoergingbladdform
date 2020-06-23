@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
+import {CanvasComponent} from "../canvas/canvas.component";
 
 @Component({
   selector: 'app-toolbar',
@@ -12,7 +13,7 @@ export class ToolbarComponent implements OnInit {
   animal: string;
   name: string;
 
-  constructor(public canvasmoduleservice: CanvasModuleService, public dialog: MatDialog) { }
+  constructor(public canvasmoduleservice: CanvasModuleService,public canvasComponent: CanvasComponent , public dialog: MatDialog) { }
 
   ngOnInit(): void {}
 
@@ -26,6 +27,10 @@ export class ToolbarComponent implements OnInit {
       console.log('The dialog was closed');
       this.animal = result;
     });
+  }
+
+  settings(){
+    this.canvasComponent.triggerSettings(5000, 5000);
   }
 
 }

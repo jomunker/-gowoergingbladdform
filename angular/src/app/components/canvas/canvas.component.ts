@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CanvasModule } from 'src/app/interfaces/canvasModule';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
-import { ArrayChecksService } from '../../services/array-checks/array-checks.service';
-import { CdkDragDrop, CdkDragEnd } from '@angular/cdk/drag-drop';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import {HttpClient} from "@angular/common/http";
+import {Settings} from "../../interfaces/settings";
 
 declare function io(): any;
 
@@ -15,7 +14,11 @@ declare function io(): any;
 })
 export class CanvasComponent implements OnInit {
 
-  settings: object = {}
+  settings: Settings = {
+    canvasWidth: undefined,
+    canvasHeight: undefined,
+    _id: undefined
+  }
   socket = io();
 
   constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient) { }
@@ -44,6 +47,13 @@ export class CanvasComponent implements OnInit {
       this.canvasmoduleservice.moduleArrayDelete(object);
       console.log("Module deleted.");
     });
+
+    // listens to socket event 'setting' and adopts the new settings
+    this.socket.on('settings', (object) => {
+      console.log(object)
+      this.settings = object[0];
+      console.log("settings adopted.");
+    });
   }
 
   // catches drag-event and updates the modules' position on the canvas
@@ -56,7 +66,6 @@ export class CanvasComponent implements OnInit {
 
   //loads settings
   loadSettings() {
-
     const option = {
       method: 'POST',
       headers: {
@@ -66,10 +75,11 @@ export class CanvasComponent implements OnInit {
 
     this.http.post('/api/preferences', option).subscribe(response => {
       // type change object(which is an array actually) -> any
-
       this.settings = response[0];
-      console.log(this.settings)
     });
-    console.log("Settings loaded");
+  }
+
+  triggerSettings(width: number, height: number) {
+    this.socket.emit("settings", {width, height})
   }
 }

@@ -14,7 +14,7 @@ http.listen(3000, () => {
 const Database = require('nedb');
 const db = new Database({filename: 'database.db', timestampData: true});
 const chatdb = new Database({filename: 'chat.db', timestampData: true});
-const preferencesdb = new Database({filename: 'preferencesdb.db', timestampData: true});
+const preferencesdb = new Database({filename: 'preferencesdb.db'});
 db.loadDatabase();
 chatdb.loadDatabase();
 preferencesdb.loadDatabase();
@@ -25,13 +25,16 @@ const startPreferences = {
 }
 
 function setPreferences() {
-    preferencesdb.find(startPreferences, (err, docs) => {
-        if (docs === []){
+    preferencesdb.find({}, (err, docs) => {
+        console.log(docs)
+        if (docs.length === 0){
             preferencesdb.insert(startPreferences, (err, newDocs) => {
+                console.log(newDocs)
             })
         }
     })
 }
+
 setPreferences();
 
 io.on('connection', (socket) => {
@@ -85,6 +88,13 @@ io.on('connection', (socket) => {
     socket.on('delete chat message', (obj) => {
         chatdb.remove({ _id: obj._id }, {}, (err, numRemoved) => {});
         io.emit('delete chat message', obj);
+    });
+
+    socket.on('settings', (obj) => {
+        preferencesdb.update({}, {canvasWidth: obj.width, canvasHeight: obj.height}, (err, numRemoved) => {});
+        preferencesdb.find({}, (err, docs) => {
+            io.emit('settings', docs);
+        });
     });
 });
 

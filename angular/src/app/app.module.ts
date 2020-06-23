@@ -40,7 +40,7 @@ import {Overlay} from "@angular/cdk/overlay";
     // DragDropModule
   ],
   entryComponents: [DialogOverviewExampleDialog],
-  providers: [MatDialog, Overlay],
+  providers: [CanvasComponent,MatDialog, Overlay],
   bootstrap: [RootComponent]
 })
 export class AppModule { }

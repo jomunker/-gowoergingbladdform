@@ -1,4 +1,4 @@
-<div class="boundary" style="width: {{settings.canvasWidth}}px; height: {{settings.canvasHeight}}px;">
+<div class="boundary" [ngStyle]="{'width': settings.canvasWidth +'px', 'height': settings.canvasHeight +'px'}">
   <!-- <div>
       <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
 
