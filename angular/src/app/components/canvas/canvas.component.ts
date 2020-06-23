@@ -27,7 +27,7 @@ export class CanvasComponent implements OnInit {
   ngOnInit() {
 
     this.canvasmoduleservice.loadModules();
-    this.loadSettings();
+    this.loadSettings().then(res => {this.settings = res});
 
     // listens to socket event 'editModule' and replaces module from moduleArray
     this.socket.on('new module', (newModule) => {
@@ -63,18 +63,19 @@ export class CanvasComponent implements OnInit {
   }
 
   //loads settings
-  loadSettings() {
+  loadSettings(){
     const option = {
       method: 'POST',
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       }
     }
-
-    this.http.post('/api/preferences', option).subscribe(response => {
-      // type change object(which is an array actually) -> any
-      this.settings = response[0];
-    });
+    return new Promise<Settings>(resolve =>{
+      this.http.post('/api/preferences', option).subscribe(response => {
+        // type change object(which is an array actually) -> any
+        resolve(response[0]);
+      });
+    })
   }
 
   triggerSettings(width: number, height: number) {

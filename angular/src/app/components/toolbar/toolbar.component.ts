@@ -15,19 +15,23 @@ export class ToolbarComponent {
 
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '500px',
-      data: {width: this.canvasComponent.settings.canvasWidth, height: this.canvasComponent.settings.canvasHeight}
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined){
-        console.log('The dialog was closed - results:');
-        console.log(result)
-        this.canvasComponent.triggerSettings(result.width, result.height)
-      } else {
-        console.log('The dialog was closed - no results');
-      }
+    this.canvasComponent.loadSettings().then(settings => {
+
+      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+        width: '500px',
+        data: {width: settings.canvasWidth, height: settings.canvasHeight}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != undefined){
+          console.log('The dialog was closed - results:');
+          console.log(result)
+          this.canvasComponent.triggerSettings(result.width, result.height)
+        } else {
+          console.log('The dialog was closed - no results');
+        }
+      });
     });
   }
 }
