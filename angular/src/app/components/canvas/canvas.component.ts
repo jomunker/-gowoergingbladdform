@@ -14,9 +14,9 @@ declare function io(): any;
 })
 export class CanvasComponent implements OnInit {
 
-  settings: Settings = {
-    canvasWidth: undefined,
-    canvasHeight: undefined,
+  public settings: Settings = {
+    canvasWidth: 0,
+    canvasHeight: 0,
     _id: undefined
   }
   socket = io();
@@ -28,7 +28,6 @@ export class CanvasComponent implements OnInit {
 
     this.canvasmoduleservice.loadModules();
     this.loadSettings();
-
 
     // listens to socket event 'editModule' and replaces module from moduleArray
     this.socket.on('new module', (newModule) => {
@@ -50,7 +49,6 @@ export class CanvasComponent implements OnInit {
 
     // listens to socket event 'setting' and adopts the new settings
     this.socket.on('settings', (object) => {
-      console.log(object)
       this.settings = object[0];
       console.log("settings adopted.");
     });
