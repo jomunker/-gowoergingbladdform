@@ -21,9 +21,13 @@ export class ToolbarComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed - results:');
-      console.log(result)
-      this.canvasComponent.triggerSettings(result.width, result.height)
+      if (result != undefined){
+        console.log('The dialog was closed - results:');
+        console.log(result)
+        this.canvasComponent.triggerSettings(result.width, result.height)
+      } else {
+        console.log('The dialog was closed - no results');
+      }
     });
   }
 }
