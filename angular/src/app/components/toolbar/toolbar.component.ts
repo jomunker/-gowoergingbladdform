@@ -2,7 +2,6 @@ import {Component, Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
 import {CanvasComponent} from "../canvas/canvas.component";
-import {Settings} from "../../interfaces/settings";
 
 @Component({
   selector: 'app-toolbar',
@@ -18,32 +17,32 @@ export class ToolbarComponent {
 
     this.canvasComponent.loadSettings().then(settings => {
 
-      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      const dialogRef = this.dialog.open(DialogHTML, {
         width: '500px',
         data: {width: settings.canvasWidth, height: settings.canvasHeight}
       });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result != undefined){
-          console.log('The dialog was closed - results:');
-          console.log(result)
+          console.log('The settings-dialog was closed - with results:');
           this.canvasComponent.triggerSettings(result.width, result.height)
         } else {
-          console.log('The dialog was closed - no results');
+          console.log('The settings-dialog was closed - no results');
         }
       });
     });
   }
 }
 
+//provides the dialog.html that's going to get displayed
 @Component({
   selector: 'dialog-overview-example-dialog',
   templateUrl: 'settings-dialog.html',
 })
-export class DialogOverviewExampleDialog {
+export class DialogHTML {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    public dialogRef: MatDialogRef<DialogHTML>,
     @Inject(MAT_DIALOG_DATA) public data) {}
 
   onNoClick(): void {

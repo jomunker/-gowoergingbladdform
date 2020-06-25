@@ -61,8 +61,7 @@ io.on('connection', (socket) => {
             type: edit.type,
             position: edit.position,
             content: edit.content
-        }, { upsert: true }, function (err, numReplaced) {
-        });
+        }, { upsert: true }, function (err, numReplaced) {});
         console.log(edit);
         io.emit('editModule', edit);
     });

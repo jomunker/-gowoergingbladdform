@@ -10,7 +10,7 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChatComponent } from './components/chat/chat.component';
 import { HeaderComponent } from './components/header/header.component';
-import {DialogOverviewExampleDialog, ToolbarComponent} from './components/toolbar/toolbar.component';
+import {DialogHTML, ToolbarComponent} from './components/toolbar/toolbar.component';
 import { FormsModule } from '@angular/forms';
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {Overlay} from "@angular/cdk/overlay";
@@ -26,7 +26,7 @@ import {Overlay} from "@angular/cdk/overlay";
     ChatComponent,
     HeaderComponent,
     ToolbarComponent,
-    DialogOverviewExampleDialog
+    DialogHTML
   ],
   imports: [
     BrowserModule,
@@ -39,7 +39,7 @@ import {Overlay} from "@angular/cdk/overlay";
     MatDialogModule,
     // DragDropModule
   ],
-  entryComponents: [DialogOverviewExampleDialog],
+  entryComponents: [DialogHTML],
   providers: [CanvasComponent,MatDialog, Overlay],
   bootstrap: [RootComponent]
 })
