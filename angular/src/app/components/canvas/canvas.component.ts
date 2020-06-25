@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import {HttpClient} from "@angular/common/http";
 import {Settings} from "../../interfaces/settings";
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
 declare function io(): any;
 
@@ -56,7 +56,6 @@ export class CanvasComponent implements OnInit {
 
   // catches drag-event and updates the modules' position on the canvas
   dragEnd(event: CdkDragEnd, module) {
-    console.log("drag");
     module.position.x += event.distance.x;
     module.position.y += event.distance.y;
     this.canvasmoduleservice.moduleEdit(module);

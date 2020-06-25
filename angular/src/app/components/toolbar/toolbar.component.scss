@@ -11,3 +11,15 @@
     top: 100px;
     left: 20px;
   }
+
+input[type="file"] {
+    display: none;
+}
+
+#upload-btn{
+  margin: 10px 0;
+}
+
+#upload-btn:hover{
+  cursor: pointer;
+}

@@ -27,9 +27,46 @@
       </div>
       <textarea cdkTextareaAutosize class="textarea" [(ngModel)]='module.content'
         (keyup)="canvasmoduleservice.moduleEdit(module)" placeholder="Write something..."></textarea>
-      <button mat-icon-button (click)="canvasmoduleservice.moduleDelete(module)">
-        <mat-icon>delete</mat-icon>
+        <button mat-icon-button [matMenuTriggerFor]="contextMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      <mat-menu #contextMenu="matMenu">
+        <ng-template matMenuContent let-item="module">
+          <button mat-menu-item (click)="canvasmoduleservice.moduleDelete(module)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </ng-template>
+      </mat-menu>
+
+    </div>
+
+      <!-- module of type img -->
+    <div cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
+      (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'img'" [class]="module.type">
+
+      <button mat-icon-button [matMenuTriggerFor]="contextMenu" class="context-menu">
+        <mat-icon>more_vert</mat-icon>
       </button>
+    <mat-menu #contextMenu="matMenu">
+      <ng-template matMenuContent let-item="module">
+        <button mat-menu-item (click)="canvasmoduleservice.moduleDelete(module)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </ng-template>
+    </mat-menu>
+      <div class="handle" cdkDragHandle>
+        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+          </path>
+          <path d="M0 0h24v24H0z" fill="none"></path>
+        </svg>
+      </div>
+      <img [src]="module.content" alt="">
+       
+
     </div>
   </ng-container>
 </div>

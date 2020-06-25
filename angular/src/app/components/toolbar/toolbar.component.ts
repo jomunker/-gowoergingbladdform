@@ -1,7 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
+import {CanvasModuleService} from 'src/app/services/canvasmodule/canvasmodule.service';
 import {CanvasComponent} from "../canvas/canvas.component";
+import {FileUploadService} from '../../services/file-upload/file-upload.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,7 +11,7 @@ import {CanvasComponent} from "../canvas/canvas.component";
 })
 export class ToolbarComponent {
 
-  constructor(public canvasmoduleservice: CanvasModuleService,public canvasComponent: CanvasComponent , public dialog: MatDialog) { }
+  constructor(public canvasmoduleservice: CanvasModuleService,public canvasComponent: CanvasComponent, public dialog: MatDialog, public fileuploadservice: FileUploadService) { }
 
 
   openDialog(): void {
@@ -48,5 +49,4 @@ export class DialogHTML {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }

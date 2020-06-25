@@ -2,6 +2,9 @@
     <button mat-icon-button aria-label="Move"><mat-icon>open_with_icon</mat-icon></button>
     <button mat-icon-button (click)="canvasmoduleservice.moduleCreate('','doc')" aria-label="Add Text"><mat-icon>title</mat-icon></button>
     <button mat-icon-button aria-label="Add List"><mat-icon>format_list_bulleted</mat-icon></button>
-    <button mat-icon-button aria-label="Add Sticky"><mat-icon>crop_square</mat-icon></button>
-    <button mat-icon-button aria-label="Settings" (click)="openDialog()"><mat-icon>settings</mat-icon></button>
-</div>
+  <label id="upload-btn"><mat-icon>photo</mat-icon>
+    <input (change)="fileuploadservice.onfileChange($event)"  type="file"  class="custom-file-input"  id="inputGroupFile01"  aria-describedby="inputGroupFileAddon01">
+  </label>
+  <button mat-icon-button aria-label="Settings" (click)="openDialog()"><mat-icon>settings</mat-icon></button>
+  </div>
+
