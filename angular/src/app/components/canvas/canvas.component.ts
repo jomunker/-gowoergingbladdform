@@ -3,6 +3,7 @@ import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.
 import {HttpClient} from "@angular/common/http";
 import {Settings} from "../../interfaces/settings";
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import { TodoService } from 'src/app/services/todo/todo.service';
 
 declare function io(): any;
 
@@ -21,7 +22,7 @@ export class CanvasComponent implements OnInit {
   }
   socket = io();
 
-  constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient) { }
+  constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient, public todoservice: TodoService) { }
 
 
   ngOnInit() {
@@ -80,4 +81,5 @@ export class CanvasComponent implements OnInit {
   triggerSettings(width: number, height: number) {
     this.socket.emit("settings", {width, height})
   }
+  
 }

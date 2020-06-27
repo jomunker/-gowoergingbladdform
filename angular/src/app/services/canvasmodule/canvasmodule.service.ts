@@ -26,14 +26,17 @@ export class CanvasModuleService {
   }
 
   // creates new module with type 'doc'
-  moduleCreate(content: string, type: string): void {
+  moduleCreate(content: any, type: string): void {
+    console.log(screen.availWidth);
+    const halfWidth = screen.availWidth / 2.5;
+    const halfHeight = screen.availHeight / 3;
+    console.log(halfWidth)
     const module: CanvasModule = {
       _id: undefined, // defined from database
-      idHTML: 1,
       type: type,
       position: {
-        x: 1,
-        y: 1,
+        x: halfWidth,
+        y: halfHeight,
         width: 1,
         height: 1
       },
