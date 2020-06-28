@@ -1,5 +1,6 @@
 <mat-toolbar color="primary">
     <span>Gowörgingbladdform</span>
     <span class="placeholder"></span>
-    <button mat-icon-button aria-label="Show Chat" (click)="rootComponent.opened=!rootComponent.opened; chatService.getChat()"><mat-icon>chat</mat-icon></button>
+    <button mat-icon-button aria-label="Show Chat" (click)="rootComponent.chatOpened=!rootComponent.chatOpened; chatService.getChat()"><mat-icon>chat</mat-icon></button>
+    <button mat-icon-button aria-label="Show Settings" (click)="rootComponent.settingsOpened=!rootComponent.settingsOpened"><mat-icon>settings</mat-icon></button>
   </mat-toolbar>

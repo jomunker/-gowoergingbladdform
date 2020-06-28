@@ -10,6 +10,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatRadioModule} from '@angular/material/radio';
 
 //Centralizing all imports from Angular Material
 
@@ -24,7 +25,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatInputModule,
     DragDropModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatRadioModule
   ],
   exports: [
     MatSidenavModule,
@@ -37,7 +39,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     DragDropModule,
     CdkTextareaAutosize,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatRadioModule
   ]
 })
 

@@ -7,7 +7,8 @@ import {Component, OnInit} from '@angular/core';
 })
 
 export class RootComponent implements OnInit {
-  opened = false;
+  chatOpened = false;
+  settingsOpened = false;
 
   constructor() {
   }

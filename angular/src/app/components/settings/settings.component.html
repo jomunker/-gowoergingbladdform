@@ -1,0 +1,14 @@
+<mat-toolbar>
+    <h2>Settings</h2>
+    <span class="placeholder"></span>
+    <button mat-icon-button (click)="rootComponent.settingsOpened=false"><mat-icon>close</mat-icon></button>
+</mat-toolbar>
+
+<div class="container">
+    <h3>Color Theme</h3>
+
+    <mat-radio-group class="radio-group">
+        <mat-radio-button value="light">Light Mode</mat-radio-button>
+        <mat-radio-button value="dark">Dark Mode</mat-radio-button>
+    </mat-radio-group>
+</div>

@@ -14,6 +14,7 @@ import {DialogHTML, ToolbarComponent} from './components/toolbar/toolbar.compone
 import { FormsModule } from '@angular/forms';
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {Overlay} from "@angular/cdk/overlay";
+import { SettingsComponent } from './components/settings/settings.component';
 
 // import {DragDropModule} from '@angular/cdk/drag-drop';
 
@@ -26,7 +27,8 @@ import {Overlay} from "@angular/cdk/overlay";
     ChatComponent,
     HeaderComponent,
     ToolbarComponent,
-    DialogHTML
+    DialogHTML,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
