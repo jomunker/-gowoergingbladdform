@@ -1,15 +1,16 @@
 #tools-container{
   position: fixed;
     z-index: 99;
-    width: 70px;
+    width: 60px;
     display: flex;
     align-items: center;
     align-content: space-around;
     flex-direction: column;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 20px;
     top: 100px;
     left: 20px;
+    background-color: #FFFF;
   }
 
 input[type="file"] {

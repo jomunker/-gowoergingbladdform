@@ -5,18 +5,17 @@
   </mat-toolbar>
 
 <div class="scroll">
-  <mat-list id="messages">
+  <mat-list id="messages" >
     <mat-list-item *ngFor="let module of chatService.chatRecord">
-      <span>{{module.message}}</span>
+      <div class="mat-body-1">{{module.message}}</div>
       <span class="placeholder"></span>
-      <button mat-icon-button (click)="onDelete(module)"><mat-icon>delete</mat-icon></button>
-      <mat-divider [inset]="true"></mat-divider>
+      <button mat-icon-button class="delete-btn" (click)="onDelete(module)"><mat-icon>close</mat-icon></button>
     </mat-list-item>
-
   </mat-list>
+
 </div>
 
   <div class="stick-to-bottom">
     <input matInput id="input" #msg autocomplete="off"/>
-    <button mat-flat-button class="send-button" (click)="onSend(msg.value)" color="primary">Send</button>
+    <button mat-flat-button class="send-button" (click)="onSend(msg.value)" color="accent">Send</button>
   </div>
