@@ -158,25 +158,31 @@ app.post('/upload-image', async (req, res) => {
         if(!req.files) {
             res.send({
                 status: false,
-                message: 'No file uploaded'
+                message: 'No file uploaded!'
             });
-        } else {
-            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+        } 
+        else {
             let image = req.files.image;
-
-            //Use the mv() method to place the file in upload directory (i.e. "uploads")
-            image.mv('./uploads/' + image.name);
-
-            //send response
-            res.send({
-                status: true,
-                message: 'File is uploaded',
-                data: {
-                    name: image.name,
-                    mimetype: image.mimetype,
-                    size: image.size
-                }
-            });
+            //limit upload to image files
+            if(!req.files.image.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)){
+                res.send({
+                    status: false,
+                    message: 'Only image files are allowed!'
+                });
+            }
+            else{
+                image.mv('./uploads/' + image.name);
+                //send response
+                res.send({
+                    status: true,
+                    message: 'File is uploaded!',
+                    data: {
+                        name: image.name,
+                        mimetype: image.mimetype,
+                        size: image.size
+                    }
+                });
+            }
         }
     } catch (err) {
         res.status(500).send(err);
