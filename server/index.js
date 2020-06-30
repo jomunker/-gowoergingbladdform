@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const morgan = require('morgan');
 const _ = require('lodash');
+const fs = require('fs');
 
 app.use(express.static('../dist/'));
 http.listen(3000, () => {
@@ -72,10 +73,21 @@ io.on('connection', (socket) => {
     });
 
     socket.on('module deleted', (deleted) => {
+        //if module is of type img, delete the image file from uploads folder
+        if(deleted.type='img'){
+            const path = './uploads/'+ deleted.content;
+                try {
+                    fs.unlinkSync(path)
+                    console.log('deleted image from ' + path);
+                } catch(err) {
+                    console.error(err)
+                }
+        }
         // removes module from db if deleted
         console.log('delete: ' + JSON.stringify(deleted))
         db.remove({ _id: deleted._id }, {}, (err, numRemoved) => { });
         io.emit('deleteModule', deleted);
+        
     });
 
     socket.on('new chat message', (obj) => {

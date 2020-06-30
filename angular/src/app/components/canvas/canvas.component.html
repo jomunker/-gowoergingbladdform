@@ -14,7 +14,7 @@
     </div> -->
 
   <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
-
+    
     <div class="box" cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
       (cdkDragEnded)="dragEnd($event, module)"  *ngIf="module.type == 'doc'" [class]="module.type">
       <button mat-icon-button [matMenuTriggerFor]="contextMenu" class="context-menu">
