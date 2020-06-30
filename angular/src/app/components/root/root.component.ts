@@ -9,13 +9,13 @@ import {Component, OnInit, HostBinding} from '@angular/core';
 export class RootComponent implements OnInit {
   chatOpened = false;
   settingsOpened = false;
-  private isDark = true;
+  public isDark = false;
 
+  isDarkTheme: boolean = false;
   @HostBinding('class')
   get themeMode(){
     return this.isDark ? 'app-dark-theme' : 'app-light-theme';
   }
-
   constructor() {
   }
 

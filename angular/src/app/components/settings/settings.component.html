@@ -5,9 +5,9 @@
 </mat-toolbar>
 
 <div class="container">
-    <div class="mat-body-2">Color Theme</div>
-    <mat-radio-group class="radio-group">
-        <mat-radio-button value="light">Light</mat-radio-button>
-        <mat-radio-button value="dark">Dark</mat-radio-button>
-    </mat-radio-group>
+    <div class="mat-subheading-2">Color Theme</div>
+<mat-slide-toggle
+          [(ngModel)]="rootComponent.isDark">
+       <span class="mat-body-1">Dark Mode</span>
+      </mat-slide-toggle>
 </div>

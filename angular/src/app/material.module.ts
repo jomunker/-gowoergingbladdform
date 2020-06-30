@@ -12,7 +12,7 @@ import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 //Centralizing all imports from Angular Material
 
 @NgModule({
@@ -28,7 +28,8 @@ import {MatCardModule} from '@angular/material/card';
     MatMenuModule,
     MatSnackBarModule,
     MatRadioModule,
-    MatCardModule
+    MatCardModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatSidenavModule,
@@ -43,7 +44,8 @@ import {MatCardModule} from '@angular/material/card';
     MatMenuModule,
     MatSnackBarModule,
     MatRadioModule,
-    MatCardModule
+    MatCardModule,
+    MatSlideToggleModule
   ]
 })
 

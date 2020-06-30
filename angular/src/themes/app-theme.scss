@@ -57,12 +57,12 @@ $typo: mat-typography-config(
   @include angular-material-theme($light-theme);
   @include mat-core($typo);
 
-  .message-container{
+   .message-container{
       background-color: #f5f5f5;
   }
-
 }
 
+ 
 //dark theme
 $dark-primary: mat-palette($mat-deep-purple, 300);
 $dark-accent:  mat-palette($mat-teal, 500);
@@ -110,6 +110,7 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 // #474747
 .app-dark-theme {
     @include angular-material-theme($dark-theme);
+    @include mat-core($typo);
 
     #tools-container{
         background-color: #474747 !important;
