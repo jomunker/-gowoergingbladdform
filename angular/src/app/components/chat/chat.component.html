@@ -6,13 +6,12 @@
 
 <div class="scroll">
   <mat-list id="messages" >
-    <mat-list-item *ngFor="let module of chatService.chatRecord">
+    <mat-list-item class="message-container" *ngFor="let module of chatService.chatRecord">
       <div class="mat-body-1">{{module.message}}</div>
       <span class="placeholder"></span>
       <button mat-icon-button class="delete-btn" (click)="onDelete(module)"><mat-icon>close</mat-icon></button>
     </mat-list-item>
   </mat-list>
-
 </div>
 
   <div class="stick-to-bottom">

@@ -1,0 +1,142 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$light-theme-primary: mat-palette($mat-amber, 400);
+$light-theme-accent:  mat-palette($mat-grey, 600, 700, 800);
+$light-theme-warn:    mat-palette($mat-red);
+
+$light-theme: mat-light-theme($light-theme-primary, $light-theme-accent, $light-theme-warn);
+
+  @include mat-core-theme($light-theme);
+  @include mat-autocomplete-theme($light-theme);
+  @include mat-badge-theme($light-theme);
+  @include mat-bottom-sheet-theme($light-theme);
+  @include mat-button-theme($light-theme);
+  @include mat-button-toggle-theme($light-theme);
+  @include mat-card-theme($light-theme);
+  @include mat-checkbox-theme($light-theme);
+  @include mat-chips-theme($light-theme);
+  @include mat-table-theme($light-theme);
+  @include mat-datepicker-theme($light-theme);
+  @include mat-dialog-theme($light-theme);
+  @include mat-divider-theme($light-theme);
+  @include mat-expansion-panel-theme($light-theme);
+  @include mat-form-field-theme($light-theme);
+  @include mat-grid-list-theme($light-theme);
+  @include mat-icon-theme($light-theme);
+  @include mat-input-theme($light-theme);
+  @include mat-list-theme($light-theme);
+  @include mat-menu-theme($light-theme);
+  @include mat-paginator-theme($light-theme);
+  @include mat-progress-bar-theme($light-theme);
+  @include mat-progress-spinner-theme($light-theme);
+  @include mat-radio-theme($light-theme);
+  @include mat-select-theme($light-theme);
+  @include mat-sidenav-theme($light-theme);
+  @include mat-slide-toggle-theme($light-theme);
+  @include mat-slider-theme($light-theme);
+  @include mat-stepper-theme($light-theme);
+  @include mat-sort-theme($light-theme);
+  @include mat-tabs-theme($light-theme);
+  @include mat-toolbar-theme($light-theme);
+  @include mat-tooltip-theme($light-theme);
+  @include mat-tree-theme($light-theme);
+  @include mat-snack-bar-theme($light-theme);
+
+$typo: mat-typography-config(
+  $font-family: 'Open Sans',
+  $headline: mat-typography-level(22px, 12px, 500),
+  $title: mat-typography-level(20px, 12px, 700),
+  $body-1: mat-typography-level(13px, 26px, 500),
+  $body-2: mat-typography-level(18px, 24px, 700),
+  $subheading-2: mat-typography-level(24px, 24px, 500)
+);
+
+.app-light-theme{
+  @include angular-material-theme($light-theme);
+  @include mat-core($typo);
+
+  .message-container{
+      background-color: #f5f5f5;
+  }
+
+}
+
+//dark theme
+$dark-primary: mat-palette($mat-deep-purple, 300);
+$dark-accent:  mat-palette($mat-teal, 500);
+$dark-warn:    mat-palette($mat-red);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+@include mat-core-theme($dark-theme);
+  @include mat-autocomplete-theme($dark-theme);
+  @include mat-badge-theme($dark-theme);
+  @include mat-bottom-sheet-theme($dark-theme);
+  @include mat-button-theme($dark-theme);
+  @include mat-button-toggle-theme($dark-theme);
+  @include mat-card-theme($dark-theme);
+  @include mat-checkbox-theme($dark-theme);
+  @include mat-chips-theme($dark-theme);
+  @include mat-table-theme($dark-theme);
+  @include mat-datepicker-theme($dark-theme);
+  @include mat-dialog-theme($dark-theme);
+  @include mat-divider-theme($dark-theme);
+  @include mat-expansion-panel-theme($dark-theme);
+  @include mat-form-field-theme($dark-theme);
+  @include mat-grid-list-theme($dark-theme);
+  @include mat-icon-theme($dark-theme);
+  @include mat-input-theme($dark-theme);
+  @include mat-list-theme($dark-theme);
+  @include mat-menu-theme($dark-theme);
+  @include mat-paginator-theme($dark-theme);
+  @include mat-progress-bar-theme($dark-theme);
+  @include mat-progress-spinner-theme($dark-theme);
+  @include mat-radio-theme($dark-theme);
+  @include mat-select-theme($dark-theme);
+  @include mat-sidenav-theme($dark-theme);
+  @include mat-slide-toggle-theme($dark-theme);
+  @include mat-slider-theme($dark-theme);
+  @include mat-stepper-theme($dark-theme);
+  @include mat-sort-theme($dark-theme);
+  @include mat-tabs-theme($dark-theme);
+  @include mat-toolbar-theme($dark-theme);
+  @include mat-tooltip-theme($dark-theme);
+  @include mat-tree-theme($dark-theme);
+  @include mat-snack-bar-theme($dark-theme);
+
+// additional colors for dark theme
+// #1c1c1c
+// #474747
+.app-dark-theme {
+    @include angular-material-theme($dark-theme);
+
+    #tools-container{
+        background-color: #474747 !important;
+    }
+    
+    .boundary{
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%234c4b4d' fill-opacity='0.7'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important
+    }
+    
+    .message-container{
+      background-color: #525252;
+    }
+
+    .box, .box textarea{
+        background-color: #474747 !important;
+    }
+
+    .box textarea{
+     color: #d9d9d9;
+    }
+
+    .mat-dialog-container{
+      background-color: #474747;
+    }
+
+    .mat-snackbar{
+      color: #d9d9d9;
+      background-color: #474747 ;
+    }
+  }

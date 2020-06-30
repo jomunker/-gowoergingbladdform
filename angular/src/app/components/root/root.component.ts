@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostBinding} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,12 @@ import {Component, OnInit} from '@angular/core';
 export class RootComponent implements OnInit {
   chatOpened = false;
   settingsOpened = false;
+  private isDark = true;
+
+  @HostBinding('class')
+  get themeMode(){
+    return this.isDark ? 'app-dark-theme' : 'app-light-theme';
+  }
 
   constructor() {
   }
