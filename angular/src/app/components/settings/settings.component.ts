@@ -9,6 +9,8 @@ import {RootComponent} from '../root/root.component';
 })
 export class SettingsComponent implements OnInit {
 
+  public boardname = 'Gowörgingbladdform';
+
   constructor(public rootComponent: RootComponent) { }
 
   ngOnInit(): void {

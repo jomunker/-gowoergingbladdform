@@ -3,7 +3,6 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import {CanvasModuleService} from 'src/app/services/canvasmodule/canvasmodule.service';
 import {CanvasComponent} from "../canvas/canvas.component";
 import {FileUploadService} from '../../services/file-upload/file-upload.service';
-
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',

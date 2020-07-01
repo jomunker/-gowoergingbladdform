@@ -42,7 +42,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     // DragDropModule
   ],
   entryComponents: [DialogHTML],
-  providers: [CanvasComponent,MatDialog, Overlay],
+  providers: [CanvasComponent,MatDialog, Overlay,SettingsComponent],
   bootstrap: [RootComponent]
 })
 export class AppModule { }
