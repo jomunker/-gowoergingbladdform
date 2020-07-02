@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {RootComponent} from '../root/root.component';
+import {HttpClient} from "@angular/common/http";
+import {SettingsService} from 'src/app/services/settings/settings.service';
+declare function io(): any;
 
 
 @Component({
@@ -9,11 +12,20 @@ import {RootComponent} from '../root/root.component';
 })
 export class SettingsComponent implements OnInit {
 
-  public boardname = 'Gowörgingbladdform';
+  socket = io();
 
-  constructor(public rootComponent: RootComponent) { }
+  constructor(public rootComponent: RootComponent, public settingsService: SettingsService) { }
 
-  ngOnInit(): void {
+  ngOnInit(){
+    this.settingsService.load();
+    console.log('boardname '+this.settingsService.settings.boardName);
+    
+    this.socket.on('set boardname', (object) => {
+      this.settingsService.settings = object[0];
+      console.log("settings adopted.");
+    });
   }
+
+
 
 }

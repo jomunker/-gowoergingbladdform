@@ -8,7 +8,8 @@
     <div class="mat-subheading-2">Boardname</div>
     <mat-form-field class="input-field">
         <mat-label>Enter a boardname</mat-label>
-        <input matInput #name maxlength="30" class="mat-body-1" placeholder="e.g. your project" [(ngModel)]="boardname">
+        <input matInput #name maxlength="30" class="mat-body-1" placeholder="e.g. your project" [(ngModel)]="settingsService.settings.boardName"
+        (keyup)="settingsService.triggerBoardName(settingsService.settings.boardName)">
     <mat-hint align="end">{{name.value.length}} / 30</mat-hint>
       </mat-form-field>
 

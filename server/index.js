@@ -27,7 +27,8 @@ preferencesdb.loadDatabase();
 
 const startPreferences = {
     canvasWidth : 1920,
-    canvasHeight : 1016, //1080px - headerbar (64px)
+    canvasHeight : 1016, //1080px - headerbar (64px),
+    boardName : 'Gowörgingbladdformmm'
 }
 
 function setPreferences() {
@@ -106,10 +107,24 @@ io.on('connection', (socket) => {
         io.emit('delete chat message', obj);
     });
 
-    socket.on('settings', (obj) => {
-        preferencesdb.update({}, {canvasWidth: obj.width, canvasHeight: obj.height}, (err, numRemoved) => {});
+    // socket.on('settings', (obj) => {
+    //     preferencesdb.update({}, {canvasWidth: obj.width, canvasHeight: obj.height, boardName: obj.name}, (err, numRemoved) => {});
+    //     preferencesdb.find({}, (err, docs) => {
+    //         io.emit('settings', docs);
+    //     });
+    // });
+
+    socket.on('set canvas', (obj) => {
+        preferencesdb.update({}, {$set: {canvasWidth: obj.width, canvasHeight: obj.height}}, (err, numRemoved) => {});
         preferencesdb.find({}, (err, docs) => {
-            io.emit('settings', docs);
+            io.emit('set canvas', docs);
+        });
+    });
+
+    socket.on('set boardname', (obj) => {
+        preferencesdb.update({},{$set: {boardName: obj.name}},(err, numRemoved) => {});
+        preferencesdb.find({}, (err, docs) => {
+            io.emit('set boardname', docs);
         });
     });
 });

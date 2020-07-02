@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CanvasModuleService } from 'src/app/services/canvasmodule/canvasmodule.service';
 import {HttpClient} from "@angular/common/http";
 import {Settings} from "../../interfaces/settings";
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
-
+import {CdkDragEnd} from '@angular/cdk/drag-drop';
+import {SettingsService} from 'src/app/services/settings/settings.service';
 declare function io(): any;
 
 
@@ -14,20 +14,15 @@ declare function io(): any;
 })
 export class CanvasComponent implements OnInit {
 
-  public settings: Settings = {
-    canvasWidth: 0,
-    canvasHeight: 0,
-    _id: undefined
-  }
   socket = io();
 
-  constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient) { }
+  constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient, public settingsService: SettingsService) { }
 
 
   ngOnInit() {
 
     this.canvasmoduleservice.loadModules();
-    this.loadSettings().then(res => {this.settings = res});
+    this.settingsService.load();
 
     // listens to socket event 'editModule' and replaces module from moduleArray
     this.socket.on('new module', (newModule) => {
@@ -48,8 +43,8 @@ export class CanvasComponent implements OnInit {
     });
 
     // listens to socket event 'setting' and adopts the new settings
-    this.socket.on('settings', (object) => {
-      this.settings = object[0];
+    this.socket.on('set canvas', (object) => {
+      this.settingsService.settings = object[0];
       console.log("settings adopted.");
     });
   }
@@ -59,25 +54,5 @@ export class CanvasComponent implements OnInit {
     module.position.x += event.distance.x;
     module.position.y += event.distance.y;
     this.canvasmoduleservice.moduleEdit(module);
-  }
-
-  //loads settings
-  loadSettings(){
-    const option = {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      }
-    }
-    return new Promise<Settings>(resolve =>{
-      this.http.post('/api/preferences', option).subscribe(response => {
-        // type change object(which is an array actually) -> any
-        resolve(response[0]);
-      });
-    })
-  }
-
-  triggerSettings(width: number, height: number) {
-    this.socket.emit("settings", {width, height})
   }
 }
