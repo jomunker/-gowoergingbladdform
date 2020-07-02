@@ -1,7 +1,5 @@
 # PHPStorm Projekt-Datein
-.idea/.gitignore
-.idea/gowoergingbladdform.iml
-.idea/*.xml
+.idea
 
 # IDE - VSCode
 .vscode/*
