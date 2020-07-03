@@ -45,7 +45,7 @@ $light-theme: mat-light-theme($light-theme-primary, $light-theme-accent, $light-
   @include mat-snack-bar-theme($light-theme);
 
 $typo: mat-typography-config(
-  $font-family: 'Open Sans',
+  $font-family: 'Open Sans, Helvetica, sans serif',
   $headline: mat-typography-level(22px, 12px, 500),
   $title: mat-typography-level(20px, 12px, 700),
   $body-1: mat-typography-level(13px, 26px, 500),
