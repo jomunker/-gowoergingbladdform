@@ -1,28 +1,6 @@
 <div class="boundary" [ngStyle]="{'width': settingsService.settings.canvasWidth +'px', 'height': settingsService.settings.canvasHeight +'px'}">
-  <!-- <div>
-      <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
-
-        <div cdkDrag [cdkDragFreeDragPosition]="module.position" (cdkDragEnded)="dragEnd($event, module)"
-          *ngIf="module.type == 'doc'" [class]="module.type">
-          <textarea [(ngModel)]='module.content' (keyup)="canvasmoduleservice.moduleEdit(module)"
-            placeholder='Write something...'></textarea>
-          <button mat-icon-button (click)="canvasmoduleservice.moduleDelete(module)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </ng-container>
-    </div> -->
-
-    
-    <!-- <div
-    mwlResizable
-    [enableGhostResize]="true"
-    [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
-    (resizeEnd)="onResizeEnd($event)"
-    ></div> -->
-
-  <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
-    
+  
+<ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
     <div 
     class="box" 
     cdkDragBoundary=".boundary" 
@@ -34,7 +12,6 @@
     [style.height.px]="module.position.height"
     mwlResizable
     [validateResize]="validate"
-    [resizeSnapGrid]="{ left: 50, right: 50 }"
     [enableGhostResize]="true"
     [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
     (resizeEnd)="onResizeEnd($event,module)">
@@ -64,11 +41,10 @@
       <!-- module of type img -->
     <div cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
       (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'img'" [class]="module.type"
-      [style.width.px]="module.position.width"  
       [style.height.px]="module.position.height"
+      [style.width.px]="module.position.width"  
       mwlResizable
       [validateResize]="validate"
-      [resizeSnapGrid]="{ left: 50, right: 50 }"
       [enableGhostResize]="true"
       [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
       (resizeEnd)="onResizeEnd($event,module)">
@@ -93,8 +69,6 @@
         </svg>
       </div>
       <img [src]="module.content" alt="">
-       
-
     </div>
   </ng-container>
 </div>
