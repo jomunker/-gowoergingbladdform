@@ -13,10 +13,29 @@
       </ng-container>
     </div> -->
 
+    
+    <!-- <div
+    mwlResizable
+    [enableGhostResize]="true"
+    [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
+    (resizeEnd)="onResizeEnd($event)"
+    ></div> -->
+
   <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
     
-    <div class="box" cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
-      (cdkDragEnded)="dragEnd($event, module)"  *ngIf="module.type == 'doc'" [class]="module.type">
+    <div 
+    class="box" 
+    cdkDragBoundary=".boundary" 
+    cdkDrag [cdkDragFreeDragPosition]="module.position"
+    (cdkDragEnded)="dragEnd($event, module)"  
+    *ngIf="module.type == 'doc'" 
+    [class]="module.type"
+    [style.width.px]="module.position.width"  
+    [style.height.px]="module.position.height"
+    mwlResizable
+    [enableGhostResize]="true"
+    [resizeEdges]="{ bottom: true, right: true, top: false, left: true }"
+    (resizeEnd)="onResizedEnd($event,module)">
       <button mat-icon-button [matMenuTriggerFor]="contextMenu" class="context-menu">
         <mat-icon>more_horiz</mat-icon>
       </button>
@@ -42,7 +61,13 @@
 
       <!-- module of type img -->
     <div cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
-      (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'img'" [class]="module.type">
+      (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'img'" [class]="module.type"
+      [style.width.px]="module.position.width"  
+      [style.height.px]="module.position.height"
+      mwlResizable
+      [enableGhostResize]="true"
+      [resizeEdges]="{ bottom: true, right: true, top: false, left: true }"
+      (resizeEnd)="onResizedEnd($event,module)">
 
       <button mat-icon-button [matMenuTriggerFor]="contextMenu" class="context-menu">
         <mat-icon>more_horiz</mat-icon>

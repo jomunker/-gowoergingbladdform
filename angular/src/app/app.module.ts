@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {Overlay} from "@angular/cdk/overlay";
 import { SettingsComponent } from './components/settings/settings.component';
+import { ResizableModule } from 'angular-resizable-element';
 
 // import {DragDropModule} from '@angular/cdk/drag-drop';
 
@@ -39,6 +40,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     FlexLayoutModule,
     FormsModule,
     MatDialogModule,
+    ResizableModule,
     // DragDropModule
   ],
   entryComponents: [DialogHTML],
