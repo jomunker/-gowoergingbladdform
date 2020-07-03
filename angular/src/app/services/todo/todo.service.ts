@@ -7,7 +7,13 @@ import { CanvasModuleService } from '../canvasmodule/canvasmodule.service';
 })
 export class TodoService {
 
+  beforeEditCache: string;
+
   constructor(public canvasmoduleservice: CanvasModuleService) { }
+
+  ngOnInit() {
+    this.beforeEditCache = '';
+  }
 
   addTodo(object, todo) {
     for (let i = 0; i < this.canvasmoduleservice.moduleArray.length; i++) {
@@ -15,7 +21,7 @@ export class TodoService {
       if (module._id == object._id) {
         if (todo != '') {
           console.log(object.content);
-          object.content.push({checked: false, editing: false, todoString: todo});
+          object.content.push({ checked: false, editing: false, todoString: todo });
           this.canvasmoduleservice.moduleEdit(object);
         } else {
           console.log("Please enter a ToDo!");
@@ -48,9 +54,10 @@ export class TodoService {
         for (let j = 0; j < object.content.length; j++) {
           console.log(object.content[j]);
           if (object.content[j] == todo) {
+            this.beforeEditCache = todo.todoString;
             todo.editing = true;
             object.content.splice(j, 1, todo);
-            this.canvasmoduleservice.moduleEdit(object);
+            //this.canvasmoduleservice.moduleEdit(object);
           }
         }
       }
@@ -66,6 +73,9 @@ export class TodoService {
           console.log(object.content[j]);
           if (object.content[j] == todo) {
             todo.editing = false;
+            if (todo.todoString.trim().length === 0) {
+              todo.todoString = this.beforeEditCache;
+            }
             object.content.splice(j, 1, todo);
             this.canvasmoduleservice.moduleEdit(object);
           }

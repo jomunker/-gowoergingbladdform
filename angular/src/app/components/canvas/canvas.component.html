@@ -18,10 +18,12 @@
     <!-- text module -->
     <div class="box" cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
       (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'doc'" [class]="module.type">
-      <ng-container *ngTemplateOutlet="draghandle"></ng-container>
+      <div class="handle" cdkDragHandle>
+        <ng-container *ngTemplateOutlet="draghandle"></ng-container>
+      </div>
       <textarea cdkTextareaAutosize class="textarea" [(ngModel)]='module.content'
         (keyup)="canvasmoduleservice.moduleEdit(module)" placeholder="Write something..."></textarea>
-        <ng-container *ngTemplateOutlet="menu"></ng-container>
+      <ng-container *ngTemplateOutlet="menu"></ng-container>
     </div>
 
     <!-- module of type img -->
@@ -30,58 +32,74 @@
 
       <ng-container *ngTemplateOutlet="menu"></ng-container>
 
-      <ng-container *ngTemplateOutlet="draghandle"></ng-container>
+      <div class="handle" cdkDragHandle>
+        <ng-container *ngTemplateOutlet="draghandle"></ng-container>
+      </div>
       <img [src]="module.content" alt="">
 
 
     </div>
 
     <!-- todo module -->
-    <div class="box" cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
+    <mat-card class="box" cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
       (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'todo'" [class]="module.type">
-      <ng-container *ngTemplateOutlet="draghandle"></ng-container>
-
-      <div class="addtodo">
-        <input onfocus="this.value=''" placeholder="Add a new todo..." maxlength="150" #newtodo>
-        <button mat-icon-button (click)="todoservice.addTodo(module, newtodo.value)">
-          <mat-icon>done</mat-icon>
-        </button>
-      </div>
-      <div class="todo-itemlist" *ngIf="module.content != ''">
-        <div *ngFor="let todo of module.content" class="todo-item">
-          <input id="done" type="checkbox" [(ngModel)]='todo.checked' (change)="canvasmoduleservice.moduleEdit(module)">
-          <div class="helper" style="width: 100%; display: flex; justify-content: space-between;">
-            <!-- <div class="content" placeholder="Write something..."> {{ todo.todoString }}</div> -->
-
-            <div *ngIf="!todo.editing; else editingTodo" class="content" (dblclick)="todoservice.editTodo(module, todo)">{{ todo.todoString }}</div>
-            <!-- <button mat-icon-button (click)="todoservice.editTodo(module, todo)" >
-              <mat-icon>create</mat-icon>
-            </button> -->
-            <ng-template #editingTodo>
-              <input placeholder="Type someting!" #todoinput style="height: fit-content; align-self:center; margin-left: .5rem; padding-left: .2rem; border: 1px solid black;" type="text" [(ngModel)]="todo.todoString" (blur)="todoservice.editDone(module, todo)" (keyup.enter)="todoservice.editDone(module, todo)" (keyup.esc)="todoservice.editDone(module, todo)" autofocus>
-            </ng-template>
-
-            <button mat-icon-button (click)="todoservice.deleteTodo(module, todo)" (keydown.enter)="todoservice.deleteTodo(module, todo)" style="right: 0;">
-              <mat-icon>clear</mat-icon>
-            </button>
-          </div>
+      <mat-card-content>
+        <div class="handle" cdkDragHandle>
+          <ng-container *ngTemplateOutlet="draghandle"></ng-container>
         </div>
-      </div>
-      <ng-container *ngTemplateOutlet="menu"></ng-container>
-    </div>
+        <mat-form-field appearance="fill" color="primary" style="width: 100%;">
+          <mat-label>Add a new Task!</mat-label>
+          <input matInput onfocus="this.value=''" maxlength="150" (keyup.enter)="todoservice.addTodo(module, newtodo.value)" #newtodo>
+          <button mat-icon-button matSuffix (click)="todoservice.addTodo(module, newtodo.value)">
+            <mat-icon color="primary">done</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-list dense class="todo-itemlist" *ngIf="module.content != ''">
+          <mat-list-item *ngFor="let todo of module.content" class="todo-item">
+
+            <mat-checkbox color="primary" id="done" [(ngModel)]='todo.checked'
+              (change)="canvasmoduleservice.moduleEdit(module)">
+            </mat-checkbox>
+            <div class="helper"
+              style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+
+              <div class="content" *ngIf="!todo.editing; else editingTodo"
+                (dblclick)="todoservice.editTodo(module, todo)">
+                {{ todo.todoString }}</div>
+
+              <ng-template #editingTodo>
+                <input class="todo-edit" maxlength="150" placeholder="Type someting!" #todoinput
+                  type="text" [(ngModel)]="todo.todoString" (blur)="todoservice.editDone(module, todo)"
+                  (keyup.enter)="todoservice.editDone(module, todo)" (keyup.esc)="todoservice.editDone(module, todo)"
+                  appAutoFocus>
+              </ng-template>
+
+
+              <button mat-icon-button (click)="todoservice.deleteTodo(module, todo)"
+                (keydown.enter)="todoservice.deleteTodo(module, todo)" style="right: 0;">
+                <mat-icon matListIcon color="warn">clear</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+
+        </mat-list>
+        <ng-container *ngTemplateOutlet="menu"></ng-container>
+      </mat-card-content>
+    </mat-card>
 
     <!-- Templates -->
 
     <!-- Draghandle-Template -->
     <ng-template #draghandle>
-      <div class="handle" cdkDragHandle>
-        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-          <path
-            d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
-          </path>
-          <path d="M0 0h24v24H0z" fill="none"></path>
-        </svg>
-      </div>
+
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+        </path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+
     </ng-template>
 
     <!-- Context-Menü-Template -->
@@ -102,3 +120,27 @@
 
   </ng-container>
 </div>
+
+
+
+
+<!-- <div class="todo-itemlist" *ngIf="module.content != ''">
+  <div *ngFor="let todo of module.content" class="todo-item">
+    <input id="done" type="checkbox" [(ngModel)]='todo.checked' (change)="canvasmoduleservice.moduleEdit(module)">
+    <div class="helper" style="width: 100%; display: flex; justify-content: space-between;">
+
+      <div *ngIf="!todo.editing; else editingTodo" class="content"
+        (dblclick)="todoservice.editTodo(module, todo)">{{ todo.todoString }}</div>
+      
+      <ng-template #editingTodo>
+        <input placeholder="Type someting!" #todoinput
+          style="height: fit-content; align-self:center; margin-left: .5rem; padding-left: .2rem; border: 1px solid black;"
+          type="text" [(ngModel)]="todo.todoString" (blur)="todoservice.editDone(module, todo)"
+          (keyup.enter)="todoservice.editDone(module, todo)" (keyup.esc)="todoservice.editDone(module, todo)"
+          autofocus>
+      </ng-template>
+
+      <button mat-icon-button (click)="todoservice.deleteTodo(module, todo)"
+        (keydown.enter)="todoservice.deleteTodo(module, todo)" style="right: 0;">
+        <mat-icon color="warn">clear</mat-icon>
+      </button> -->
