@@ -14,9 +14,15 @@
       </mat-form-field>
 
     <div class="mat-subheading-2">Color Theme</div>
-        <mat-slide-toggle
-          [(ngModel)]="rootComponent.isDark">
-            <span class="mat-body-1">Dark Mode</span>
-      </mat-slide-toggle>
-
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="radio-group"
+        [(ngModel)]="rootComponent.themeClass">
+        <mat-radio-button [value]="rootComponent.lightTheme" (change)="rootComponent.changeTheme(rootComponent.lightTheme)">
+          Light Mode
+        </mat-radio-button>
+        <mat-radio-button [value]="rootComponent.darkTheme" (change)="rootComponent.changeTheme(rootComponent.darkTheme)">
+          Dark Mode
+        </mat-radio-button>
+      </mat-radio-group>
 </div>

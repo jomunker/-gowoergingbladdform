@@ -13,7 +13,7 @@ export class SettingsService {
     canvasWidth: 0,
     canvasHeight: 0,
     boardName: '',
-    _id: undefined
+    _id: undefined,
   }
   socket = io();
 
