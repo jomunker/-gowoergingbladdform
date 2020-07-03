@@ -34,8 +34,8 @@ export class CanvasModuleService {
       position: {
         x: 1,
         y: 1,
-        width: 1,
-        height: 1
+        width: 200,
+        height: 200
       },
       content: content,
     };

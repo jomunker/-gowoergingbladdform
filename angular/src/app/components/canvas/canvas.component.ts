@@ -17,8 +17,7 @@ declare function io(): any;
 export class CanvasComponent implements OnInit {
 
   socket = io();
-  public style: object = {};
-
+  moduleMaxSize = 500;
 
   constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient, public settingsService: SettingsService) { }
 
@@ -73,31 +72,24 @@ export class CanvasComponent implements OnInit {
     return true;
   }
 
-  onResizeEnd(event: ResizeEvent): void {
-    this.style = {
-      position: 'fixed',
-      left: `${event.rectangle.left}px`,
-      top: `${event.rectangle.top}px`,
-      width: `${event.rectangle.width}px`,
-      height: `${event.rectangle.height}px`
-    };
-  }
-
-  async onResized(event, module){
-    console.log('resize was triggered');
-    module.position.width = event.rectangle.width;
-    module.position.height = event.rectangle.height;
-    console.log('***new dimensions: height: '+ module.position.height + ' width: ' + module.position.width);
-
-  }
-
-  onResizedEnd(event: ResizeEvent, module){
+  // updates module width and height at resizing
+  onResizeEnd(event: ResizeEvent, module){
     console.log('resize end was triggered');
-    module.position.width = event.rectangle.width;
-    module.position.height = event.rectangle.height;
+    module.position.width = this.checkRectangle(event.rectangle.width);
+    module.position.height = this.checkRectangle(event.rectangle.height);
+    this.canvasmoduleservice.moduleEdit(module);
+    console.log('width '+event.rectangle.width);
+    console.log('height '+event.rectangle.height);
+
     console.log('new dimensions: height: '+ module.position.height + ' width: ' + module.position.width);
-
-
   }
+
+  checkRectangle(size){
+    if(size > this.moduleMaxSize){
+      size = 500;
+    }
+    return size;
+  }
+  
 
 }

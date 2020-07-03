@@ -33,9 +33,11 @@
     [style.width.px]="module.position.width"  
     [style.height.px]="module.position.height"
     mwlResizable
+    [validateResize]="validate"
+    [resizeSnapGrid]="{ left: 50, right: 50 }"
     [enableGhostResize]="true"
-    [resizeEdges]="{ bottom: true, right: true, top: false, left: true }"
-    (resizeEnd)="onResizedEnd($event,module)">
+    [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
+    (resizeEnd)="onResizeEnd($event,module)">
       <button mat-icon-button [matMenuTriggerFor]="contextMenu" class="context-menu">
         <mat-icon>more_horiz</mat-icon>
       </button>
@@ -65,9 +67,11 @@
       [style.width.px]="module.position.width"  
       [style.height.px]="module.position.height"
       mwlResizable
+      [validateResize]="validate"
+      [resizeSnapGrid]="{ left: 50, right: 50 }"
       [enableGhostResize]="true"
-      [resizeEdges]="{ bottom: true, right: true, top: false, left: true }"
-      (resizeEnd)="onResizedEnd($event,module)">
+      [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
+      (resizeEnd)="onResizeEnd($event,module)">
 
       <button mat-icon-button [matMenuTriggerFor]="contextMenu" class="context-menu">
         <mat-icon>more_horiz</mat-icon>
