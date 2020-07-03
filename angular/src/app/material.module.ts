@@ -14,6 +14,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 //Centralizing all imports from Angular Material
 
@@ -32,7 +33,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatRadioModule,
     MatCardModule,
     MatSlideToggleModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTooltipModule
   ],
   exports: [
     MatSidenavModule,
@@ -49,7 +51,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatRadioModule,
     MatCardModule,
     MatSlideToggleModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTooltipModule
   ]
 })
 
