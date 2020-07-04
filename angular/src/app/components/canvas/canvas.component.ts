@@ -18,6 +18,7 @@ export class CanvasComponent implements OnInit {
 
   socket = io();
   moduleMaxSize = 500;
+  moduleMinSize = 200;
 
   constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient, public settingsService: SettingsService) { }
 
@@ -60,12 +61,12 @@ export class CanvasComponent implements OnInit {
   }
 
   validate(event: ResizeEvent): boolean {
-    const MIN_DIMENSIONS_PX: number = 50;
+    // const MIN_DIMENSIONS_PX: number = 100;
     if (
       event.rectangle.width &&
       event.rectangle.height &&
-      (event.rectangle.width < MIN_DIMENSIONS_PX ||
-        event.rectangle.height < MIN_DIMENSIONS_PX)
+      (event.rectangle.width < this.moduleMinSize ||
+        event.rectangle.height < this.moduleMinSize)
     ) {
       return false;
     }
@@ -86,7 +87,10 @@ export class CanvasComponent implements OnInit {
 
   checkRectangle(size){
     if(size > this.moduleMaxSize){
-      size = 500;
+      size = this.moduleMaxSize;
+    }
+    if(size < this.moduleMinSize){
+      size = this.moduleMinSize;
     }
     return size;
   }

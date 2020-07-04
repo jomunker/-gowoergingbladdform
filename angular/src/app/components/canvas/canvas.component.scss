@@ -25,10 +25,11 @@
 .textarea {
   display: block;
   width: 100%;
-  overflow: hidden;
+  height: 100%;
+  overflow: hidden; 
   resize: none;
   min-height: 40px;
-  min-width: 300px;
+  min-width: 100px;
   line-height: 20px;
   cursor: text;
   border: none;
@@ -64,8 +65,8 @@
   height: 200px;
   overflow: hidden;
   line-height: 0;
-  min-width: 100px;
-  min-height: 100px;
+  min-width: 200px;
+  min-height: 200px;
   max-width: 500px;
   max-height: 500px;
 }
