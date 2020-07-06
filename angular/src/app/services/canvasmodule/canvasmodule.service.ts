@@ -34,8 +34,8 @@ export class CanvasModuleService {
       position: {
         x: 1,
         y: 1,
-        width: 1,
-        height: 1
+        width: 200,
+        height: 200
       },
       content: content,
     };
@@ -71,6 +71,10 @@ export class CanvasModuleService {
           // console.log(object.position);
           this.moduleArray.splice(i, 1, object);
 
+        }
+        // checks if width or height has changed
+        if (module.position.width != object.position.width || module.position.height != object.position.height) {
+          this.moduleArray.splice(i, 1, object);
         }
       }
     }

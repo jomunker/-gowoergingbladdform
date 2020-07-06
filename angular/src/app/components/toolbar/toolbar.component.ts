@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import {CanvasModuleService} from 'src/app/services/canvasmodule/canvasmodule.service';
 import {CanvasComponent} from "../canvas/canvas.component";
 import {FileUploadService} from '../../services/file-upload/file-upload.service';
+import {SettingsService} from 'src/app/services/settings/settings.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,12 +12,12 @@ import {FileUploadService} from '../../services/file-upload/file-upload.service'
 })
 export class ToolbarComponent {
 
-  constructor(public canvasmoduleservice: CanvasModuleService,public canvasComponent: CanvasComponent, public dialog: MatDialog, public fileuploadservice: FileUploadService) { }
+  constructor(public canvasmoduleservice: CanvasModuleService,public canvasComponent: CanvasComponent, public dialog: MatDialog, public fileuploadservice: FileUploadService, public settingsService: SettingsService) { }
 
 
   openDialog(): void {
 
-    this.canvasComponent.loadSettings().then(settings => {
+    this.settingsService.loadSettings().then(settings => {
 
       const dialogRef = this.dialog.open(DialogHTML, {
         width: '500px',
@@ -26,7 +27,7 @@ export class ToolbarComponent {
       dialogRef.afterClosed().subscribe(result => {
         if (result != undefined){
           console.log('The settings-dialog was closed - with results:');
-          this.canvasComponent.triggerSettings(result.width, result.height)
+          this.settingsService.triggerSettings(result.width, result.height)
         } else {
           console.log('The settings-dialog was closed - no results');
         }

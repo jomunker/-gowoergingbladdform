@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const morgan = require('morgan');
 const _ = require('lodash');
+const fs = require('fs');
 
 app.use(express.static('../dist/'));
 http.listen(3000, () => {
@@ -26,7 +27,8 @@ preferencesdb.loadDatabase();
 
 const startPreferences = {
     canvasWidth : 1920,
-    canvasHeight : 1016, //1080px - headerbar (64px)
+    canvasHeight : 1016, //1080px - headerbar (64px),
+    boardName : 'Gowörgingbladdformmm'
 }
 
 function setPreferences() {
@@ -72,10 +74,21 @@ io.on('connection', (socket) => {
     });
 
     socket.on('module deleted', (deleted) => {
+        //if module is of type img, delete the image file from uploads folder
+        if(deleted.type='img'){
+            const path = './uploads/'+ deleted.content;
+                try {
+                    fs.unlinkSync(path)
+                    console.log('deleted image from ' + path);
+                } catch(err) {
+                    console.error(err)
+                }
+        }
         // removes module from db if deleted
         console.log('delete: ' + JSON.stringify(deleted))
         db.remove({ _id: deleted._id }, {}, (err, numRemoved) => { });
         io.emit('deleteModule', deleted);
+        
     });
 
     socket.on('new chat message', (obj) => {
@@ -94,10 +107,24 @@ io.on('connection', (socket) => {
         io.emit('delete chat message', obj);
     });
 
-    socket.on('settings', (obj) => {
-        preferencesdb.update({}, {canvasWidth: obj.width, canvasHeight: obj.height}, (err, numRemoved) => {});
+    // socket.on('settings', (obj) => {
+    //     preferencesdb.update({}, {canvasWidth: obj.width, canvasHeight: obj.height, boardName: obj.name}, (err, numRemoved) => {});
+    //     preferencesdb.find({}, (err, docs) => {
+    //         io.emit('settings', docs);
+    //     });
+    // });
+
+    socket.on('set canvas', (obj) => {
+        preferencesdb.update({}, {$set: {canvasWidth: obj.width, canvasHeight: obj.height}}, (err, numRemoved) => {});
         preferencesdb.find({}, (err, docs) => {
-            io.emit('settings', docs);
+            io.emit('set canvas', docs);
+        });
+    });
+
+    socket.on('set boardname', (obj) => {
+        preferencesdb.update({},{$set: {boardName: obj.name}},(err, numRemoved) => {});
+        preferencesdb.find({}, (err, docs) => {
+            io.emit('set boardname', docs);
         });
     });
 });
@@ -158,25 +185,31 @@ app.post('/upload-image', async (req, res) => {
         if(!req.files) {
             res.send({
                 status: false,
-                message: 'No file uploaded'
+                message: 'No file uploaded!'
             });
-        } else {
-            //Use the name of the input field (i.e. "avatar") to retrieve the uploaded file
+        } 
+        else {
             let image = req.files.image;
-
-            //Use the mv() method to place the file in upload directory (i.e. "uploads")
-            image.mv('./uploads/' + image.name);
-
-            //send response
-            res.send({
-                status: true,
-                message: 'File is uploaded',
-                data: {
-                    name: image.name,
-                    mimetype: image.mimetype,
-                    size: image.size
-                }
-            });
+            //limit upload to image files
+            if(!req.files.image.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)){
+                res.send({
+                    status: false,
+                    message: 'Only image files are allowed!'
+                });
+            }
+            else{
+                image.mv('./uploads/' + image.name);
+                //send response
+                res.send({
+                    status: true,
+                    message: 'File is uploaded!',
+                    data: {
+                        name: image.name,
+                        mimetype: image.mimetype,
+                        size: image.size
+                    }
+                });
+            }
         }
     } catch (err) {
         res.status(500).send(err);

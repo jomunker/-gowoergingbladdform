@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~9.1.0",
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
+    "angular-resizable-element": "^3.3.2",
     "rxjs": "~6.5.4",
     "rxjs-compat": "^6.5.5",
     "socket.io": "^2.3.0",

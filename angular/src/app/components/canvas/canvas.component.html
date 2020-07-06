@@ -1,22 +1,31 @@
-<div class="boundary" [ngStyle]="{'width': settings.canvasWidth +'px', 'height': settings.canvasHeight +'px'}">
-  <!-- <div>
-      <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
-
-        <div cdkDrag [cdkDragFreeDragPosition]="module.position" (cdkDragEnded)="dragEnd($event, module)"
-          *ngIf="module.type == 'doc'" [class]="module.type">
-          <textarea [(ngModel)]='module.content' (keyup)="canvasmoduleservice.moduleEdit(module)"
-            placeholder='Write something...'></textarea>
-          <button mat-icon-button (click)="canvasmoduleservice.moduleDelete(module)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </ng-container>
-    </div> -->
-
-  <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
-
-    <div class="box" cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
-      (cdkDragEnded)="dragEnd($event, module)"  *ngIf="module.type == 'doc'" [class]="module.type">
+<div class="boundary" [ngStyle]="{'width': settingsService.settings.canvasWidth +'px', 'height': settingsService.settings.canvasHeight +'px'}">
+  
+<ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
+    <div 
+    class="box" 
+    cdkDragBoundary=".boundary" 
+    cdkDrag [cdkDragFreeDragPosition]="module.position"
+    (cdkDragEnded)="dragEnd($event, module)"  
+    *ngIf="module.type == 'doc'" 
+    [class]="module.type"
+    [style.width.px]="module.position.width"  
+    [style.height.px]="module.position.height"
+    mwlResizable
+    [validateResize]="validate"
+    [enableGhostResize]="true"
+    [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
+    (resizeEnd)="onResizeEnd($event,module)">
+      <button mat-icon-button [matMenuTriggerFor]="contextMenu" class="context-menu">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+    <mat-menu #contextMenu="matMenu">
+      <ng-template matMenuContent let-item="module">
+        <button mat-menu-item (click)="canvasmoduleservice.moduleDelete(module)">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </ng-template>
+    </mat-menu>
       <div class="handle" cdkDragHandle>
         <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
           <path
@@ -25,28 +34,23 @@
           <path d="M0 0h24v24H0z" fill="none"></path>
         </svg>
       </div>
-      <textarea cdkTextareaAutosize class="textarea" [(ngModel)]='module.content'
+      <textarea cdkTextareaAutosize class="textarea mat-body-1" [(ngModel)]='module.content'
         (keyup)="canvasmoduleservice.moduleEdit(module)" placeholder="Write something..."></textarea>
-        <button mat-icon-button [matMenuTriggerFor]="contextMenu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      <mat-menu #contextMenu="matMenu">
-        <ng-template matMenuContent let-item="module">
-          <button mat-menu-item (click)="canvasmoduleservice.moduleDelete(module)">
-            <mat-icon>delete</mat-icon>
-            <span>Delete</span>
-          </button>
-        </ng-template>
-      </mat-menu>
-
     </div>
 
       <!-- module of type img -->
     <div cdkDragBoundary=".boundary" cdkDrag [cdkDragFreeDragPosition]="module.position"
-      (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'img'" [class]="module.type">
+      (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'img'" [class]="module.type"
+      [style.height.px]="module.position.height"
+      [style.width.px]="module.position.width"  
+      mwlResizable
+      [validateResize]="validate"
+      [enableGhostResize]="true"
+      [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
+      (resizeEnd)="onResizeEnd($event,module)">
 
       <button mat-icon-button [matMenuTriggerFor]="contextMenu" class="context-menu">
-        <mat-icon>more_vert</mat-icon>
+        <mat-icon>more_horiz</mat-icon>
       </button>
     <mat-menu #contextMenu="matMenu">
       <ng-template matMenuContent let-item="module">
@@ -65,8 +69,6 @@
         </svg>
       </div>
       <img [src]="module.content" alt="">
-       
-
     </div>
   </ng-container>
 </div>

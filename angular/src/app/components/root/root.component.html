@@ -1,7 +1,11 @@
-<mat-sidenav-container>
+<mat-sidenav-container  class="mat-typography">
   <!-- Chat -->
-  <mat-sidenav #sidenav mode="side" position="end" [opened]="opened" role="region">
+  <mat-sidenav #sidenav mode="side" position="end" [opened]="chatOpened" role="region">
     <app-chat></app-chat>
+  </mat-sidenav>
+  <!-- Settings -->
+  <mat-sidenav #sidenav mode="side" position="end" [opened]="settingsOpened" role="region">
+    <app-settings></app-settings>
   </mat-sidenav>
   <!-- Main Content -->
   <mat-sidenav-content role="main">

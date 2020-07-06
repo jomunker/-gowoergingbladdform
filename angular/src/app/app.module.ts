@@ -14,6 +14,8 @@ import {DialogHTML, ToolbarComponent} from './components/toolbar/toolbar.compone
 import { FormsModule } from '@angular/forms';
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {Overlay} from "@angular/cdk/overlay";
+import { SettingsComponent } from './components/settings/settings.component';
+import { ResizableModule } from 'angular-resizable-element';
 
 // import {DragDropModule} from '@angular/cdk/drag-drop';
 
@@ -26,7 +28,8 @@ import {Overlay} from "@angular/cdk/overlay";
     ChatComponent,
     HeaderComponent,
     ToolbarComponent,
-    DialogHTML
+    DialogHTML,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,10 +40,11 @@ import {Overlay} from "@angular/cdk/overlay";
     FlexLayoutModule,
     FormsModule,
     MatDialogModule,
+    ResizableModule,
     // DragDropModule
   ],
   entryComponents: [DialogHTML],
-  providers: [CanvasComponent,MatDialog, Overlay],
+  providers: [CanvasComponent,MatDialog, Overlay,SettingsComponent],
   bootstrap: [RootComponent]
 })
 export class AppModule { }
