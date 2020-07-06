@@ -28,20 +28,19 @@ input {
     height: 83%;
   }
 
-  mat-card{
-    margin-bottom: 20px;
+  .message-container{
+    height: auto;
+    border-radius: 12px;
+    margin: 10px 0;
+    padding: 15px 20px;
+    display: flex;
   }
-
-mat-list-item{
-  border-radius: 12px;
-  margin: 10px 0;
-}
 
 .delete-btn{
   visibility: hidden;
   color: #bdbdbd;
 }
 
-mat-list-item:hover .delete-btn{
+.message-container:hover .delete-btn{
   visibility: visible;
 }
