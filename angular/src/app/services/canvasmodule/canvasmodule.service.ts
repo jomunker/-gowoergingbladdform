@@ -124,6 +124,4 @@ export class CanvasModuleService {
     });
     console.log("DB loaded");
   }
-
-
 }

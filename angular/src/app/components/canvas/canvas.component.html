@@ -1,6 +1,8 @@
-<div class="boundary" [ngStyle]="{'width': settings.canvasWidth +'px', 'height': settings.canvasHeight +'px'}">
+<div class="boundary" [ngStyle]="{'width': settingsService.settings.canvasWidth +'px', 'height': settingsService.settings.canvasHeight +'px'}">
 
-  <!-- module of type img/doc -->
+  <ng-container cdkDrop *ngFor="let module of canvasmoduleservice.moduleArray">
+
+<!-- module of type img/doc -->
   <div
     class="box"
     cdkDragBoundary=".boundary"
@@ -148,4 +150,5 @@
     </mat-menu>
   </ng-template>
 
+  </ng-container>
 </div>
