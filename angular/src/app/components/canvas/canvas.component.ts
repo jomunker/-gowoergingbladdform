@@ -6,6 +6,7 @@ import {CdkDragEnd} from '@angular/cdk/drag-drop';
 import {SettingsService} from 'src/app/services/settings/settings.service';
 import {ResizeEvent} from 'angular-resizable-element';
 import {ResizableModule} from 'angular-resizable-element';
+import { TodoService } from 'src/app/services/todo/todo.service';
 
 declare function io(): any;
 
@@ -20,7 +21,7 @@ export class CanvasComponent implements OnInit {
   moduleMaxSize = 500;
   moduleMinSize = 200;
 
-  constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient, public settingsService: SettingsService) { }
+  constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient, public settingsService: SettingsService, public todoservice: TodoService) { }
 
 
   ngOnInit() {
@@ -94,6 +95,4 @@ export class CanvasComponent implements OnInit {
     }
     return size;
   }
-  
-
 }

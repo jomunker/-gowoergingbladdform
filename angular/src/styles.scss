@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 *, html {
     margin: 0;
@@ -18,4 +17,8 @@ mat-sidenav .mat-drawer-inner-container {
   height: 100%;
   overflow: hidden;
   -webkit-overflow-scrolling: hidden;
+}
+
+.mat-list-item-content {
+  width: 100%;
 }

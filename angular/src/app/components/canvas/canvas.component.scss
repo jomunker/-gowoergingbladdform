@@ -3,7 +3,7 @@
   color: #ccc;
   z-index: 50;
 }
-.context-menu{
+.context-menu {
   top: 0;
   left: 15px;
 }
@@ -26,7 +26,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  overflow: hidden; 
+  overflow: hidden;
   resize: none;
   min-height: 40px;
   min-width: 100px;
@@ -43,7 +43,8 @@
   color: gray;
 }
 
-.box, .img{
+.box,
+.img {
   position: absolute !important;
   transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
@@ -59,7 +60,8 @@
   border-radius: 10px;
 }
 
-.img, .box{
+.img,
+.box{
   // resize: both;
   width: 250px;
   height: 200px;
@@ -112,4 +114,66 @@ mwlResizable {
 }
 .resize-handle-right {
   right: 0;
+}
+.todo {
+  .delete {
+    bottom: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  .addtodo {
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-between;
+
+    input {
+      outline: none;
+      border: none;
+      padding: 0.5rem;
+      width: 100%;
+    }
+  }
+
+  .todo-itemlist {
+    width: 100%;
+    align-items: center;
+
+    .todo-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      border-bottom: 1px solid lightgray;
+      height: fit-content;
+
+      .content {
+        margin: 0.5rem 0 0.5rem 0.5rem;
+      }
+
+      #done:checked ~ .helper {
+        text-decoration: line-through;
+        color: gray;
+      }
+
+      button {
+        color: black;
+      }
+
+      .todo-edit {
+        height: fit-content;
+        align-self: center;
+        margin-left: 0.5rem;
+        // padding-left: 0.2rem;
+        // border: 1px solid black;
+        border: none;
+        font-size: 12px;
+        width: fit-content;
+      }
+
+      .todo-edit:focus {
+        outline: none !important;
+      }
+    }
+  }
 }
