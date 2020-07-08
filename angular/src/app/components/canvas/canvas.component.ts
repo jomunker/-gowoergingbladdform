@@ -95,4 +95,8 @@ export class CanvasComponent implements OnInit {
     }
     return size;
   }
+
+  trackByFn(index: any, item: any) {
+    return index;
+ }
 }
