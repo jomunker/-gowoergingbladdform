@@ -51,7 +51,7 @@
         </mat-form-field>
 
         <mat-list *ngIf="module.content != ''" class="todo-itemlist" dense>
-          <mat-list-item *ngFor="let todo of module.content.reverse()" class="todo-item">
+          <mat-list-item *ngFor="let todo of module.content" class="todo-item">
 
             <mat-checkbox (change)="canvasmoduleservice.moduleEdit(module)" [(ngModel)]="todo.checked" color="primary">
             </mat-checkbox>

@@ -54,6 +54,11 @@ export class CanvasModuleService {
   moduleEdit(object) {
     this.moduleArrayEdit(object);
     console.log(this.moduleArray);
+    if (Array.isArray(object.content)) {
+      object.content = object.content.sort(function (a, b) {
+        return a.checked - b.checked;
+      })
+    }
     this.socket.emit('module edited', (object));
   }
 
@@ -68,13 +73,18 @@ export class CanvasModuleService {
           // console.log(object.content);
           // checks if the content is an Array
           if (Array.isArray(object.content)) {
-            console.log(object)
+            //console.log(object)
             // checks if checked value has changed on todo modules
             for (let j = 0; j < object.content.length; j++) {
               if (object.content[j].checked != this.moduleArray[i].content[j].checked) {
                 this.moduleArray[i].content.splice(j, 1, object.content[j]);
               }
             }
+            // console.log(this.moduleArray[i].content)
+            this.moduleArray[i].content.sort(function (a, b) {
+              return a.checked - b.checked;
+            })
+            // console.log(this.moduleArray[i].content);
           } else {
             this.moduleArray.splice(i, 1, object);
           }
