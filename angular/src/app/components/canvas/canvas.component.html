@@ -1,90 +1,80 @@
-<div [ngStyle]="{'width': settingsService.settings.canvasWidth +'px', 'height': settingsService.settings.canvasHeight +'px'}"
-     class="boundary">
+<div
+  [ngStyle]="{'width': settingsService.settings.canvasWidth +'px', 'height': settingsService.settings.canvasHeight +'px'}"
+  class="boundary">
 
   <ng-container *ngFor="let module of canvasmoduleservice.moduleArray" cdkDrop>
 
     <!-- module of type doc/text -->
     <div (cdkDragEnded)="dragEnd($event, module)" (resizeEnd)="onResizeEnd($event,module)" *ngIf="module.type == 'doc'"
-      [cdkDragFreeDragPosition]="module.position"
-      [class]="module.type"
-      [enableGhostResize]="true"
-      [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
-      [style.height.px]="module.position.height"
-      [style.width.px]="module.position.width"
-      [validateResize]="validate"
-      cdkDrag
-      cdkDragBoundary=".boundary"
-      class="box"
-      mwlResizable>
+      [cdkDragFreeDragPosition]="module.position" [class]="module.type" [enableGhostResize]="true"
+      [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [style.height.px]="module.position.height"
+      [style.width.px]="module.position.width" [validateResize]="validate" cdkDrag cdkDragBoundary=".boundary"
+      class="box" mwlResizable>
 
       <ng-container *ngTemplateOutlet="menu"></ng-container>
-      <ng-container *ngTemplateOutlet="draghandle"></ng-container>
+      <div cdkDragHandle class="handle">
+        <ng-container *ngTemplateOutlet="draghandle"></ng-container>
+      </div>
 
       <textarea (keyup)="canvasmoduleservice.moduleEdit(module)" [(ngModel)]='module.content' cdkTextareaAutosize
-                class="textarea mat-body-1" placeholder="Write something..."></textarea>
+        class="textarea mat-body-1" placeholder="Write something..."></textarea>
     </div>
 
     <!-- module of type img -->
     <div (cdkDragEnded)="dragEnd($event, module)" (resizeEnd)="onResizeEnd($event,module)" *ngIf="module.type == 'img'"
-         [cdkDragFreeDragPosition]="module.position"
-         [class]="module.type"
-         [enableGhostResize]="true"
-         [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
-         [style.height.px]="module.position.height"
-         [style.width.px]="module.position.width"
-         [validateResize]="validate"
-         cdkDrag
-         cdkDragBoundary=".boundary"
-         mwlResizable>
+      [cdkDragFreeDragPosition]="module.position" [class]="module.type" [enableGhostResize]="true"
+      [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [style.height.px]="module.position.height"
+      [style.width.px]="module.position.width" [validateResize]="validate" cdkDrag cdkDragBoundary=".boundary"
+      mwlResizable>
 
       <ng-container *ngTemplateOutlet="menu"></ng-container>
-      <ng-container *ngTemplateOutlet="draghandle"></ng-container>
-
+      <div cdkDragHandle class="handle">
+        <ng-container *ngTemplateOutlet="draghandle"></ng-container>
+      </div>
       <img [src]="module.content" alt="">
     </div>
 
     <!-- module of type to-do -->
     <mat-card (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'todo'"
-              [cdkDragFreeDragPosition]="module.position"
-              [class]="module.type"
-              cdkDrag
-              dkDragBoundary=".boundary"
-              class="box">
+      [cdkDragFreeDragPosition]="module.position" [class]="module.type" cdkDrag dkDragBoundary=".boundary" class="box">
       <mat-card-content>
+        <div cdkDragHandle class="handle">
           <ng-container *ngTemplateOutlet="draghandle"></ng-container>
+        </div>
         <mat-form-field appearance="fill" color="primary" style="width: 100%;">
           <mat-label>Add a new Task!</mat-label>
-          <input #newtodo (keyup.enter)="todoservice.addTodo(module, newtodo.value)" matInput
-                 maxlength="150" onfocus="this.value=''">
+          <input matInput #newtodo (keyup.enter)="todoservice.addTodo(module, newtodo.value)" maxlength="150"
+            onfocus="this.value=''">
           <button (click)="todoservice.addTodo(module, newtodo.value)" mat-icon-button matSuffix>
             <mat-icon color="primary">done</mat-icon>
           </button>
         </mat-form-field>
 
         <mat-list *ngIf="module.content != ''" class="todo-itemlist" dense>
-          <mat-list-item *ngFor="let todo of module.content" class="todo-item">
+          <mat-list-item *ngFor="let todo of module.content.reverse()" class="todo-item">
 
-            <mat-checkbox (change)="canvasmoduleservice.moduleEdit(module)" [(ngModel)]='todo.checked' color="primary"
-                          id="done">
+            <mat-checkbox (change)="canvasmoduleservice.moduleEdit(module)" [(ngModel)]="todo.checked" color="primary">
             </mat-checkbox>
-            <div class="helper" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
 
-              <div (dblclick)="todoservice.editTodo(module, todo)" *ngIf="!todo.editing; else editingTodo" class="content">
+            <div class="helper">
+
+              <div (dblclick)="todoservice.editTodo(module, todo)" *ngIf="!todo.editing; else editingTodo"
+                class="content"
+                [ngStyle]="{'color': (todo.checked == true)? '#bbb' : 'inherit', 'text-decoration': (todo.checked == true)? 'line-through' : 'none'}">
                 {{ todo.todoString }}
               </div>
 
               <ng-template #editingTodo>
-                <input #todoinput (blur)="todoservice.editDone(module, todo)" (keyup.enter)="todoservice.editDone(module, todo)" (keyup.esc)="todoservice.editDone(module, todo)"
-                       [(ngModel)]="todo.todoString" appAutoFocus class="todo-edit"
-                       maxlength="150"
-                       placeholder="Type someting!"
-                       type="text">
+                <input #todoinput (blur)="todoservice.editDone(module, todo)"
+                  (keyup.enter)="todoservice.editDone(module, todo)" (keyup.esc)="todoservice.editDone(module, todo)"
+                  [(ngModel)]="todo.todoString" appAutoFocus class="todo-edit" maxlength="150"
+                  placeholder="Type someting!" type="text">
               </ng-template>
 
 
-              <button (click)="todoservice.deleteTodo(module, todo)" (keydown.enter)="todoservice.deleteTodo(module, todo)"
-                      mat-icon-button style="right: 0;">
-                <mat-icon color="warn" matListIcon>clear</mat-icon>
+              <button (click)="todoservice.deleteTodo(module, todo)"
+                (keydown.enter)="todoservice.deleteTodo(module, todo)" mat-icon-button style="right: 0;">
+                <mat-icon color="warn" matListIcon style="display: flex; align-items: center;">clear</mat-icon>
               </button>
             </div>
           </mat-list-item>
@@ -97,14 +87,12 @@
     <!-- ----Templates---- -->
     <!-- Draghandle-Template -->
     <ng-template #draghandle>
-      <div cdkDragHandle class="handle">
       <svg fill="currentColor" viewBox="0 0 24 24" width="24px">
         <path
           d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
         </path>
         <path d="M0 0h24v24H0z" fill="none"></path>
       </svg>
-      </div>
     </ng-template>
 
     <!-- Context-Menü-Template -->

@@ -66,7 +66,18 @@ export class CanvasModuleService {
         if (module.content != object.content) {
           // console.log(module.content);
           // console.log(object.content);
-          this.moduleArray.splice(i, 1, object);
+          // checks if the content is an Array
+          if (Array.isArray(object.content)) {
+            console.log(object)
+            // checks if checked value has changed on todo modules
+            for (let j = 0; j < object.content.length; j++) {
+              if (object.content[j].checked != this.moduleArray[i].content[j].checked) {
+                this.moduleArray[i].content.splice(j, 1, object.content[j]);
+              }
+            }
+          } else {
+            this.moduleArray.splice(i, 1, object);
+          }
         }
         // checks if the x or y position has changed
         if (module.position.x != object.position.x || module.position.y != object.position.y) {
@@ -76,7 +87,7 @@ export class CanvasModuleService {
 
         }
         // checks if width or height has changed
-        if (module.position.width != object.position.width || module.position.height != object.position.height) {
+        if (module.position.width != object.position.width || module.position.height != object.position.height) {
           this.moduleArray.splice(i, 1, object);
         }
       }

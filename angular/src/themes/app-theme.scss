@@ -130,7 +130,7 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
         background-color: #474747 !important;
     }
 
-    .box textarea{
+    .box textarea, .box input{
      color: #d9d9d9;
     }
 
