@@ -69,30 +69,23 @@ export class CanvasModuleService {
       if (module._id == object._id) {
         // checks if the content has changed
         if (module.content != object.content) {
-          // console.log(module.content);
-          // console.log(object.content);
           // checks if the content is an Array
           if (Array.isArray(object.content)) {
-            //console.log(object)
             // checks if checked value has changed on todo modules
             for (let j = 0; j < object.content.length; j++) {
-              if (object.content[j].checked != this.moduleArray[i].content[j].checked) {
-                this.moduleArray[i].content.splice(j, 1, object.content[j]);
+              if (object.content[j].checked != module.content[j].checked) {
+                module.content.splice(j, 1, object.content[j]);
               }
             }
-            // console.log(this.moduleArray[i].content)
-            this.moduleArray[i].content.sort(function (a, b) {
+            module.content.sort(function (a, b) {
               return a.checked - b.checked;
             })
-            // console.log(this.moduleArray[i].content);
           } else {
             this.moduleArray.splice(i, 1, object);
           }
         }
         // checks if the x or y position has changed
         if (module.position.x != object.position.x || module.position.y != object.position.y) {
-          // console.log(module.position);
-          // console.log(object.position);
           this.moduleArray.splice(i, 1, object);
 
         }

@@ -58,6 +58,11 @@ export class CanvasComponent implements OnInit {
   dragEnd(event: CdkDragEnd, module) {
     module.position.x += event.distance.x;
     module.position.y += event.distance.y;
+    if(module.position.x < 0) {
+      module.position.x = 0;
+    } else if (module.position.y < 0) {
+      module.position.y = 0;
+    }
     this.canvasmoduleservice.moduleEdit(module);
   }
 

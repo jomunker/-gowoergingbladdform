@@ -35,9 +35,10 @@
     </div>
 
     <!-- module of type to-do -->
-    <mat-card (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'todo'"
-      [cdkDragFreeDragPosition]="module.position" [class]="module.type" cdkDrag dkDragBoundary=".boundary" class="box">
+    <div (cdkDragEnded)="dragEnd($event, module)" *ngIf="module.type == 'todo'"
+      [cdkDragFreeDragPosition]="module.position" [class]="module.type" cdkDrag cdkDragBoundary=".boundary" class="box" >
       <mat-card-content>
+        <ng-container *ngTemplateOutlet="menu"></ng-container>
         <div cdkDragHandle class="handle">
           <ng-container *ngTemplateOutlet="draghandle"></ng-container>
         </div>
@@ -80,9 +81,8 @@
           </mat-list-item>
 
         </mat-list>
-        <ng-container *ngTemplateOutlet="menu"></ng-container>
       </mat-card-content>
-    </mat-card>
+    </div>
 
     <!-- ----Templates---- -->
     <!-- Draghandle-Template -->
