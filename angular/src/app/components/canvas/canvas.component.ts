@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {CanvasModuleService} from 'src/app/services/canvasmodule/canvasmodule.service';
-import {HttpClient} from "@angular/common/http";
-import {Settings} from "../../interfaces/settings";
 import {CdkDragEnd} from '@angular/cdk/drag-drop';
 import {SettingsService} from 'src/app/services/settings/settings.service';
 import {ResizeEvent} from 'angular-resizable-element';
-import {ResizableModule} from 'angular-resizable-element';
-import { TodoService } from 'src/app/services/todo/todo.service';
+import {TodoService} from 'src/app/services/todo/todo.service';
 
 declare function io(): any;
 
@@ -21,7 +18,8 @@ export class CanvasComponent implements OnInit {
   moduleMaxSize = 500;
   moduleMinSize = 200;
 
-  constructor(public canvasmoduleservice: CanvasModuleService, private http: HttpClient, public settingsService: SettingsService, public todoservice: TodoService) { }
+  constructor(public canvasmoduleservice: CanvasModuleService, public settingsService: SettingsService, public todoservice: TodoService) {
+  }
 
 
   ngOnInit() {
@@ -58,50 +56,49 @@ export class CanvasComponent implements OnInit {
   dragEnd(event: CdkDragEnd, module) {
     module.position.x += event.distance.x;
     module.position.y += event.distance.y;
-    if(module.position.x < 0) {
+    if (module.position.x < 0) {
       module.position.x = 0;
     } else if (module.position.y < 0) {
       module.position.y = 0;
+    } else if ((module.position.x + module.position.width) > this.settingsService.settings.canvasWidth) {
+      module.position.x = this.settingsService.settings.canvasWidth - module.position.width;
+    } else if ((module.position.y + module.position.height) > this.settingsService.settings.canvasHeight) {
+      module.position.y = this.settingsService.settings.canvasHeight - module.position.height;
     }
     this.canvasmoduleservice.moduleEdit(module);
   }
 
   validate(event: ResizeEvent): boolean {
     // const MIN_DIMENSIONS_PX: number = 100;
-    if (
-      event.rectangle.width &&
+    return !(event.rectangle.width &&
       event.rectangle.height &&
       (event.rectangle.width < this.moduleMinSize ||
-        event.rectangle.height < this.moduleMinSize)
-    ) {
-      return false;
-    }
-    return true;
+        event.rectangle.height < this.moduleMinSize));
   }
 
   // updates module width and height at resizing
-  onResizeEnd(event: ResizeEvent, module){
+  onResizeEnd(event: ResizeEvent, module) {
     console.log('resize end was triggered');
     module.position.width = this.checkRectangle(event.rectangle.width);
     module.position.height = this.checkRectangle(event.rectangle.height);
     this.canvasmoduleservice.moduleEdit(module);
-    console.log('width '+event.rectangle.width);
-    console.log('height '+event.rectangle.height);
+    console.log('width ' + event.rectangle.width);
+    console.log('height ' + event.rectangle.height);
 
-    console.log('new dimensions: height: '+ module.position.height + ' width: ' + module.position.width);
+    console.log('new dimensions: height: ' + module.position.height + ' width: ' + module.position.width);
   }
 
-  checkRectangle(size){
-    if(size > this.moduleMaxSize){
+  checkRectangle(size) {
+    if (size > this.moduleMaxSize) {
       size = this.moduleMaxSize;
     }
-    if(size < this.moduleMinSize){
+    if (size < this.moduleMinSize) {
       size = this.moduleMinSize;
     }
     return size;
   }
 
-  trackByFn(index: any, item: any) {
+  trackByFn(index: any) {
     return index;
- }
+  }
 }

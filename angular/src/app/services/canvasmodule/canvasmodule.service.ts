@@ -84,11 +84,12 @@ export class CanvasModuleService {
             this.moduleArray.splice(i, 1, object);
           }
         }
+
         // checks if the x or y position has changed
         if (module.position.x != object.position.x || module.position.y != object.position.y) {
           this.moduleArray.splice(i, 1, object);
-
         }
+
         // checks if width or height has changed
         if (module.position.width != object.position.width || module.position.height != object.position.height) {
           this.moduleArray.splice(i, 1, object);
