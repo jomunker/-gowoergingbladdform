@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CanvasModuleService {
   socket = io();
+  lastTextEmit = 0;
 
   moduleArray: Array<CanvasModule> = [];
 
@@ -18,11 +19,14 @@ export class CanvasModuleService {
   }
 
   ngOnInit() {
-
     this.socket.on('new doc', (module) => {
       this.moduleArray.push(module);
     });
+  }
 
+  //called every 1 ms in canvas.component.ts
+  updateLastTextEmit(): void{
+    this.lastTextEmit += 1;
   }
 
   // creates new module with type 'doc'
@@ -53,13 +57,21 @@ export class CanvasModuleService {
   // emits 'module edited' to initiate the edit of a module
   moduleEdit(object) {
     this.moduleArrayEdit(object);
-    console.log(this.moduleArray);
     if (Array.isArray(object.content)) {
       object.content = object.content.sort(function (a, b) {
         return a.checked - b.checked;
       })
     }
-    this.socket.emit('module edited', (object));
+    //when type doc, emit only after 300ms passed. to slow the connections down.
+    if (object.type === "doc"){
+      if (this.lastTextEmit >= 500) {
+        this.socket.emit('module edited', (object));
+        this.lastTextEmit = 0;
+      }
+    }
+    if (object.type != "doc") {
+      this.socket.emit('module edited', (object));
+    }
   }
 
   // replaces the module in moduleArray if module is edited

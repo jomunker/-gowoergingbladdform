@@ -16,7 +16,7 @@
         <ng-container *ngTemplateOutlet="draghandle"></ng-container>
       </div>
 
-      <textarea (keyup)="canvasmoduleservice.moduleEdit(module)" [(ngModel)]='module.content' cdkTextareaAutosize
+      <textarea (keyup)="canvasmoduleservice.moduleEdit(module)" (blur)="canvasmoduleservice.moduleEdit(module)"[(ngModel)]='module.content' cdkTextareaAutosize
                 class="textarea mat-body-1" placeholder="Write something..."></textarea>
     </div>
 

@@ -27,6 +27,9 @@ export class CanvasComponent implements OnInit {
     this.canvasmoduleservice.loadModules();
     this.settingsService.load();
 
+    setInterval(() => {
+      this.canvasmoduleservice.updateLastTextEmit()}, 1);
+
     // listens to socket event 'editModule' and replaces module from moduleArray
     this.socket.on('new module', (newModule) => {
       this.canvasmoduleservice.moduleArrayPush(newModule);
