@@ -12,42 +12,8 @@ import {SettingsService} from 'src/app/services/settings/settings.service';
 })
 export class ToolbarComponent {
 
-  constructor(public canvasmoduleservice: CanvasModuleService,public canvasComponent: CanvasComponent, public dialog: MatDialog, public fileuploadservice: FileUploadService, public settingsService: SettingsService) { }
-
-
-  openDialog(): void {
-
-    this.settingsService.loadSettings().then(settings => {
-
-      const dialogRef = this.dialog.open(DialogHTML, {
-        width: '500px',
-        data: {width: settings.canvasWidth, height: settings.canvasHeight}
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result != undefined){
-          console.log('The settings-dialog was closed - with results:');
-          this.settingsService.triggerSettings(result.width, result.height)
-        } else {
-          console.log('The settings-dialog was closed - no results');
-        }
-      });
-    });
+  constructor(public canvasmoduleservice: CanvasModuleService, public canvasComponent: CanvasComponent, public dialog: MatDialog, public fileuploadservice: FileUploadService, public settingsService: SettingsService) {
   }
+
 }
 
-//provides the dialog.html that's going to get displayed
-@Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'settings-dialog.html',
-})
-export class DialogHTML {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogHTML>,
-    @Inject(MAT_DIALOG_DATA) public data) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
