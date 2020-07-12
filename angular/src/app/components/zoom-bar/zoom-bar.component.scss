@@ -1,11 +1,8 @@
 #zoom-bar {
   position: fixed;
   z-index: 99;
-  width: 60px;
   display: flex;
-  align-items: center;
-  align-content: space-around;
-  flex-direction: column;
+  flex-direction: row;
   padding: 20px;
   border-radius: 20px;
   bottom: 20px;

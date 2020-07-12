@@ -14,19 +14,14 @@ export class SettingsComponent implements OnInit {
 
   socket = io();
 
-
   constructor(public rootComponent: RootComponent, public settingsService: SettingsService) { }
 
   ngOnInit(){
     this.settingsService.load();
-    
+
     this.socket.on('set boardname', (object) => {
       this.settingsService.settings = object[0];
       console.log("settings adopted.");
     });
   }
-
-
-  
-
 }

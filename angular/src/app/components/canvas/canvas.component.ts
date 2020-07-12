@@ -4,6 +4,7 @@ import {CdkDragEnd} from '@angular/cdk/drag-drop';
 import {SettingsService} from 'src/app/services/settings/settings.service';
 import {ResizeEvent} from 'angular-resizable-element';
 import {TodoService} from 'src/app/services/todo/todo.service';
+import {ZoomBarComponent} from "../zoom-bar/zoom-bar.component";
 
 declare function io(): any;
 
@@ -17,8 +18,7 @@ export class CanvasComponent implements OnInit {
   socket = io();
   moduleMaxSize = 500;
   moduleMinSize = 200;
-
-  constructor(public canvasmoduleservice: CanvasModuleService, public settingsService: SettingsService, public todoservice: TodoService) {
+  constructor(public canvasmoduleservice: CanvasModuleService, public settingsService: SettingsService, public todoservice: TodoService, public zoomBarComponent: ZoomBarComponent) {
   }
 
 

@@ -19,6 +19,7 @@ import { Overlay } from "@angular/cdk/overlay";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import {ZoomBarComponent, DialogHTML} from "./components/zoom-bar/zoom-bar.component";
+import {MatSliderModule} from "@angular/material/slider";
 
 
 
@@ -49,10 +50,11 @@ import {ZoomBarComponent, DialogHTML} from "./components/zoom-bar/zoom-bar.compo
     MatDialogModule,
     MatCheckboxModule,
     MatCardModule,
-    ResizableModule
+    ResizableModule,
+    MatSliderModule
   ],
   entryComponents: [DialogHTML],
-  providers: [CanvasComponent, MatDialog, Overlay, SettingsComponent],
+  providers: [CanvasComponent, MatDialog, Overlay, SettingsComponent, ZoomBarComponent],
   bootstrap: [RootComponent]
 })
 export class AppModule { }

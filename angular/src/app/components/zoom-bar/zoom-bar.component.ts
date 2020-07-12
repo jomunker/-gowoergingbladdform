@@ -1,6 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {CanvasModuleService} from "../../services/canvasmodule/canvasmodule.service";
 import {CanvasComponent} from "../canvas/canvas.component";
 import {SettingsService} from "../../services/settings/settings.service";
 
@@ -11,7 +10,9 @@ import {SettingsService} from "../../services/settings/settings.service";
 })
 export class ZoomBarComponent {
 
-  constructor(public canvasmoduleservice: CanvasModuleService,public canvasComponent: CanvasComponent, public dialog: MatDialog, public settingsService: SettingsService) { }
+  value : number = 1;
+
+  constructor(public dialog: MatDialog, public settingsService: SettingsService) { }
 
   openDialog(): void {
 
@@ -32,8 +33,12 @@ export class ZoomBarComponent {
       });
     });
   }
-}
 
+  //zoomValue is going to get processed in the settings.service.ts
+  sliderChange(newValue){
+    this.settingsService.setZoomValue(newValue);
+  }
+}
 //provides the dialog.html that's going to get displayed
 @Component({
   selector: 'dialog-overview-example-dialog',
