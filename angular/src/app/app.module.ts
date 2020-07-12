@@ -18,6 +18,7 @@ import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { Overlay } from "@angular/cdk/overlay";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
+import {ZoomBarComponent} from "./components/zoom-bar/zoom-bar.component";
 
 
 
@@ -32,6 +33,7 @@ import { MatCardModule } from '@angular/material/card';
     ChatComponent,
     HeaderComponent,
     ToolbarComponent,
+    ZoomBarComponent,
     DialogHTML,
     SettingsComponent,
     AutoFocusDirective
@@ -47,8 +49,7 @@ import { MatCardModule } from '@angular/material/card';
     MatDialogModule,
     MatCheckboxModule,
     MatCardModule,
-    ResizableModule,
-    // DragDropModule
+    ResizableModule
   ],
   entryComponents: [DialogHTML],
   providers: [CanvasComponent, MatDialog, Overlay, SettingsComponent],
