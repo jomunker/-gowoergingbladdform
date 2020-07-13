@@ -10,7 +10,7 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChatComponent } from './components/chat/chat.component';
 import { HeaderComponent } from './components/header/header.component';
-import { DialogHTML, ToolbarComponent } from './components/toolbar/toolbar.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ResizableModule } from 'angular-resizable-element';
@@ -18,6 +18,8 @@ import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { Overlay } from "@angular/cdk/overlay";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
+import {ZoomBarComponent, DialogHTML} from "./components/zoom-bar/zoom-bar.component";
+import {MatSliderModule} from "@angular/material/slider";
 
 
 
@@ -32,6 +34,7 @@ import { MatCardModule } from '@angular/material/card';
     ChatComponent,
     HeaderComponent,
     ToolbarComponent,
+    ZoomBarComponent,
     DialogHTML,
     SettingsComponent,
     AutoFocusDirective
@@ -48,10 +51,10 @@ import { MatCardModule } from '@angular/material/card';
     MatCheckboxModule,
     MatCardModule,
     ResizableModule,
-    // DragDropModule
+    MatSliderModule
   ],
   entryComponents: [DialogHTML],
-  providers: [CanvasComponent, MatDialog, Overlay, SettingsComponent],
+  providers: [CanvasComponent, MatDialog, Overlay, SettingsComponent, ZoomBarComponent],
   bootstrap: [RootComponent]
 })
 export class AppModule { }

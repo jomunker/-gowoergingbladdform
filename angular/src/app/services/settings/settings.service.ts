@@ -16,6 +16,7 @@ export class SettingsService {
     _id: undefined,
   }
   socket = io();
+  zoomValue : number = 1;
 
   constructor(private http: HttpClient) { }
 
@@ -49,5 +50,9 @@ export class SettingsService {
 
   triggerBoardName(name: string){
     this.socket.emit("set boardname", {name})
+  }
+
+  setZoomValue(value){
+    this.zoomValue = value;
   }
 }
