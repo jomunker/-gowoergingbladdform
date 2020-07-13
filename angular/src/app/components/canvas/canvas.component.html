@@ -1,4 +1,6 @@
-<div [ngStyle]="{'width': settingsService.settings.canvasWidth +'px', 'height': settingsService.settings.canvasHeight +'px', 'zoom': settingsService.zoomValue}"
+<div
+  [ngStyle]="{'width': settingsService.settings.canvasWidth +'px', 'height': settingsService.settings.canvasHeight +'px',
+   'zoom': settingsService.zoomValue, 'margin-top': 64 / settingsService.zoomValue +'px'}"
   class="boundary">
 
   <ng-container *ngFor="let module of canvasmoduleservice.moduleArray; let i=index; trackBy:trackByFn" cdkDrop>
@@ -16,7 +18,8 @@
         <ng-container *ngTemplateOutlet="draghandle"></ng-container>
       </div>
 
-      <textarea (keyup)="canvasmoduleservice.moduleEdit(module)" (blur)="canvasmoduleservice.moduleEdit(module)"[(ngModel)]='module.content' cdkTextareaAutosize
+      <textarea (blur)="canvasmoduleservice.moduleEdit(module)" (keyup)="canvasmoduleservice.moduleEdit(module)"
+                [(ngModel)]='module.content' cdkTextareaAutosize
                 class="textarea mat-body-1" placeholder="Write something..."></textarea>
     </div>
 
