@@ -31,6 +31,12 @@ export class ChatService {
   chatRecordPush(msg) {
     //adds another message to the chatRecord
     this.chatRecord.push(msg);
+
+    //Timeout of 1ms because the data-binding needs time.
+    setTimeout( () => {
+      document.getElementById("chat").scroll(0, document.getElementById("chat").offsetHeight);
+      }, 1)
+
   }
 
   chatRecordSplice(msg) {

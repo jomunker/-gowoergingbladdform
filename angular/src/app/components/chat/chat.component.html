@@ -4,7 +4,7 @@
     <button mat-icon-button (click)="rootComponent.chatOpened=false"><mat-icon>close</mat-icon></button>
   </mat-toolbar>
 
-<div class="scroll">
+<div class="scroll" id="chat">
   <mat-list id="messages" >
     <div class="message-container" *ngFor="let module of chatService.chatRecord">
       <span class="mat-body-1">{{module.message}}</span>
@@ -15,6 +15,7 @@
 </div>
 
 <div class="stick-to-bottom">
-  <input matInput id="input" (keydown.enter)="onSend(msg.value)" #msg autocomplete="off"/>
+  <label>
+    <input matInput id="input" (keydown.enter)="onSend(msg.value)" #msg autocomplete="off"/></label>
   <button mat-flat-button class="send-button" (click)="onSend(msg.value)" color="accent">Send</button>
 </div>
