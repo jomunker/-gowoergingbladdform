@@ -1,17 +1,16 @@
-<h1 mat-dialog-title>Einstellungen</h1>
+<h1 mat-dialog-title>Board size</h1>
 <div mat-dialog-content>
-  <p>Maße</p>
   <mat-form-field>
-    <mat-label>Breite</mat-label>
+    <mat-label>Width</mat-label>
     <input type="number" matInput [(ngModel)]="data.width">
 
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Höhe</mat-label>
+    <mat-label>Height</mat-label>
     <input type="number" matInput [(ngModel)]="data.height">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Abbrechen</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Übernehmen</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Subbmit</button>
 </div>
