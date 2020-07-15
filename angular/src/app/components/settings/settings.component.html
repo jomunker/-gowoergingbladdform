@@ -1,28 +1,31 @@
 <mat-toolbar>
-    <h2>Settings</h2>
-    <span class="placeholder"></span>
-    <button mat-icon-button (click)="rootComponent.settingsOpened=false"><mat-icon>close</mat-icon></button>
+  <h2>Settings</h2>
+  <span class="placeholder"></span>
+  <button (click)="rootComponent.settingsOpened=false" mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
 </mat-toolbar>
 
 <div class="container">
-    <div class="mat-subheading-2">Boardname</div>
-    <mat-form-field class="input-field">
-        <mat-label>Enter a boardname</mat-label>
-        <input matInput #name maxlength="30" class="mat-body-1" placeholder="e.g. your project" [(ngModel)]="settingsService.settings.boardName"
-        (keyup)="settingsService.triggerBoardName(settingsService.settings.boardName)">
+  <div class="mat-subheading-2">Boardname</div>
+  <mat-form-field class="input-field">
+    <mat-label>Enter a boardname</mat-label>
+    <input #name (keyup)="settingsService.triggerBoardName(settingsService.settings.boardName)" [(ngModel)]="settingsService.settings.boardName" class="mat-body-1" matInput
+           maxlength="30"
+           placeholder="e.g. your project">
     <mat-hint align="end">{{name.value.length}} / 30</mat-hint>
-      </mat-form-field>
+  </mat-form-field>
 
-    <div class="mat-subheading-2">Color Theme</div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="radio-group"
-        [(ngModel)]="rootComponent.themeClass">
-        <mat-radio-button [value]="rootComponent.lightTheme" (change)="rootComponent.changeTheme(rootComponent.lightTheme)">
-          Light Mode
-        </mat-radio-button>
-        <mat-radio-button [value]="rootComponent.darkTheme" (change)="rootComponent.changeTheme(rootComponent.darkTheme)">
-          Dark Mode
-        </mat-radio-button>
-      </mat-radio-group>
+  <div class="mat-subheading-2">Color Theme</div>
+  <mat-radio-group
+    [(ngModel)]="rootComponent.themeClass"
+    aria-labelledby="example-radio-group-label"
+    class="radio-group">
+    <mat-radio-button (change)="rootComponent.changeTheme(rootComponent.lightTheme)" [value]="rootComponent.lightTheme">
+      Light Mode
+    </mat-radio-button>
+    <mat-radio-button (change)="rootComponent.changeTheme(rootComponent.darkTheme)" [value]="rootComponent.darkTheme">
+      Dark Mode
+    </mat-radio-button>
+  </mat-radio-group>
 </div>

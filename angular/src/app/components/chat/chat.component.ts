@@ -42,9 +42,4 @@ export class ChatComponent implements OnInit {
   onDelete(msg: ChatMsg) {
     this.chatService.msgDelete(msg);
   }
-
-  loadDB() {
-    this.chatService.getChat();
-  }
-
 }

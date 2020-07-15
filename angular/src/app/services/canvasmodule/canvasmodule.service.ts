@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-declare function io(): any;
+import {Injectable} from '@angular/core';
+import {CanvasModule} from '../../interfaces/canvasModule';
+import {HttpClient} from '@angular/common/http';
 
-import { CanvasModule } from '../../interfaces/canvasModule';
-import { HttpClient } from '@angular/common/http';
+declare function io(): any;
 
 
 @Injectable({
@@ -25,16 +25,18 @@ export class CanvasModuleService {
   }
 
   //called every 1 ms in canvas.component.ts
-  updateLastTextEmit(): void{
-    this.lastTextEmit += 1;
+  updateLastTextEmit(): void {
+    if (this.lastTextEmit <= 500) {
+      this.lastTextEmit += 1;
+    }
   }
 
-  // creates new module with type 'doc'
+  // creates new module
   moduleCreate(content: any, type: string): void {
-    console.log(screen.availWidth);
+    //console.log(screen.availWidth);
     const halfWidth = screen.availWidth / 2.5;
     const halfHeight = screen.availHeight / 3;
-    console.log(halfWidth)
+    //console.log(halfWidth)
     const module: CanvasModule = {
       _id: undefined, // defined from database
       type: type,
@@ -46,7 +48,7 @@ export class CanvasModuleService {
       },
       content: content,
     };
-    console.log(module);
+    //console.log(module);
     this.socket.emit('new module', (module));
   }
 
@@ -57,13 +59,15 @@ export class CanvasModuleService {
   // emits 'module edited' to initiate the edit of a module
   moduleEdit(object) {
     this.moduleArrayEdit(object);
+
+    //to place the checked to-dos at the bottom after they get checked.
     if (Array.isArray(object.content)) {
       object.content = object.content.sort(function (a, b) {
         return a.checked - b.checked;
       })
     }
-    //when type doc, emit only after 300ms passed. to slow the connections down.
-    if (object.type === "doc"){
+    //when type doc, emit only after 500ms passed. to slow the connections down.
+    if (object.type === "doc") {
       if (this.lastTextEmit >= 500) {
         this.socket.emit('module edited', (object));
         this.lastTextEmit = 0;
@@ -77,13 +81,18 @@ export class CanvasModuleService {
   // replaces the module in moduleArray if module is edited
   moduleArrayEdit(object) {
     for (let i = 0; i < this.moduleArray.length; i++) {
+
       const module = this.moduleArray[i];
+
       if (module._id == object._id) {
+
         // checks if the content has changed
         if (module.content != object.content) {
+
           // checks if the content is an Array
           if (Array.isArray(object.content)) {
-            // checks if checked value has changed on todo modules
+
+            // checks if checked value has changed on to-do modules
             for (let j = 0; j < object.content.length; j++) {
               if (object.content[j].checked != module.content[j].checked) {
                 module.content.splice(j, 1, object.content[j]);
@@ -119,7 +128,7 @@ export class CanvasModuleService {
   moduleArrayDelete(object) {
     for (let i = 0; i < this.moduleArray.length; i++) {
       const module = this.moduleArray[i];
-      console.log(module);
+
       if (module._id == object._id) {
         console.log(this.moduleArray[i]);
         this.moduleArray.splice(i, 1);

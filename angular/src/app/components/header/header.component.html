@@ -1,14 +1,18 @@
 <mat-toolbar color="primary">
-    <h2>{{ settingsService.settings.boardName }}</h2>
-    <span class="placeholder"></span>
-    <button mat-icon-button 
-      matTooltip="Show Chat"
-      matTooltipPosition="before"
-      aria-label="Show Chat" 
-      (click)="rootComponent.chatOpened=!rootComponent.chatOpened; chatService.getChat()"><mat-icon>chat</mat-icon></button>
-    <button mat-icon-button 
-      matTooltip="Show Settings"
-      matTooltipPosition="before"
-      aria-label="Show Settings" 
-      (click)="rootComponent.settingsOpened=!rootComponent.settingsOpened"><mat-icon>settings</mat-icon></button>
-  </mat-toolbar>
+  <h2>{{ settingsService.settings.boardName }}</h2>
+  <span class="placeholder"></span>
+  <button (click)="rootComponent.chatOpened=!rootComponent.chatOpened; chatService.getChat()"
+          aria-label="Show Chat"
+          mat-icon-button
+          matTooltip="Show Chat"
+          matTooltipPosition="before">
+    <mat-icon>chat</mat-icon>
+  </button>
+  <button (click)="rootComponent.settingsOpened=!rootComponent.settingsOpened"
+          aria-label="Show Settings"
+          mat-icon-button
+          matTooltip="Show Settings"
+          matTooltipPosition="before">
+    <mat-icon>settings</mat-icon>
+  </button>
+</mat-toolbar>

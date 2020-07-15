@@ -15,8 +15,10 @@
   </button>
   <label id="upload-btn" matTooltip="Upload an image" matTooltipPosition="after">
     <mat-icon>photo</mat-icon>
-    <input (change)="fileuploadservice.onfileChange($event)" aria-describedby="inputGroupFileAddon01"
-           class="custom-file-input" id="inputGroupFile01"
+    <input (change)="fileuploadservice.onfileChange($event)"
+           aria-describedby="inputGroupFileAddon01"
+           class="custom-file-input"
+           id="inputGroupFile01"
            type="file">
   </label>
 </div>

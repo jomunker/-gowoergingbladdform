@@ -26,15 +26,15 @@ chatdb.loadDatabase();
 preferencesdb.loadDatabase();
 
 const startPreferences = {
-    canvasWidth : 1920,
-    canvasHeight : 1016, //1080px - headerbar (64px),
-    boardName : 'Gowörgingbladdformmm'
+    canvasWidth: 1920,
+    canvasHeight: 1016, //1080px - headerbar (64px),
+    boardName: 'Gowörgingbladdformmm'
 }
 
 function setPreferences() {
     preferencesdb.find({}, (err, docs) => {
         console.log(docs)
-        if (docs.length === 0){
+        if (docs.length === 0) {
             preferencesdb.insert(startPreferences, (err, newDocs) => {
                 console.log(newDocs)
             })
@@ -62,33 +62,35 @@ io.on('connection', (socket) => {
 
     socket.on('module edited', (edit) => {
         // updates db if a module is edited
-        db.update({ _id: edit._id }, {
+        db.update({_id: edit._id}, {
             _id: edit._id,
             idHTML: edit.idHTML,
             type: edit.type,
             position: edit.position,
             content: edit.content
-        }, { upsert: true }, function (err, numReplaced) {});
+        }, {upsert: true}, function (err, numReplaced) {
+        });
         console.log(edit);
         io.emit('editModule', edit);
     });
 
     socket.on('module deleted', (deleted) => {
         //if module is of type img, delete the image file from uploads folder
-        if(deleted.type='img'){
-            const path = './uploads/'+ deleted.content;
-                try {
-                    fs.unlinkSync(path)
-                    console.log('deleted image from ' + path);
-                } catch(err) {
-                    console.error(err)
-                }
+        if (deleted.type === 'img') {
+            const path = './uploads/' + deleted.content;
+            try {
+                fs.unlinkSync(path)
+                console.log('deleted image from ' + path);
+            } catch (err) {
+                console.error(err)
+            }
         }
         // removes module from db if deleted
         console.log('delete: ' + JSON.stringify(deleted))
-        db.remove({ _id: deleted._id }, {}, (err, numRemoved) => { });
+        db.remove({_id: deleted._id}, {}, (err, numRemoved) => {
+        });
         io.emit('deleteModule', deleted);
-        
+
     });
 
     socket.on('new chat message', (obj) => {
@@ -103,26 +105,22 @@ io.on('connection', (socket) => {
     });
 
     socket.on('delete chat message', (obj) => {
-        chatdb.remove({ _id: obj._id }, {}, (err, numRemoved) => {});
+        chatdb.remove({_id: obj._id}, {}, (err, numRemoved) => {
+        });
         io.emit('delete chat message', obj);
     });
 
-    // socket.on('settings', (obj) => {
-    //     preferencesdb.update({}, {canvasWidth: obj.width, canvasHeight: obj.height, boardName: obj.name}, (err, numRemoved) => {});
-    //     preferencesdb.find({}, (err, docs) => {
-    //         io.emit('settings', docs);
-    //     });
-    // });
-
     socket.on('set canvas', (obj) => {
-        preferencesdb.update({}, {$set: {canvasWidth: obj.width, canvasHeight: obj.height}}, (err, numRemoved) => {});
+        preferencesdb.update({}, {$set: {canvasWidth: obj.width, canvasHeight: obj.height}}, (err, numRemoved) => {
+        });
         preferencesdb.find({}, (err, docs) => {
             io.emit('set canvas', docs);
         });
     });
 
     socket.on('set boardname', (obj) => {
-        preferencesdb.update({},{$set: {boardName: obj.name}},(err, numRemoved) => {});
+        preferencesdb.update({}, {$set: {boardName: obj.name}}, (err, numRemoved) => {
+        });
         preferencesdb.find({}, (err, docs) => {
             io.emit('set boardname', docs);
         });
@@ -146,7 +144,7 @@ app.post('/api/chat', function (req, res) {
 })
 
 app.post('/api/modules', function (req, res) {
-    db.find({}).sort({ createdAt: 1 }).exec((err, data) => {
+    db.find({}).sort({createdAt: 1}).exec((err, data) => {
         if (err) {
             res.end();
             return;
@@ -182,22 +180,20 @@ app.use(express.static('uploads'));
 //Upload single image
 app.post('/upload-image', async (req, res) => {
     try {
-        if(!req.files) {
+        if (!req.files) {
             res.send({
                 status: false,
                 message: 'No file uploaded!'
             });
-        } 
-        else {
+        } else {
             let image = req.files.image;
             //limit upload to image files
-            if(!req.files.image.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)){
+            if (!req.files.image.name.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
                 res.send({
                     status: false,
                     message: 'Only image files are allowed!'
                 });
-            }
-            else{
+            } else {
                 image.mv('./uploads/' + image.name);
                 //send response
                 res.send({

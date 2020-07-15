@@ -18,6 +18,7 @@ export class CanvasComponent implements OnInit {
   socket = io();
   moduleMaxSize = 500;
   moduleMinSize = 200;
+
   constructor(public canvasmoduleservice: CanvasModuleService, public settingsService: SettingsService, public todoservice: TodoService, public zoomBarComponent: ZoomBarComponent) {
   }
 
@@ -28,30 +29,27 @@ export class CanvasComponent implements OnInit {
     this.settingsService.load();
 
     setInterval(() => {
-      this.canvasmoduleservice.updateLastTextEmit()}, 1);
+      this.canvasmoduleservice.updateLastTextEmit()
+    }, 1);
 
     // listens to socket event 'editModule' and replaces module from moduleArray
     this.socket.on('new module', (newModule) => {
       this.canvasmoduleservice.moduleArrayPush(newModule);
-      console.log("Module created.");
     });
 
     // listens to socket event 'editModule' and replaces module from moduleArray
     this.socket.on('editModule', (moduleEdit) => {
       this.canvasmoduleservice.moduleArrayEdit(moduleEdit);
-      console.log("Module edited.");
     });
 
     // listens to socket event 'editModule' and splices module from modulesArray
     this.socket.on('deleteModule', (object) => {
       this.canvasmoduleservice.moduleArrayDelete(object);
-      console.log("Module deleted.");
     });
 
     // listens to socket event 'setting' and adopts the new settings
     this.socket.on('set canvas', (object) => {
       this.settingsService.settings = object[0];
-      console.log("settings adopted.");
     });
   }
 
@@ -81,14 +79,13 @@ export class CanvasComponent implements OnInit {
 
   // updates module width and height at resizing
   onResizeEnd(event: ResizeEvent, module) {
-    console.log('resize end was triggered');
     module.position.width = this.checkRectangle(event.rectangle.width);
     module.position.height = this.checkRectangle(event.rectangle.height);
     this.canvasmoduleservice.moduleEdit(module);
-    console.log('width ' + event.rectangle.width);
-    console.log('height ' + event.rectangle.height);
+    //console.log('width ' + event.rectangle.width);
+    //console.log('height ' + event.rectangle.height);
 
-    console.log('new dimensions: height: ' + module.position.height + ' width: ' + module.position.width);
+    //console.log('new dimensions: height: ' + module.position.height + ' width: ' + module.position.width);
   }
 
   checkRectangle(size) {

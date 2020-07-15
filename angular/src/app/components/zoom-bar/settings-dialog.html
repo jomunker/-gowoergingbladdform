@@ -2,15 +2,15 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Width</mat-label>
-    <input type="number" matInput [(ngModel)]="data.width">
+    <input [(ngModel)]="data.width" matInput type="number">
 
   </mat-form-field>
   <mat-form-field>
     <mat-label>Height</mat-label>
-    <input type="number" matInput [(ngModel)]="data.height">
+    <input [(ngModel)]="data.height" matInput type="number">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Subbmit</button>
+  <button (click)="onNoClick()" mat-button>Cancel</button>
+  <button [mat-dialog-close]="data" cdkFocusInitial mat-button>Subbmit</button>
 </div>

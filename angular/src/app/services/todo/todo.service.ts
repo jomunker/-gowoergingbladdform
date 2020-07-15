@@ -1,15 +1,13 @@
-import { Injectable } from '@angular/core';
-
-import { CanvasModuleService } from '../canvasmodule/canvasmodule.service';
+import {Injectable} from '@angular/core';
+import {CanvasModuleService} from '../canvasmodule/canvasmodule.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
-
   beforeEditCache: string;
 
-  constructor(public canvasmoduleservice: CanvasModuleService) { }
+  constructor(public canvasmoduleservice: CanvasModuleService) {}
 
   ngOnInit() {
     this.beforeEditCache = '';
@@ -20,11 +18,11 @@ export class TodoService {
       const module = this.canvasmoduleservice.moduleArray[i];
       if (module._id == object._id) {
         if (todo != '') {
-          console.log(object.content);
-          object.content.push({ checked: false, editing: false, todoString: todo });
+          //console.log(object.content);
+          object.content.push({checked: false, editing: false, todoString: todo});
           this.canvasmoduleservice.moduleEdit(object);
         } else {
-          console.log("Please enter a ToDo!");
+          //console.log("Please enter a To-Do!");
         }
       }
     }
@@ -34,9 +32,9 @@ export class TodoService {
     for (let i = 0; i < this.canvasmoduleservice.moduleArray.length; i++) {
       const module = this.canvasmoduleservice.moduleArray[i];
       if (module._id == object._id) {
-        console.log(object.content.length);
+        //console.log(object.content.length);
         for (let j = 0; j < object.content.length; j++) {
-          console.log(object.content[j]);
+          //console.log(object.content[j]);
           if (object.content[j] == todo) {
             object.content.splice(j, 1);
             this.canvasmoduleservice.moduleEdit(object);
@@ -48,11 +46,11 @@ export class TodoService {
 
   editTodo(object, todo) {
     for (let i = 0; i < this.canvasmoduleservice.moduleArray.length; i++) {
-      const module = this.canvasmoduleservice.moduleArray[i];
+      const module = this.canvasmoduleservice.moduleArray[i]
       if (module._id == object._id) {
-        console.log(object.content.length);
+        //console.log(object.content.length);
         for (let j = 0; j < object.content.length; j++) {
-          console.log(object.content[j]);
+          //console.log(object.content[j]);
           if (object.content[j] == todo) {
             this.beforeEditCache = todo.todoString;
             todo.editing = true;
@@ -68,9 +66,9 @@ export class TodoService {
     for (let i = 0; i < this.canvasmoduleservice.moduleArray.length; i++) {
       const module = this.canvasmoduleservice.moduleArray[i];
       if (module._id == object._id) {
-        console.log(object.content.length);
+        //console.log(object.content.length);
         for (let j = 0; j < object.content.length; j++) {
-          console.log(object.content[j]);
+          //console.log(object.content[j]);
           if (object.content[j] == todo) {
             todo.editing = false;
             if (todo.todoString.trim().length === 0) {
@@ -83,7 +81,4 @@ export class TodoService {
       }
     }
   }
-
-
-
 }

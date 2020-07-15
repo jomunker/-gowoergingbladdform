@@ -32,10 +32,11 @@ export class ChatService {
     //adds another message to the chatRecord
     this.chatRecord.push(msg);
 
+    //Scrollbar jumps to the bottom, after another message came in.
     //Timeout of 1ms because the data-binding needs time.
-    setTimeout( () => {
+    setTimeout(() => {
       document.getElementById("chat").scroll(0, document.getElementById("chat").offsetHeight);
-      }, 1)
+    }, 1)
 
   }
 

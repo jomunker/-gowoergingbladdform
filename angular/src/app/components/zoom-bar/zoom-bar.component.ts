@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Inject, Input, Output} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {CanvasComponent} from "../canvas/canvas.component";
 import {SettingsService} from "../../services/settings/settings.service";
 
 @Component({
@@ -10,9 +9,10 @@ import {SettingsService} from "../../services/settings/settings.service";
 })
 export class ZoomBarComponent {
 
-  value : number = 1;
+  value: number = 1;
 
-  constructor(public dialog: MatDialog, public settingsService: SettingsService) { }
+  constructor(public dialog: MatDialog,
+              public settingsService: SettingsService) {}
 
   openDialog(): void {
 
@@ -24,21 +24,22 @@ export class ZoomBarComponent {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        if (result != undefined){
-          console.log('The settings-dialog was closed - with results:');
+        if (result != undefined) {
+          //console.log('The settings-dialog was closed - with results:');
           this.settingsService.triggerSettings(result.width, result.height)
         } else {
-          console.log('The settings-dialog was closed - no results');
+          //console.log('The settings-dialog was closed - no results');
         }
       });
     });
   }
 
   //zoomValue is going to get processed in the settings.service.ts
-  sliderChange(newValue){
+  sliderChange(newValue) {
     this.settingsService.setZoomValue(newValue);
   }
 }
+
 //provides the dialog.html that's going to get displayed
 @Component({
   selector: 'dialog-overview-example-dialog',
@@ -48,7 +49,8 @@ export class DialogHTML {
 
   constructor(
     public dialogRef: MatDialogRef<DialogHTML>,
-    @Inject(MAT_DIALOG_DATA) public data) {}
+    @Inject(MAT_DIALOG_DATA) public data) {
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

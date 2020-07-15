@@ -1,28 +1,28 @@
-#tools-container{
+#tools-container {
   position: fixed;
-    z-index: 99;
-    width: 60px;
-    display: flex;
-    align-items: center;
-    align-content: space-around;
-    flex-direction: column;
-    padding: 20px;
-    border-radius: 20px;
-    top: 100px;
-    left: 20px;
-    background-color: #FFFF;
-  }
-
-input[type="file"] {
-    display: none;
+  z-index: 99;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  align-content: space-around;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 20px;
+  top: 100px;
+  left: 20px;
+  background-color: #FFFF;
 }
 
-#upload-btn{
+input[type="file"] {
+  display: none;
+}
+
+#upload-btn {
   margin-top: 10px;
   margin-bottom: 2px;
   padding: 0 8px;
 }
 
-#upload-btn:hover{
+#upload-btn:hover {
   cursor: pointer;
 }

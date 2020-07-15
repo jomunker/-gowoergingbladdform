@@ -1,5 +1,6 @@
 import {Component, OnInit, HostBinding} from '@angular/core';
 import {SettingsService} from 'src/app/services/settings/settings.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './root.component.html',
@@ -22,8 +23,7 @@ export class RootComponent implements OnInit {
     return this.themeClass;
   }
 
-  constructor(public settingsService: SettingsService) {
-  }
+  constructor(public settingsService: SettingsService) {}
 
   ngOnInit(){
     this.setThemeMode();
@@ -44,5 +44,4 @@ export class RootComponent implements OnInit {
     this.themeClass = theme;
     localStorage.setItem('themeMode',theme);
   }
-
 }

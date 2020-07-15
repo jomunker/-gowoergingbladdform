@@ -16,20 +16,20 @@ export class SettingsService {
     _id: undefined,
   }
   socket = io();
-  zoomValue : number = 1;
+  zoomValue: number = 1;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
 
   //loads settings
-  loadSettings(){
+  loadSettings() {
     const option = {
       method: 'POST',
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       }
     }
-    return new Promise<Settings>(resolve =>{
+    return new Promise<Settings>(resolve => {
       this.http.post('/api/preferences', option).subscribe(response => {
         // type change object(which is an array actually) -> any
         resolve(response[0]);
@@ -37,9 +37,11 @@ export class SettingsService {
     })
   }
 
-  load(){
-    this.loadSettings().then(res => {this.settings = res});
-    console.log(this.settings);
+  load() {
+    //async function
+    this.loadSettings().then(res => {
+      this.settings = res
+    });
   }
 
   triggerSettings(width: number, height: number) {
@@ -48,11 +50,11 @@ export class SettingsService {
 
   }
 
-  triggerBoardName(name: string){
+  triggerBoardName(name: string) {
     this.socket.emit("set boardname", {name})
   }
 
-  setZoomValue(value){
+  setZoomValue(value) {
     this.zoomValue = value;
   }
 }
