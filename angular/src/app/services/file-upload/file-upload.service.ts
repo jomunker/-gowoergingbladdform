@@ -9,7 +9,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class FileUploadService {
 
   selectedFile: File = null;
-  snackBarAction: string = "Nice!";
+  snackBarAction: string = "Ok!";
 
   constructor(private http: HttpClient,
               private _snackBar: MatSnackBar,
