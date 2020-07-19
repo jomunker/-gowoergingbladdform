@@ -1,8 +1,9 @@
+
 <div [ngStyle]="{'width': settingsService.settings.canvasWidth +'px',
                 'height': settingsService.settings.canvasHeight +'px',
                 'transform':' scale(' + settingsService.zoomValue + ')'}"
      class="boundary">
-
+     
   <ng-container *ngFor="let module of canvasmoduleservice.moduleArray; let i=index; trackBy:trackByFn" cdkDrop>
 
     <!-- module of type doc/text -->
@@ -96,7 +97,8 @@
               <div (dblclick)="todoservice.editTodo(module, todo)"
                    *ngIf="!todo.editing; else editingTodo"
                    [ngStyle]="{'color': (todo.checked == true)? '#bbb' : 'inherit', 'text-decoration': (todo.checked == true)? 'line-through' : 'none'}"
-                   class="content">
+                   class="content" style="line-height: 1.2rem;
+                   word-break: break-all;">
                 {{ todo.todoString }}
               </div>
 
@@ -150,6 +152,6 @@
         </ng-template>
       </mat-menu>
     </ng-template>
-
+    
   </ng-container>
 </div>
