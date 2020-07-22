@@ -13,5 +13,6 @@ Link zum [Wiki.md](https://github.com/maadc/gowoergingbladdform/blob/master/Wiki
 * To-Do-Liste mit Datum und weiteren Parametern versehen
 * Tabellen-Modul
 * Wer ist gerade Live? Mit Namen
+* Chat mit Uhrzeit und Namen versehen
 * Linien zwischen Modulen, um die Beziehung untereinander zu klarifizieren
 * Modul als Zeichenplatte. 
