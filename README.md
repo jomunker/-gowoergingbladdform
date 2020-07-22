@@ -4,12 +4,14 @@ A realtime collaboration tool for students and others.
 ## Frameworks
 Angular, Socket.io, Node.JS
 
-## How-To
-### /angular
-Hier befinden sich alle Frond-End files. Mit `$ ng build` wird das Projekt im Folder /dist ausgegeben.
-### /dist
-Der Ordner mit den fertig-zusammengesetzten statischen Datein. Der Server holt sich diesen Ordner
-### /server
-`$ node index.js` startet den Server.
+## Wiki
+Link zum [Wiki.md](https://github.com/maadc/gowoergingbladdform/blob/master/Wiki.md)
 
-Immer auspassen, dass sich das Terminal im richtigen Ordner befinden. ggf. mit `$cd ordner` in Ordnern oder mit `$cd ..` aus einem Ordner raus bewegen.
+## To-Do's
+* Mindestgröße für das Whiteboard, in Abhängikeit von den existierenden Modulen
+* Simpler WYSIWYG-Editor im Textmodul
+* To-Do-Liste mit Datum und weiteren Parametern versehen
+* Tabellen-Modul
+* Wer ist gerade Live? Mit Namen
+* Linien zwischen Modulen, um die Beziehung untereinander zu klarifizieren
+* Modul als Zeichenplatte. 
