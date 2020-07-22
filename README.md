@@ -1,4 +1,4 @@
-# gowoergingbladdform
+# zäddlwärdschafd
 A realtime collaboration tool for students and others.
 
 ## Frameworks
