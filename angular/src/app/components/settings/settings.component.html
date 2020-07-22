@@ -7,16 +7,16 @@
 </mat-toolbar>
 
 <div class="container">
-  <div class="mat-subheading-2">Boardname</div>
+  <div class="mat-subheading-2">Board title</div>
   <mat-form-field class="input-field">
-    <mat-label>Enter a boardname</mat-label>
+    <mat-label>Enter a board title</mat-label>
     <input #name (keyup)="settingsService.triggerBoardName(settingsService.settings.boardName)" [(ngModel)]="settingsService.settings.boardName" class="mat-body-1" matInput
            maxlength="30"
            placeholder="e.g. your project">
     <mat-hint align="end">{{name.value.length}} / 30</mat-hint>
   </mat-form-field>
 
-  <div class="mat-subheading-2">Color Theme</div>
+  <div class="mat-subheading-2">Color theme</div>
   <mat-radio-group
     [(ngModel)]="rootComponent.themeClass"
     aria-labelledby="example-radio-group-label"
